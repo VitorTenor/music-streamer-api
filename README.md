@@ -1,1 +1,1 @@
-# musicStreamerApplicationJavApi
+# musicStreamerApplicationJavaApi
