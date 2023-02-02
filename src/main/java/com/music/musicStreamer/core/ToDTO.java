@@ -32,7 +32,7 @@ public class ToDTO {
     public PlaylistDTO toPlaylistDto(PlaylistModel newPlaylist) {
         PlaylistDTO playlistDTO = new PlaylistDTO();
         playlistDTO.setId(newPlaylist.getId());
-        playlistDTO.setUserId(newPlaylist.getUser_id());
+        playlistDTO.setUserId(newPlaylist.getUserId());
         playlistDTO.setName(newPlaylist.getName());
         return playlistDTO;
     }
@@ -44,7 +44,7 @@ public class ToDTO {
         musicDTO.setArtist(musicModel.getArtist());
         musicDTO.setAlbum(musicModel.getAlbum());
         musicDTO.setGenre(musicModel.getGenre());
-        musicDTO.setPath_name(musicModel.getPath_name());
+        musicDTO.setPath_name(musicModel.getPathName());
         musicDTO.setImage(imageService.getImageByMusicId(musicModel.getId()));
         return musicDTO;
     }
@@ -58,7 +58,7 @@ public class ToDTO {
             musicDTO1.setArtist(music.getArtist());
             musicDTO1.setAlbum(music.getAlbum());
             musicDTO1.setGenre(music.getGenre());
-            musicDTO1.setPath_name(music.getPath_name());
+            musicDTO1.setPath_name(music.getPathName());
             musicDTO1.setImage(imageService.getImageByMusicId(music.getId()));
             musicDTO.add(musicDTO1);
         }

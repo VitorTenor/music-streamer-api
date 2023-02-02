@@ -1,5 +1,6 @@
 package com.music.musicStreamer.domain.models.dtos;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 

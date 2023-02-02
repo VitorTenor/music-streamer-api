@@ -35,8 +35,8 @@ public class ImageService {
     private ImageDTO toImageDto(ImageModel imageModel) {
         ImageDTO imageDTO = new ImageDTO();
         imageDTO.setId(imageModel.getId());
-        imageDTO.setPath_name(imageModel.getPath_name());
-        imageDTO.setUrl("http://localhost:8081/images/" + imageModel.getPath_name());
+        imageDTO.setPath_name(imageModel.getPathName());
+        imageDTO.setUrl("http://localhost:8081/images/" + imageModel.getPathName());
         return imageDTO;
     }
     public Object uploadImage(MultipartFile file, Integer id) throws IOException {
@@ -55,8 +55,8 @@ public class ImageService {
         byte[] bytes = file.getBytes();
         Path path = Paths.get("src/main/resources/media/images/" + newFileName + ".jpg");
         Files.write(path, bytes);
-        imageModel.setPath_name(newFileName);
-        imageModel.setMusic_id(id);
+        imageModel.setPathName(newFileName);
+        imageModel.setMusicId(id);
         imageModel.setCreated_at(new Date());
         imageModel.setUpdated_at(new Date());
         imageRepository.save(imageModel);

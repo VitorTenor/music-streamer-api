@@ -29,8 +29,8 @@ public class MusicModel {
     @Column(nullable = false, length = 100)
     private String genre;
 
-    @Column(nullable = false, length = 100)
-    private String path_name;
+    @Column(name = "path_name",nullable = false, length = 100)
+    private String pathName;
 
     @Column(nullable = false, length = 100)
     private Date created_at;

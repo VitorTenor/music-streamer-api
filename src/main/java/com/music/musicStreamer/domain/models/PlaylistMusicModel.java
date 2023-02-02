@@ -1,6 +1,5 @@
 package com.music.musicStreamer.domain.models;
 
-import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,14 +16,14 @@ public class PlaylistMusicModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(nullable = false, length = 100)
-    private int playlist_id;
+    @Column(name = "playlist_id",nullable = false, length = 100)
+    private int playlistId;
 
-    @Column(nullable = false, length = 100)
-    private int user_id;
+    @Column(name = "user_id", nullable = false, length = 100)
+    private int userId;
 
-    @Column(nullable = false, length = 100)
-    private int music_id;
+    @Column(name = "music_id", nullable = false, length = 100)
+    private int musicId;
     @Column(nullable = false, length = 100)
     private Date created_at;
     @Column(nullable = false, length = 100)

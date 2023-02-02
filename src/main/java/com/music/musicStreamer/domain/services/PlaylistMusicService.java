@@ -41,7 +41,7 @@ public class PlaylistMusicService {
     public PlaylistMusicDTO getPlaylistMusic(int playlistId) {
         PlaylistMusicDTO playlistMusic = new PlaylistMusicDTO();
         playlistMusic.setPlaylist_id(playlistRepository.findById(playlistId).get().getId());
-        playlistMusic.setUser_id(playlistRepository.findById(playlistId).get().getUser_id());
+        playlistMusic.setUser_id(playlistRepository.findById(playlistId).get().getUserId());
         playlistMusic.setMusics(getMusics(playlistId));
         return playlistMusic;
     }
@@ -50,7 +50,7 @@ public class PlaylistMusicService {
         ArrayList<PlaylistMusicModel> musicModels = playlistMusicRepository.findByPlaylistId2(playlistId);
         System.out.println(musicModels);
         for (PlaylistMusicModel musicModel : musicModels) {
-            Optional<MusicModel> music = musicRepository.findById(musicModel.getMusic_id());
+            Optional<MusicModel> music = musicRepository.findById(musicModel.getMusicId());
             if (music.isPresent()) {
                 MusicDTO musicDTO = new MusicDTO();
                 musicDTO.setId(music.get().getId());

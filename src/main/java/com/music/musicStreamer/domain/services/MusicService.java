@@ -75,7 +75,7 @@ public class MusicService {
         if (musicModel == null) {
             return false;
         }
-        File file = new File("src/main/resources/media/musics/" + musicModel.getPath_name());
+        File file = new File("src/main/resources/media/musics/" + musicModel.getPathName());
         playlistMusicService.deleteAllByMusicId(id);
         musicRepository.deleteById(id);
         return file.delete();
@@ -93,7 +93,7 @@ public class MusicService {
         return toDTO.toMusiclDTO(musicModel);
     }
     public InputStreamDTO getInputStream (MusicModel musicModel) throws IOException {
-        File file = new File("src/main/resources/media/musics/" + musicModel.getPath_name() + ".mp3");
+        File file = new File("src/main/resources/media/musics/" + musicModel.getPathName() + ".mp3");
         InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
         return new InputStreamDTO(resource, file);
     }

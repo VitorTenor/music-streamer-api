@@ -1,18 +1,17 @@
 package com.music.musicStreamer.domain.models;
 
-import jdk.jshell.Snippet;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.annotation.Resource;
 import javax.persistence.*;
 import java.util.Date;
 
 @Data
 @Getter
 @Setter
-@Builder
 @Entity
 @Table(name = "playlists")
 public class PlaylistModel {
@@ -23,8 +22,8 @@ public class PlaylistModel {
     @Column(nullable = false, length = 100)
     private String name;
 
-    @Column(nullable = false, length = 100)
-    private int user_id;
+    @Column(name = "user_id", nullable = false, length = 100)
+    private int userId;
 
     @Column(nullable = false, length = 100)
     private Date created_at;

@@ -17,16 +17,18 @@ import java.util.Date;
 public class ToModel {
 
     public PlaylistModel toPlaylistModel(PlaylistRegisterDTO playlistRegisterDTO) {
-        return PlaylistModel.builder()
-                .name(playlistRegisterDTO.getName())
-                .user_id(playlistRegisterDTO.getUserId())
-                .build();
+        PlaylistModel playlistModel = new PlaylistModel();
+        playlistModel.setName(playlistRegisterDTO.getName());
+        playlistModel.setUserId(playlistRegisterDTO.getUserId());
+        playlistModel.setCreated_at(new Date());
+        playlistModel.setUpdated_at(new Date());
+        return playlistModel;
     }
     public PlaylistMusicModel toPlaylistMusicModel(MusicPlaylistRegisterDTO musicPlaylistRegisterDTO) {
         PlaylistMusicModel playlistMusicModel = new PlaylistMusicModel();
-        playlistMusicModel.setPlaylist_id(musicPlaylistRegisterDTO.getPlaylistId());
-        playlistMusicModel.setMusic_id(musicPlaylistRegisterDTO.getMusicId());
-        playlistMusicModel.setUser_id(musicPlaylistRegisterDTO.getUserId());
+        playlistMusicModel.setPlaylistId(musicPlaylistRegisterDTO.getPlaylistId());
+        playlistMusicModel.setMusicId(musicPlaylistRegisterDTO.getMusicId());
+        playlistMusicModel.setUserId(musicPlaylistRegisterDTO.getUserId());
         playlistMusicModel.setCreated_at(new Date());
         playlistMusicModel.setUpdated_at(new Date());
         return playlistMusicModel;
