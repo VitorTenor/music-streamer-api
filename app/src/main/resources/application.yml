@@ -1,0 +1,43 @@
+server:
+  url: http://localhost
+  port: 8081
+
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  datasource:
+    url: jdbc:mysql://localhost:3306/musicStreamer
+    username: root
+    password: facadojoao@ie
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+  flyway:
+    enabled: true
+    locations: src/main/resources/db/migration
+    schemas: musicStreamer
+    baseline-on-migrate: true
+    baseline-version: 1
+    sql-migration-prefix: V
+    sql-migration-suffixes: .sql
+    url: jdbc:mysql://localhost:3306/musicStreamer?createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true
+    user: root
+    password: facadojoao@ie
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+storage:
+  music:
+    path: C:/streamerAplication/media/music/
+    mediaType: .mp3
+  image:
+    path: C:/streamerAplication/media/image/
+    mediaType: .jpg
+
