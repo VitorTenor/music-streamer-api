@@ -1,10 +1,10 @@
-package com.music.musicStreamer.domain.utils.token.security;
+package com.music.musicStreamer.core.token.security;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.music.musicStreamer.api.v1.models.dtos.UserLoginDTO;
-import com.music.musicStreamer.domain.utils.token.data.UserDataDetail;
+import com.music.musicStreamer.core.token.data.UserDataDetail;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;

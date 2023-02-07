@@ -3,7 +3,7 @@ package com.music.musicStreamer.api.v1.clients;
 import com.music.musicStreamer.api.v1.models.ImageModel;
 import com.music.musicStreamer.api.v1.repositories.ImageRepository;
 import com.music.musicStreamer.api.v1.repositories.MusicRepository;
-import com.music.musicStreamer.domain.utils.GenerateName;
+import com.music.musicStreamer.core.GenerateName;
 import com.music.musicStreamer.entities.image.Image;
 import com.music.musicStreamer.entities.image.ImageRequest;
 import com.music.musicStreamer.gateways.ImageGateway;

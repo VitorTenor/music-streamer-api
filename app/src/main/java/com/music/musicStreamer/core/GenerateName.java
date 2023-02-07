@@ -1,4 +1,4 @@
-package com.music.musicStreamer.domain.utils;
+package com.music.musicStreamer.core;
 
 import org.springframework.stereotype.Service;
 

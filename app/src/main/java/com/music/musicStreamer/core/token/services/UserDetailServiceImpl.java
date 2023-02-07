@@ -1,9 +1,9 @@
-package com.music.musicStreamer.domain.utils.token.services;
+package com.music.musicStreamer.core.token.services;
 
 
 import com.music.musicStreamer.domain.models.UserModel;
 import com.music.musicStreamer.api.v1.repositories.UserRepository;
-import com.music.musicStreamer.domain.utils.token.data.UserDataDetail;
+import com.music.musicStreamer.core.token.data.UserDataDetail;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

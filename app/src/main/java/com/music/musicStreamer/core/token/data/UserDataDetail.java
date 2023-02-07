@@ -1,4 +1,4 @@
-package com.music.musicStreamer.domain.utils.token.data;
+package com.music.musicStreamer.core.token.data;
 
 import com.music.musicStreamer.domain.models.UserModel;
 import com.music.musicStreamer.api.v1.models.dtos.UserLoginDTO;

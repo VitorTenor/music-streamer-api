@@ -1,4 +1,4 @@
-package com.music.musicStreamer.domain.utils.token.security;
+package com.music.musicStreamer.core.token.security;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;

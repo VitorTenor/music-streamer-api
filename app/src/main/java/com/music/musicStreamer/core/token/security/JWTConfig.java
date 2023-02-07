@@ -1,6 +1,6 @@
-package com.music.musicStreamer.domain.utils.token.security;
+package com.music.musicStreamer.core.token.security;
 
-import com.music.musicStreamer.domain.utils.token.services.UserDetailServiceImpl;
+import com.music.musicStreamer.core.token.services.UserDetailServiceImpl;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
