@@ -15,7 +15,7 @@ import java.io.IOException;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/images")
+@RequestMapping("music-streamer/v1/images")
 public class ImageController {
 
     private final GetImageUseCase getImageUseCase;

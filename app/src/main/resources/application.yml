@@ -1,5 +1,5 @@
 server:
-  url: http://localhost
+  url: http://localhost:{server.port}/music-streamer/v1
   port: 8081
 
 spring:
@@ -40,4 +40,5 @@ storage:
   image:
     path: C:/streamerAplication/media/image/
     mediaType: .jpg
+    url: http://localhost:8081/music-streamer/v1/images/
 

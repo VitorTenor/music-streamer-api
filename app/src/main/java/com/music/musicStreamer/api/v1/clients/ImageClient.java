@@ -22,6 +22,7 @@ import java.util.Date;
 public class ImageClient implements ImageGateway {
         private @Value("${storage.image.path}") String IMAGE_PATH;
         private @Value("${storage.image.mediaType}") String IMAGE_TYPE;
+        private @Value("${storage.image.url}") String IMAGE_URL;
         private final GenerateName generateName;
         private final ImageRepository imageRepository;
         private final MusicRepository musicRepository;
@@ -47,7 +48,6 @@ public class ImageClient implements ImageGateway {
                         throw new RuntimeException(e);
                 }
         }
-
         @Override
         public byte[] getImage(String getPathName) {
                 try {
@@ -57,16 +57,14 @@ public class ImageClient implements ImageGateway {
                         throw new RuntimeException(e);
                 }
         }
-
         @Override
         public Image getImageById(int id) {
                 ImageModel imageModel = imageRepository.findByMusicId(id);
                 if (imageModel == null) {
                         return null;
                 }
-                return new Image(imageModel.getMusicId(), imageModel.getPathName(),"http://localhost:8081/images/" + imageModel.getPathName());
+                return new Image(imageModel.getMusicId(), imageModel.getPathName(),IMAGE_URL + imageModel.getPathName());
         }
-
         @Override
         public Boolean deleteImageByMusicId(int id) {
                 ImageModel imageModel = imageRepository.findByMusicId(id);
@@ -82,13 +80,12 @@ public class ImageClient implements ImageGateway {
                         throw new RuntimeException(e);
                 }
         }
-
         @Override
         public Image getImageByMusicId(int id) {
                 ImageModel imageModel = imageRepository.findByMusicId(id);
                 if (imageModel == null) {
                         return null;
                 }
-                return new Image(imageModel.getMusicId(), imageModel.getPathName(),"http://localhost:8081/images/" + imageModel.getPathName());
+                return new Image(imageModel.getMusicId(), imageModel.getPathName(),IMAGE_URL + imageModel.getPathName());
         }
 }

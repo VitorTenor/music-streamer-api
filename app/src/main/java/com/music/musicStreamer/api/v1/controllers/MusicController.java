@@ -18,7 +18,7 @@ import java.io.IOException;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/musics")
+@RequestMapping("/music-streamer/v1/musics")
 public class MusicController {
 
     private @Value("${storage.image.mediaType}") String MUSIC_TYPE;

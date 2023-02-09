@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -47,6 +46,8 @@ public class PlaylistMusicClient implements PlaylistMusicGateway {
                     music1.setName(musicModel.getName());
                     music1.setArtist(musicModel.getArtist());
                     music1.setAlbum(musicModel.getAlbum());
+                    music1.setGenre(musicModel.getGenre());
+                    music1.setPath_name(musicModel.getPathName());
                     music1.setImage(getImageByMusicIdUseCase.execute(musicModel.getId()));
                     musicList.add(music1);
                 }

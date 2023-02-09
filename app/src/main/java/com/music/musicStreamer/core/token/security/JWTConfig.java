@@ -28,7 +28,7 @@ public class JWTConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeRequests()
                 .antMatchers("/**","/users", "/musics/**", "/users/login", "/swagger-ui/**", "/swagger-resources/**", "/v2/**").permitAll()
-                .anyRequest().authenticated()
+                .anyRequest().permitAll()
                 .and()
                 .addFilter(new JWTAuthenticateFilter(authenticationManager()))
                 .addFilter(new JWTValidateFilter(authenticationManager()))

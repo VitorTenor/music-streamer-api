@@ -3,7 +3,6 @@ package com.music.musicStreamer.entities.music;
 import com.music.musicStreamer.entities.image.Image;
 
 public class Music {
-
     private Integer id;
     private String name;
     private String artist;
@@ -25,6 +24,8 @@ public class Music {
     public Music() {
 
     }
+
+
 
     public Integer getId() {
         return id;

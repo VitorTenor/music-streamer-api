@@ -11,7 +11,6 @@ public class GenerateName {
         Instant instant = Instant.now();
         long randomValue = new Random().nextLong();
         String generatedName = instant.toString() + "_" + Long.toString(randomValue);
-        String newName = generatedName.replace(":", "_").replace(".", "_");
-        return newName;
+        return generatedName.replace(":", "_").replace(".", "_");
     }
 }

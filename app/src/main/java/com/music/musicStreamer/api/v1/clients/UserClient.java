@@ -34,9 +34,8 @@ public class UserClient implements UserGateway {
         if (user.isEmpty()) {
             throw new RuntimeException("User [" + userAuthRequest.getEmail() + "] not found");
         }
-        return new UserAuth(auth.getToken(userAuthRequest));
+        return new UserAuth(user.get().getId(), user.get().getEmail(), auth.getToken(userAuthRequest));
     }
-
 
     public UserModel toModel(UserRequest userRequest) {
         UserModel userModel = new UserModel();

@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/playlists")
+@RequestMapping("/music-streamer/v1/playlists")
 public class PlaylistController {
     private final CreatePlaylistUseCase createPlaylistUseCase;
     private final AddMusicPlaylistUseCase addMusicPlaylistUseCase;

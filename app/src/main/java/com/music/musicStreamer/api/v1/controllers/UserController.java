@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/users")
+@RequestMapping("/music-streamer/v1/users")
 public class UserController {
 
     private final CreateUserUseCase createUserUseCase;
