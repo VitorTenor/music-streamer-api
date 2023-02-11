@@ -1,10 +1,14 @@
 package com.music.musicStreamer.api.exceptionHandler;
 
-import com.music.musicStreamer.exception.*;
+import com.music.musicStreamer.exceptions.*;
+import com.music.musicStreamer.exceptions.SecurityException;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.cache.spi.access.UnknownAccessTypeException;
+import org.springframework.dao.UncategorizedDataAccessException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
@@ -31,7 +35,6 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
                 .build();
         return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
     }
-
     @ExceptionHandler(BusinessException.class)
     public ResponseEntity<Object> handleBusinessException(BusinessException ex, WebRequest request) {
         HttpStatus status = HttpStatus.BAD_REQUEST;
@@ -63,6 +66,15 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
     public ResponseEntity<Object> handleImageException(ImageException ex, WebRequest request) {
         HttpStatus status = HttpStatus.BAD_REQUEST;
         ProblemType problemType = ProblemType.IMAGE_ERROR;
+        String detail = ex.getMessage();
+        Problem problem = createProblemBuilder(status, problemType, detail);
+        return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
+    }
+
+    @ExceptionHandler(SecurityException.class)
+    public ResponseEntity<Object> handleImageException(SecurityException ex, WebRequest request) {
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        ProblemType problemType = ProblemType.SECURITY_ERROR;
         String detail = ex.getMessage();
         Problem problem = createProblemBuilder(status, problemType, detail);
         return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);

@@ -5,10 +5,10 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.music.musicStreamer.api.v1.models.dtos.UserLoginDTO;
 import com.music.musicStreamer.core.token.data.UserDataDetail;
+import com.music.musicStreamer.exceptions.SecurityException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.servlet.FilterChain;
@@ -34,7 +34,7 @@ public class JWTAuthenticateFilter extends UsernamePasswordAuthenticationFilter 
 
 
     public Authentication attemptAuthentication(HttpServletRequest request,
-                                                HttpServletResponse response) throws AuthenticationException {
+                                                HttpServletResponse response)  {
         try {
             UserLoginDTO user = new ObjectMapper()
                     .readValue(request.getInputStream(), UserLoginDTO.class);
@@ -46,7 +46,7 @@ public class JWTAuthenticateFilter extends UsernamePasswordAuthenticationFilter 
             ));
 
         } catch (IOException e) {
-            throw new RuntimeException("Fail to authenticate user", e.getCause());
+            throw new SecurityException("Fail to authenticate user");
         }
 
     }

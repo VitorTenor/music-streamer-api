@@ -1,4 +1,4 @@
-package com.music.musicStreamer.exception;
+package com.music.musicStreamer.exceptions;
 
 public class BusinessException extends RuntimeException {
 

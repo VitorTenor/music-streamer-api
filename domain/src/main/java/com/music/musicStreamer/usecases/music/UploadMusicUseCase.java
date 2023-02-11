@@ -2,7 +2,6 @@ package com.music.musicStreamer.usecases.music;
 
 import com.music.musicStreamer.entities.music.Music;
 import com.music.musicStreamer.entities.music.MusicRequest;
-import com.music.musicStreamer.exception.MusicException;
 import com.music.musicStreamer.gateways.MusicGateway;
 
 import javax.inject.Named;

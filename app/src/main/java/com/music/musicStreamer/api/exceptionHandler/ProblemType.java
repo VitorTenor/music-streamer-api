@@ -11,7 +11,9 @@ public enum ProblemType {
     BUSINESS_ERROR("/business-error", "Business error"),
     IMAGE_ERROR("/image-error", "Image error"),
     PLAYLIST_ERROR("/playlist-error", "Playlist error"),
-    PLAYLIST_MUSIC_ERROR("/playlist-music-error", "Playlist music error");
+    PLAYLIST_MUSIC_ERROR("/playlist-music-error", "Playlist music error"),
+    SECURITY_ERROR("/security-error", "Security error"),
+    AUTHENTICATION_ERROR("/authentication-error", "Authentication error");
     private final String title;
     private final String uri;
 

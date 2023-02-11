@@ -6,7 +6,7 @@ import com.music.musicStreamer.entities.user.User;
 import com.music.musicStreamer.entities.user.UserAuth;
 import com.music.musicStreamer.entities.user.UserAuthRequest;
 import com.music.musicStreamer.entities.user.UserRequest;
-import com.music.musicStreamer.exception.UserException;
+import com.music.musicStreamer.exceptions.UserException;
 import com.music.musicStreamer.gateways.UserGateway;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

@@ -5,7 +5,7 @@ import com.music.musicStreamer.api.v1.models.PlaylistMusicModel;
 import com.music.musicStreamer.api.v1.repositories.MusicRepository;
 import com.music.musicStreamer.api.v1.repositories.PlaylistMusicRepository;
 import com.music.musicStreamer.entities.music.Music;
-import com.music.musicStreamer.exception.PlaylistMusicException;
+import com.music.musicStreamer.exceptions.PlaylistMusicException;
 import com.music.musicStreamer.gateways.PlaylistMusicGateway;
 import com.music.musicStreamer.usecases.image.GetImageByMusicIdUseCase;
 import lombok.RequiredArgsConstructor;

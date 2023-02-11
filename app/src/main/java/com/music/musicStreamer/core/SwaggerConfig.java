@@ -38,7 +38,7 @@ private ApiInfo metaData() {
                      "vitortenorio.dev@gmail.com"),
                 "Apache License Version 2.0",
                 "https://www.apache.org/licesen.html",
-             new ArrayList<VendorExtension>()
+             new ArrayList<>()
      );
      return apiInfo;
     }

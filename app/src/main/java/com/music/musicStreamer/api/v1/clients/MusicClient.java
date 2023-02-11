@@ -6,7 +6,7 @@ import com.music.musicStreamer.core.GenerateName;
 import com.music.musicStreamer.entities.music.Music;
 import com.music.musicStreamer.entities.music.MusicDownload;
 import com.music.musicStreamer.entities.music.MusicRequest;
-import com.music.musicStreamer.exception.MusicException;
+import com.music.musicStreamer.exceptions.MusicException;
 import com.music.musicStreamer.gateways.MusicGateway;
 import com.music.musicStreamer.usecases.image.DeleteImageByMusicIdUseCase;
 import com.music.musicStreamer.usecases.image.GetImageByMusicIdUseCase;
