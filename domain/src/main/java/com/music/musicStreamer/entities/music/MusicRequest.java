@@ -1,6 +1,5 @@
 package com.music.musicStreamer.entities.music;
 
-import java.util.Date;
 
 public class MusicRequest {
 
@@ -13,10 +12,10 @@ public class MusicRequest {
     }
     private String name;
     private String artist;
+
     private String album;
     private String genre;
     private byte[] music;
-
 
     public String getName() {
         return name;
@@ -37,4 +36,5 @@ public class MusicRequest {
     public byte[] getMusic() {
         return music;
     }
+
 }

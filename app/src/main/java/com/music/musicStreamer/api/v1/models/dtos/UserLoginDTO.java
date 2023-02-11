@@ -12,7 +12,7 @@ public class UserLoginDTO {
     private String email;
     private String password;
 
-    public UserAuthRequest toRequest() {
+    public UserAuthRequest toEntity() {
         return new UserAuthRequest(email, password);
     }
 }

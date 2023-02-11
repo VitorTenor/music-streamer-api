@@ -1,5 +1,6 @@
 package com.music.musicStreamer.usecases.image;
 
+import com.music.musicStreamer.entities.image.Image;
 import com.music.musicStreamer.entities.image.ImageRequest;
 import com.music.musicStreamer.gateways.ImageGateway;
 
@@ -14,12 +15,7 @@ public class UploadImageUseCase {
         this.imageGateway = imageGateway;
     }
 
-    public String execute(final ImageRequest imageRequest) {
-            try {
-                this.imageGateway.saveImage(imageRequest);
-                return "Image uploaded successfully";
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        }
+    public Image execute(final ImageRequest imageRequest) {
+        return imageGateway.saveImage(imageRequest);
+    }
 }

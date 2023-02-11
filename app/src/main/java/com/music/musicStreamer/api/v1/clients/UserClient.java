@@ -6,6 +6,7 @@ import com.music.musicStreamer.entities.user.User;
 import com.music.musicStreamer.entities.user.UserAuth;
 import com.music.musicStreamer.entities.user.UserAuthRequest;
 import com.music.musicStreamer.entities.user.UserRequest;
+import com.music.musicStreamer.exception.UserException;
 import com.music.musicStreamer.gateways.UserGateway;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -14,6 +15,7 @@ import com.music.musicStreamer.domain.models.UserModel;
 
 import java.util.Date;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 
 @Component
@@ -21,22 +23,23 @@ import java.util.Optional;
 public class UserClient implements UserGateway {
     private final UserRepository userRepository;
     private final Auth auth;
+    private final String REGEX_EMAIL = "^[\\w-\\+]+(\\.[\\w]+)*@[\\w-]+(\\.[\\w]+)*(\\.[a-z]{2,})$";;
 
     @Override
     public User createUser(UserRequest userRequest) {
-        final UserModel createdUser = this.userRepository.save(toModel(userRequest));
-        return createdUser.toDomain();
+        validateUser(userRequest);
+        UserModel createdUser = this.userRepository.save(toModel(userRequest));
+        return createdUser.toEntity();
     }
-
     @Override
     public UserAuth loginUser(UserAuthRequest userAuthRequest) {
-        final Optional<UserModel> user = this.userRepository.findByEmailForAuthenticate(userAuthRequest.getEmail());
-        if (user.isEmpty()) {
-            throw new RuntimeException("User [" + userAuthRequest.getEmail() + "] not found");
+        UserModel user = validateUserLogin(userAuthRequest);
+        try {
+            return new UserAuth(user.getId(), user.getName(),user.getEmail(), auth.getToken(userAuthRequest));
+        } catch (Exception e) {
+            throw new UserException("Invalid credentials");
         }
-        return new UserAuth(user.get().getId(), user.get().getEmail(), auth.getToken(userAuthRequest));
     }
-
     public UserModel toModel(UserRequest userRequest) {
         UserModel userModel = new UserModel();
         userModel.setName(userRequest.getName());
@@ -45,5 +48,22 @@ public class UserClient implements UserGateway {
         userModel.setCreated_at(new Date());
         userModel.setUpdated_at(new Date());
         return userModel;
+    }
+    private void validateUser(UserRequest userRequest) {
+        if (userRequest.getName().isBlank()) throw new UserException("Name is required");
+        if (userRequest.getEmail().isBlank()) throw new UserException("Email is required");
+        Pattern pattern = Pattern.compile(REGEX_EMAIL);
+        if (!pattern.matcher(userRequest.getEmail()).matches()) throw new UserException("Email is invalid");
+        if (userRequest.getPassword().isBlank()) throw new UserException("Password is required");
+        if (userRequest.getPassword().length() < 6) throw new UserException("Password must be at least 6 characters");
+        Optional<UserModel> user = this.userRepository.findByEmail(userRequest.getEmail());
+        if (user.isPresent())  throw new UserException("User already exists") ;
+    }
+    private UserModel validateUserLogin(UserAuthRequest userAuthRequest) {
+        if (userAuthRequest.getEmail().isBlank()) throw new UserException("Email is required");
+        if (userAuthRequest.getPassword().isBlank()) throw new UserException("Password is required");
+        Pattern pattern = Pattern.compile(REGEX_EMAIL);
+        if (!pattern.matcher(userAuthRequest.getEmail()).matches()) throw new UserException("Email is invalid");
+        return this.userRepository.findByEmail(userAuthRequest.getEmail()).orElseThrow(() -> new UserException("User not found"));
     }
 }

@@ -2,10 +2,7 @@ package com.music.musicStreamer.api.v1.controllers;
 
 import com.music.musicStreamer.api.v1.models.dtos.AddMusicPlaylistDTO;
 import com.music.musicStreamer.api.v1.models.dtos.CreatePlaylistDTO;
-import com.music.musicStreamer.api.v1.models.dtos.PlaylistDTO;
-import com.music.musicStreamer.entities.playlist.MusicPlaylistRequest;
 import com.music.musicStreamer.entities.playlist.Playlist;
-import com.music.musicStreamer.entities.playlist.PlaylistRequest;
 import com.music.musicStreamer.usecases.playlist.AddMusicPlaylistUseCase;
 import com.music.musicStreamer.usecases.playlist.CreatePlaylistUseCase;
 import com.music.musicStreamer.usecases.playlist.GetPlaylistByIdUseCase;
@@ -29,13 +26,13 @@ public class PlaylistController {
     @ApiOperation(value = "Create playlist")
     @PostMapping
     public ResponseEntity<Playlist> createPlaylist(@RequestBody CreatePlaylistDTO createPlaylist) throws Exception {
-        return ResponseEntity.status(HttpStatus.OK).body(createPlaylistUseCase.execute(createPlaylist.toRequest()));
+        return ResponseEntity.status(HttpStatus.OK).body(createPlaylistUseCase.execute(createPlaylist.toEntity()));
     }
 
     @ApiOperation(value = "Add music to playlist")
     @PostMapping("/addSong")
     public ResponseEntity<String> addSongToPlaylist(@RequestBody AddMusicPlaylistDTO addMusicPlaylist){
-        return ResponseEntity.status(HttpStatus.OK).body(addMusicPlaylistUseCase.execute(addMusicPlaylist.toRequest()));
+        return ResponseEntity.status(HttpStatus.OK).body(addMusicPlaylistUseCase.execute(addMusicPlaylist.toEntity()));
     }
 
     @ApiOperation(value = "Get playlist")

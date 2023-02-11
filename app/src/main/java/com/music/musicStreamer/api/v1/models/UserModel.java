@@ -29,7 +29,7 @@ public class UserModel implements Serializable {
     @Column(nullable = false, length = 100)
     private Date updated_at;
 
-    public User toDomain() {
+    public User toEntity() {
         return new User(id, name, email);
     }
 }

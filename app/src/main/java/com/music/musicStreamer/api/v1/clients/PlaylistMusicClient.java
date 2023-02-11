@@ -5,6 +5,7 @@ import com.music.musicStreamer.api.v1.models.PlaylistMusicModel;
 import com.music.musicStreamer.api.v1.repositories.MusicRepository;
 import com.music.musicStreamer.api.v1.repositories.PlaylistMusicRepository;
 import com.music.musicStreamer.entities.music.Music;
+import com.music.musicStreamer.exception.PlaylistMusicException;
 import com.music.musicStreamer.gateways.PlaylistMusicGateway;
 import com.music.musicStreamer.usecases.image.GetImageByMusicIdUseCase;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +30,7 @@ public class PlaylistMusicClient implements PlaylistMusicGateway {
             }
             return true;
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new PlaylistMusicException("Error deleting music from playlist");
         }
     }
 
@@ -37,9 +38,9 @@ public class PlaylistMusicClient implements PlaylistMusicGateway {
     public List<Music> getMusicByPlaylistId(int id) {
         try {
             List<Music> musicList = new ArrayList<>();
-            List<PlaylistMusicModel> playlistMusic = playlistMusicRepository.findAllByPlaylistId(id);
+            List<PlaylistMusicModel> playlistMusic = playlistMusicRepository.findAllById(id);
             for (PlaylistMusicModel playlistMusicModel : playlistMusic) {
-                List<MusicModel> music = musicRepository.findAllMusicById(playlistMusicModel.getMusicId());
+                List<MusicModel> music = musicRepository.findAllById(playlistMusicModel.getMusicId());
                 for (MusicModel musicModel : music) {
                     Music music1 = new Music();
                     music1.setId(musicModel.getId());
@@ -54,7 +55,7 @@ public class PlaylistMusicClient implements PlaylistMusicGateway {
             }
             return musicList;
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new PlaylistMusicException("Error getting music by playlist id");
         }
     }
 }

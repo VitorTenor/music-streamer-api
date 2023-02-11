@@ -1,5 +1,7 @@
 package com.music.musicStreamer.api.v1.models;
 
+import com.music.musicStreamer.entities.image.Image;
+import com.music.musicStreamer.entities.music.Music;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -41,4 +43,7 @@ public class MusicModel {
     public MusicModel() {
     }
 
+    public Music toEntity() {
+        return new Music(id, name, artist, album,genre, null, pathName);
+    }
 }

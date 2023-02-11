@@ -1,6 +1,8 @@
 package com.music.musicStreamer.usecases.music;
 
+import com.music.musicStreamer.entities.music.Music;
 import com.music.musicStreamer.entities.music.MusicRequest;
+import com.music.musicStreamer.exception.MusicException;
 import com.music.musicStreamer.gateways.MusicGateway;
 
 import javax.inject.Named;
@@ -14,12 +16,7 @@ public class UploadMusicUseCase {
         this.musicGateway = musicGateway;
     }
 
-    public String execute(MusicRequest musicRequest) {
-        try {
-            musicGateway.saveMusic(musicRequest);
-            return "Music uploaded successfully";
-        } catch (Exception e) {
-            return "Error uploading music";
-        }
+    public Music execute(MusicRequest musicRequest) throws Exception {
+        return musicGateway.saveMusic(musicRequest);
     }
 }

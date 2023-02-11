@@ -6,6 +6,7 @@ import com.music.musicStreamer.core.GenerateName;
 import com.music.musicStreamer.entities.music.Music;
 import com.music.musicStreamer.entities.music.MusicDownload;
 import com.music.musicStreamer.entities.music.MusicRequest;
+import com.music.musicStreamer.exception.MusicException;
 import com.music.musicStreamer.gateways.MusicGateway;
 import com.music.musicStreamer.usecases.image.DeleteImageByMusicIdUseCase;
 import com.music.musicStreamer.usecases.image.GetImageByMusicIdUseCase;
@@ -38,68 +39,74 @@ public class MusicClient implements MusicGateway {
 
 
     @Override
-    public void saveMusic(MusicRequest musicRequest) {
+    public Music saveMusic(MusicRequest musicRequest) {
+        validateMusic(musicRequest);
         try {
             String newFileName = generateName.randomName();
             Path path = Path.of(MUSIC_PATH + newFileName + MUSIC_TYPE);
             Files.write(path, musicRequest.getMusic());
-            musicRepository.save(toModel(musicRequest, newFileName));
+            MusicModel musicModel = musicRepository.save(toModel(musicRequest, newFileName));
+            return musicModel.toEntity();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new MusicException("Error to save music");
         }
     }
     @Override
     public List<Music> getAllMusics() {
-        List<MusicModel> musicModel = musicRepository.findAll();
-        return listToMusic(musicModel);
+        try {
+            return listToMusic(musicRepository.findAll());
+        } catch (Exception e) {
+            throw new MusicException("Error to get musics");
+        }
     }
     @Override
-    public Object playMusic(int id) throws IOException {
-        MusicModel musicModel = musicRepository.findById(id).orElse(null);
-        if (musicModel == null) {
-            return null;
+    public Object playMusic(int id) {
+        MusicModel musicModel = musicRepository.findById(id).orElseThrow(() -> new MusicException("Music not found"));
+        try {
+            File file = new File(MUSIC_PATH + musicModel.getPathName());
+            return new InputStreamResource(new FileInputStream(file));
+        } catch (Exception e) {
+            throw new MusicException("Error to play music");
         }
-        File file = new File(MUSIC_PATH + musicModel.getPathName());
-        InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
-        return resource;
     }
 
     @Override
-    public MusicDownload downloadMusic(int id) throws IOException {
-        MusicModel musicModel = musicRepository.findById(id).orElse(null);
-        if (musicModel == null) {
-            return null;
-        }
+    public MusicDownload downloadMusic(int id) {
+        MusicModel musicModel = musicRepository.findById(id).orElseThrow(() -> new MusicException("Music not found"));
         File file = new File(MUSIC_PATH + musicModel.getPathName());
-        InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
-        return new MusicDownload(resource.getInputStream(), file);
+        try {
+            InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
+            return new MusicDownload(resource.getInputStream(), file);
+        } catch (Exception e) {
+            throw new MusicException("Error to download music");
+        }
     }
 
     @Override
     public Music getMusicById(int id) {
-        MusicModel musicModel = musicRepository.findById(id).orElse(null);
-        if (musicModel == null) {
-            return null;
-        }
-        return toMusic(musicModel);
+        return toMusic(musicRepository.findById(id).orElseThrow(() -> new MusicException("Music not found")));
     }
 
     @Override
     public String deleteMusicById(int id) {
-        MusicModel musicModel = musicRepository.findById(id).orElse(null);
-        if (musicModel == null) {
-            return null;
-        }
+        MusicModel musicModel = musicRepository.findById(id).orElseThrow(() -> new MusicException("Music not found"));
         try {
-            Path path = Path.of(MUSIC_PATH + musicModel.getPathName());
-            Files.delete(path);
+            Files.delete(Path.of(MUSIC_PATH + musicModel.getPathName()));
             musicRepository.deleteById(id);
             deleteImageByMusicIdUseCase.execute(id);
             deleteMusicFromPlaylistUseCase.execute(id);
             return "Music deleted";
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new MusicException("Error to delete music");
         }
+    }
+
+    private void validateMusic(MusicRequest musicRequest) {
+        if(musicRequest.getName().isBlank()) throw new MusicException("Name is required");
+        if(musicRequest.getArtist().isBlank()) throw new MusicException("Artist is required");
+        if(musicRequest.getAlbum().isBlank()) throw new MusicException("Album is required");
+        if(musicRequest.getGenre().isBlank()) throw new MusicException("Genre is required");
+        if(musicRequest.getMusic().length == 0 || musicRequest.getMusic() == null) throw new MusicException("Music is required");
     }
 
     private Music toMusic(MusicModel musicModel) {

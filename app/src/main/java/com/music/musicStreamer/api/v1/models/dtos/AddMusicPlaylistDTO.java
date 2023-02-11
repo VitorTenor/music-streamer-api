@@ -9,7 +9,7 @@ public class AddMusicPlaylistDTO {
     private int musicId;
     private int userId;
 
-    public MusicPlaylistRequest toRequest() {
+    public MusicPlaylistRequest toEntity() {
         return new MusicPlaylistRequest(playlistId, musicId, userId);
     }
 }

@@ -1,4 +1,4 @@
-package com.music.musicStreamer.domain.models;
+package com.music.musicStreamer.api.v1.models;
 
 import lombok.Builder;
 import lombok.Data;

@@ -15,11 +15,7 @@ public class CreateUserUseCase {
     }
 
     public User execute(final UserRequest userRequest) {
-        try {
-            return this.userGateway.createUser(userRequest);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        return this.userGateway.createUser(userRequest);
     }
 
 }

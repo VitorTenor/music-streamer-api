@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface ImageRepository extends JpaRepository<ImageModel, Integer> {
 
-    @Query(value = "SELECT * FROM images WHERE music_id = :id", nativeQuery = true)
     ImageModel findByMusicId(Integer id);
 
 }

@@ -7,10 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<UserModel, Integer> {
-    @Query(value = "SELECT * FROM users u WHERE u.email = :email", nativeQuery = true)
-    UserModel findByEmail(String email);
-
     @Query(value = "SELECT * FROM users WHERE email = :email", nativeQuery = true)
-    Optional<UserModel> findByEmailForAuthenticate(String email);
+    Optional<UserModel> findByEmail(String email);
 
 }

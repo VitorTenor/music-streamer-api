@@ -16,10 +16,6 @@ public class LoginUserUseCase {
     }
 
     public UserAuth execute(final UserAuthRequest userAuthRequest) {
-        try {
-            return this.userGateway.loginUser(userAuthRequest);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        return this.userGateway.loginUser(userAuthRequest);
     }
 }

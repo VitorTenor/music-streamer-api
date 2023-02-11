@@ -22,11 +22,11 @@ public class UserController {
     @ApiOperation(value = "Create user")
     @PostMapping("")
     public ResponseEntity<User> register(@RequestBody UserRegisterDTO userRegisterDTO) {
-        return ResponseEntity.status(HttpStatus.OK).body(createUserUseCase.execute(userRegisterDTO.toRequest()));
+        return ResponseEntity.status(HttpStatus.OK).body(createUserUseCase.execute(userRegisterDTO.toEntity()));
     }
     @ApiOperation(value = "Login user")
     @PostMapping("/login")
     public ResponseEntity<UserAuth> login(@RequestBody UserLoginDTO userLogin) {
-        return ResponseEntity.status(HttpStatus.OK).body(loginUserUseCase.execute(userLogin.toRequest()));
+        return ResponseEntity.status(HttpStatus.OK).body(loginUserUseCase.execute(userLogin.toEntity()));
     }
 }

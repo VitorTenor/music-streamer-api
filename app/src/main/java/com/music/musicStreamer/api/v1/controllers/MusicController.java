@@ -1,5 +1,6 @@
 package com.music.musicStreamer.api.v1.controllers;
 
+import com.music.musicStreamer.api.v1.models.dtos.AddMusicDTO;
 import com.music.musicStreamer.entities.music.Music;
 import com.music.musicStreamer.entities.music.MusicDownload;
 import com.music.musicStreamer.entities.music.MusicRequest;
@@ -31,13 +32,8 @@ public class MusicController {
 
     @ApiOperation(value = "Upload music")
     @PostMapping("")
-    public ResponseEntity<Object> uploadMusic(@RequestParam(name = "music")MultipartFile music,
-                                              @RequestParam(name = "name") String name,
-                                              @RequestParam(name = "artist") String artist,
-                                              @RequestParam(name = "album") String album,
-                                              @RequestParam(name = "genre") String genre) throws IOException {
-        MusicRequest musicRequest = new MusicRequest(name, artist, album, genre, music.getBytes());
-        return ResponseEntity.status(HttpStatus.OK).body(uploadMusicUseCase.execute(musicRequest));
+    public ResponseEntity<Music> uploadMusic(@ModelAttribute AddMusicDTO addMusicDTO) throws Exception {
+        return ResponseEntity.status(HttpStatus.OK).body(uploadMusicUseCase.execute(addMusicDTO.toEntity()));
     }
 
     @ApiOperation(value = "Get all musics")

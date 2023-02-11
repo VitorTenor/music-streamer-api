@@ -12,5 +12,5 @@ public class UserRegisterDTO {
     private String name;
     private String email;
     private String password;
-    public UserRequest toRequest() { return new UserRequest(name, email, password);}
+    public UserRequest toEntity() { return new UserRequest(name, email, password);}
 }
