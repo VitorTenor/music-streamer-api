@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -39,6 +40,7 @@ public class MusicClient implements MusicGateway {
 
 
     @Override
+    @Transactional
     public Music saveMusic(MusicRequest musicRequest) {
         validateMusic(musicRequest);
         try {
@@ -88,6 +90,7 @@ public class MusicClient implements MusicGateway {
     }
 
     @Override
+    @Transactional
     public String deleteMusicById(int id) {
         MusicModel musicModel = musicRepository.findById(id).orElseThrow(() -> new MusicException("Music not found"));
         try {

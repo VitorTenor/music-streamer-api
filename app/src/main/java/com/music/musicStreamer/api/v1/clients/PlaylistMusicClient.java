@@ -11,6 +11,7 @@ import com.music.musicStreamer.usecases.image.GetImageByMusicIdUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +23,7 @@ public class PlaylistMusicClient implements PlaylistMusicGateway {
     private final MusicRepository musicRepository;
     private final GetImageByMusicIdUseCase getImageByMusicIdUseCase;
     @Override
+    @Transactional
     public Boolean deleteMusicFromPlaylist(int id) {
         try {
             List<PlaylistMusicModel> playlistMusic = playlistMusicRepository.findByMusicId(id);

@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -30,6 +31,7 @@ public class ImageClient implements ImageGateway {
         private final MusicRepository musicRepository;
 
         @Override
+        @Transactional
         public Image saveImage(ImageRequest imageRequest) {
                 validateImage(imageRequest);
                 try {
@@ -70,6 +72,7 @@ public class ImageClient implements ImageGateway {
                 return new Image(imageModel.getMusicId(), imageModel.getPathName(),IMAGE_URL + imageModel.getPathName());
         }
         @Override
+        @Transactional
         public Boolean deleteImageByMusicId(int id) {
                 ImageModel imageModel = imageRepository.findByMusicId(id);
                 if (imageModel == null) throw new ImageException( "Image not found");

@@ -13,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import com.music.musicStreamer.domain.models.UserModel;
 
+import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.Optional;
 import java.util.regex.Pattern;
@@ -26,6 +27,7 @@ public class UserClient implements UserGateway {
     private final String REGEX_EMAIL = "^[\\w-\\+]+(\\.[\\w]+)*@[\\w-]+(\\.[\\w]+)*(\\.[a-z]{2,})$";;
 
     @Override
+    @Transactional
     public User createUser(UserRequest userRequest) {
         validateUser(userRequest);
         UserModel createdUser = this.userRepository.save(toModel(userRequest));
@@ -50,20 +52,21 @@ public class UserClient implements UserGateway {
         return userModel;
     }
     private void validateUser(UserRequest userRequest) {
+        validateUserEmail(userRequest.getEmail());
         if (userRequest.getName().isBlank()) throw new UserException("Name is required");
-        if (userRequest.getEmail().isBlank()) throw new UserException("Email is required");
-        Pattern pattern = Pattern.compile(REGEX_EMAIL);
-        if (!pattern.matcher(userRequest.getEmail()).matches()) throw new UserException("Email is invalid");
         if (userRequest.getPassword().isBlank()) throw new UserException("Password is required");
         if (userRequest.getPassword().length() < 6) throw new UserException("Password must be at least 6 characters");
         Optional<UserModel> user = this.userRepository.findByEmail(userRequest.getEmail());
-        if (user.isPresent())  throw new UserException("User already exists") ;
+        if (user.isPresent())  throw new UserException("User already exists");
     }
     private UserModel validateUserLogin(UserAuthRequest userAuthRequest) {
-        if (userAuthRequest.getEmail().isBlank()) throw new UserException("Email is required");
+        validateUserEmail(userAuthRequest.getEmail());
         if (userAuthRequest.getPassword().isBlank()) throw new UserException("Password is required");
-        Pattern pattern = Pattern.compile(REGEX_EMAIL);
-        if (!pattern.matcher(userAuthRequest.getEmail()).matches()) throw new UserException("Email is invalid");
         return this.userRepository.findByEmail(userAuthRequest.getEmail()).orElseThrow(() -> new UserException("User not found"));
+    }
+    private void validateUserEmail(String email) {
+        if (email.isBlank()) throw new UserException("Email is required");
+        Pattern pattern = Pattern.compile(REGEX_EMAIL);
+        if (!pattern.matcher(email).matches()) throw new UserException("Email is invalid");
     }
 }

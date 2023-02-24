@@ -20,6 +20,7 @@ import com.music.musicStreamer.usecases.playlistMusic.GetMusicByPlaylistIdUseCas
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -34,6 +35,7 @@ public class PlaylistClient implements PlaylistGateway {
     private final GetMusicByPlaylistIdUseCase getMusicByPlaylistIdUseCase;
 
     @Override
+    @Transactional
     public Playlist createPlaylist(PlaylistRequest playlistRequest) {
         validatePlaylist(playlistRequest);
         PlaylistModel playlistCreated = new PlaylistModel(playlistRequest.getName(), playlistRequest.getUserId(), new Date(), new Date());
@@ -46,6 +48,7 @@ public class PlaylistClient implements PlaylistGateway {
     }
 
     @Override
+    @Transactional
     public String addMusicToPlaylist(MusicPlaylistRequest musicPlaylistRequest) {
         if (!playlistRepository.existsById(musicPlaylistRequest.getPlaylistId())) throw new PlaylistException("Playlist not found");
         if (!musicRepository.existsById(musicPlaylistRequest.getMusicId())) throw new MusicException("Music not found");
@@ -67,15 +70,9 @@ public class PlaylistClient implements PlaylistGateway {
 
     @Override
     public List<Playlist> getPlaylistByUserId(int id) {
-        List<PlaylistModel> playlistModel = playlistRepository.findAllByUserId(id);
-        if (playlistModel.isEmpty()) throw new PlaylistException("Playlist not found");
+        if (!userRepository.existsById(id)) throw new UserException("User not found");
         try {
-            List<Playlist> playlists = new ArrayList<>();
-            for (PlaylistModel playlist : playlistModel) {
-                Playlist playlistMusic = new Playlist(playlist.getName(), playlist.getUserId(), playlist.getId());
-                playlists.add(playlistMusic);
-            }
-            return playlists;
+            return playlistRepository.findAllByUserId(id).stream().map(playlist -> new Playlist(playlist.getName(), playlist.getUserId(), playlist.getId())).toList();
         } catch (Exception e) {
             throw new PlaylistException("Error while getting playlist by user id");
         }

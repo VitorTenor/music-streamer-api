@@ -44,7 +44,8 @@ public class PlaylistController {
     @ApiOperation(value = "Get all playlists from user")
     @GetMapping("/all/{id}")
     public ResponseEntity<Object> getAllPlaylistsByUserId(@PathVariable("id") int userId) {
-            return ResponseEntity.status(HttpStatus.OK).body(getPlaylistByUserIdUseCase.execute(userId));
+        Object playlists = getPlaylistByUserIdUseCase.execute(userId);
+        return ResponseEntity.status(HttpStatus.OK).body(playlists);
     }
 
 }

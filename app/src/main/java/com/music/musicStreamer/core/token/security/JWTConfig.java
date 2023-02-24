@@ -32,6 +32,7 @@ public class JWTConfig extends WebSecurityConfigurerAdapter {
                         "/music-streamer/v1/musics/play/**",
                         "/music-streamer/v1/users/**",
                         "/swagger-ui/**",
+                        "/**",
                         "/swagger-resources/**",
                         "/v2/**")
                 .permitAll()

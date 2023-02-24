@@ -29,7 +29,7 @@ public class MusicController {
     private final GetAllMusicsUseCase getAllMusicsUseCase;
 
     @ApiOperation(value = "Upload music")
-    @PostMapping("")
+    @PostMapping("/upload")
     public ResponseEntity<Music> uploadMusic(@ModelAttribute AddMusicDTO addMusicDTO) throws Exception {
         return ResponseEntity.status(HttpStatus.OK).body(uploadMusicUseCase.execute(addMusicDTO.toEntity()));
     }
