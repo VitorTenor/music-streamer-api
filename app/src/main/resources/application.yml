@@ -9,7 +9,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/musicStreamer
     username: root
-    password: facadojoao@ie
+    password: mariadb
   jpa:
     generate-ddl: true
     hibernate:
@@ -27,7 +27,7 @@ spring:
     sql-migration-suffixes: .sql
     url: jdbc:mysql://localhost:3306/musicStreamer?createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true
     user: root
-    password: facadojoao@ie
+    password: mariadb
   servlet:
     multipart:
       max-file-size: 10MB
