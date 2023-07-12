@@ -1,16 +1,17 @@
 package com.music.musicStreamer.api.v1.clients;
 
+import com.music.musicStreamer.enumerators.ImageErrorMessage;
 import com.music.musicStreamer.api.v1.models.ImageModel;
 import com.music.musicStreamer.api.v1.repositories.ImageRepository;
-import com.music.musicStreamer.api.v1.repositories.MusicRepository;
 import com.music.musicStreamer.core.GenerateName;
+import com.music.musicStreamer.core.utils.Validators;
 import com.music.musicStreamer.entities.image.Image;
 import com.music.musicStreamer.entities.image.ImageRequest;
 import com.music.musicStreamer.exceptions.ImageException;
-import com.music.musicStreamer.exceptions.MusicException;
 import com.music.musicStreamer.gateways.ImageGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
@@ -23,71 +24,99 @@ import java.util.Date;
 @Component
 @RequiredArgsConstructor
 public class ImageClient implements ImageGateway {
-        private @Value("${storage.image.path}") String IMAGE_PATH;
-        private @Value("${storage.image.mediaType}") String IMAGE_TYPE;
-        private @Value("${storage.image.url}") String IMAGE_URL;
+        private static @Value("${storage.image.path}") String IMAGE_PATH;
+        private static @Value("${storage.image.url}") String IMAGE_URL;
+        private static final String IMAGE_TYPE = MediaType.IMAGE_JPEG_VALUE;
         private final GenerateName generateName;
         private final ImageRepository imageRepository;
-        private final MusicRepository musicRepository;
+        private final Validators validators;
 
         @Override
         @Transactional
         public Image saveImage(ImageRequest imageRequest) {
-                validateImage(imageRequest);
-                try {
-                        ImageModel imageModel = new ImageModel();
-                        String newFileName = generateName.randomName();
-                        Path path = Paths.get(IMAGE_PATH + newFileName + IMAGE_TYPE);
-                        Files.write(path, imageRequest.getImage());
-                        imageModel.setPathName(newFileName + IMAGE_TYPE);
-                        imageModel.setMusicId(imageRequest.getId());
-                        imageModel.setCreated_at(new Date());
-                        imageModel.setUpdated_at(new Date());
-                        ImageModel imageModel01 = imageRepository.save(imageModel);
-                        return imageModel01.toEntity(IMAGE_URL);
-                } catch (Exception e) {
-                        throw new ImageException("Error to save image");
-                }
-        }
+                validators.validateImage(imageRequest);
 
-        private void validateImage(ImageRequest imageRequest) {
-                if (imageRequest.getImage() == null) throw new ImageException("Image is required");
-                if (imageRequest.getId() == 0) throw new ImageException("Id is required");
-                if (!musicRepository.existsById(imageRequest.getId())) throw new MusicException("Music not found");
-        }
+                String newFileName = generateName.randomName();
 
+                saveInStorage(imageRequest, newFileName);
+
+                ImageModel imageModel =
+                        ImageModel
+                                .builder()
+                                .pathName(newFileName + IMAGE_TYPE)
+                                .musicId(imageRequest.getId())
+                                .created_at(new Date())
+                                .updated_at(new Date())
+                                .build();
+
+                return saveInDatabase(imageModel).toEntity(IMAGE_URL);
+        }
 
         @Override
         public byte[] getImage(String getPathName) {
                 try {
                         return Files.readAllBytes(Paths.get(IMAGE_PATH + getPathName));
                 } catch (IOException e) {
-                        throw new ImageException( "Error to get image");
+                        throw new ImageException(ImageErrorMessage.READ_ERROR);
                 }
         }
+
         @Override
         public Image getImageById(int id) {
-                ImageModel imageModel = imageRepository.findByMusicId(id);
-                if (imageModel == null) throw new ImageException( "Image not found");
+                ImageModel imageModel = findByMusicId(id);
+                if (imageModel == null) throw new ImageException(ImageErrorMessage.NOT_FOUND);
+
                 return new Image(imageModel.getMusicId(), imageModel.getPathName(),IMAGE_URL + imageModel.getPathName());
         }
+
         @Override
         @Transactional
         public Boolean deleteImageByMusicId(int id) {
-                ImageModel imageModel = imageRepository.findByMusicId(id);
-                if (imageModel == null) throw new ImageException( "Image not found");
-                try {
-                        Files.delete(Paths.get(IMAGE_PATH + imageModel.getPathName()));
-                        imageRepository.deleteById(imageModel.getId());
-                        return true;
-                } catch (IOException e) {
-                        throw new ImageException( "Error to delete image");
-                }
+                ImageModel imageModel = findByMusicId(id);
+                validators.validateIfImageIsNotNull(imageModel);
+
+                deleteInStorage(imageModel.getPathName());
+                deleteInDatabaseById(imageModel.getId());
+                return true;
         }
+
+
+
         @Override
         public Image getImageByMusicId(int id) {
-                ImageModel imageModel = imageRepository.findByMusicId(id);
-                if (imageModel == null) throw new ImageException( "Image not found");
+                ImageModel imageModel = findByMusicId(id);
+                validators.validateIfImageIsNotNull(imageModel);
+
                 return new Image(imageModel.getMusicId(), imageModel.getPathName(),IMAGE_URL + imageModel.getPathName());
         }
+
+        private ImageModel findByMusicId(int id) {
+                return imageRepository.findByMusicId(id);
+        }
+
+        private void deleteInDatabaseById(int id) {
+                imageRepository.deleteById(id);
+        }
+
+        private void deleteInStorage(String getPathName) {
+                try {
+                        Files.delete(Paths.get(IMAGE_PATH + getPathName));
+                } catch (IOException e) {
+                        throw new ImageException(ImageErrorMessage.DELETE_STORAGE);
+                }
+        }
+
+        private ImageModel saveInDatabase(ImageModel imageModel) {
+                return imageRepository.save(imageModel);
+        }
+
+        private void saveInStorage(ImageRequest imageRequest, String newFileName) {
+                Path path = Paths.get(IMAGE_PATH + newFileName + IMAGE_TYPE);
+                try {
+                        Files.write(path, imageRequest.getImage());
+                } catch (IOException e) {
+                        throw new ImageException(ImageErrorMessage.SAVE_STORAGE);
+                }
+        }
+
 }

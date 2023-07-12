@@ -1,6 +1,7 @@
 package com.music.musicStreamer.api.v1.models;
 
 import com.music.musicStreamer.entities.image.Image;
+import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,6 +14,7 @@ import java.util.Date;
 @Entity
 @Setter
 @Getter
+@Builder
 @Table(name = "images")
 public class ImageModel {
     @Id
@@ -26,6 +28,10 @@ public class ImageModel {
     private Date created_at;
     @Column(nullable = false, length = 100)
     private Date updated_at;
+
+    public ImageModel() {
+    }
+
     public Image toEntity(String url) {
         return  new Image( id,  pathName, url + pathName);
     }
