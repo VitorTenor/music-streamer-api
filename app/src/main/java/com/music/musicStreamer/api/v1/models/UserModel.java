@@ -1,4 +1,4 @@
-package com.music.musicStreamer.domain.models;
+package com.music.musicStreamer.api.v1.models;
 
 import com.music.musicStreamer.entities.user.User;
 import lombok.Data;
@@ -28,9 +28,5 @@ public class UserModel implements Serializable {
     private Date created_at;
     @Column(nullable = false, length = 100)
     private Date updated_at;
-
-    public User toEntity() {
-        return new User(id, name, email);
-    }
 }
 

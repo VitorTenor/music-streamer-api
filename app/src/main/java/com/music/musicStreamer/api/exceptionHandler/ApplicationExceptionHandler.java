@@ -86,15 +86,6 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
         return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
     }
 
-    @ExceptionHandler(PlaylistMusicException.class)
-    public ResponseEntity<Object> handlePlaylistMusicException(PlaylistMusicException ex, WebRequest request) {
-        HttpStatus status = HttpStatus.BAD_REQUEST;
-        ProblemType problemType = ProblemType.PLAYLIST_MUSIC_ERROR;
-        String detail = ex.getMessage();
-        Problem problem = createProblemBuilder(status, problemType, detail);
-        return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
-    }
-
     private Problem createProblemBuilder(HttpStatus status, ProblemType problemType, String detail) {
         return Problem.builder()
                 .timestamp(LocalDateTime.now())
