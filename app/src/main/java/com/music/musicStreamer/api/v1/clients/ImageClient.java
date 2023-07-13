@@ -25,8 +25,8 @@ import java.util.Date;
 @RequiredArgsConstructor
 public class ImageClient implements ImageGateway {
         private static @Value("${storage.image.path}") String IMAGE_PATH;
+        private static @Value("${storage.image.mediaType}") String IMAGE_TYPE;
         private static @Value("${storage.image.url}") String IMAGE_URL;
-        private static final String IMAGE_TYPE = MediaType.IMAGE_JPEG_VALUE;
         private final GenerateName generateName;
         private final ImageRepository imageRepository;
         private final Validators validators;
