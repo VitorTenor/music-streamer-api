@@ -1,8 +1,13 @@
 package com.music.musicStreamer.core.utils.validators;
 
+import com.music.musicStreamer.api.v1.models.MusicModel;
 import com.music.musicStreamer.entities.music.MusicRequest;
 import com.music.musicStreamer.exceptions.MusicException;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
+@Component
+@RequiredArgsConstructor
 public class MusicValidator {
     public void validateMusic(MusicRequest musicRequest) {
         if(musicRequest.getName().isBlank()) throw new MusicException("Name is required");
@@ -10,5 +15,9 @@ public class MusicValidator {
         if(musicRequest.getAlbum().isBlank()) throw new MusicException("Album is required");
         if(musicRequest.getGenre().isBlank()) throw new MusicException("Genre is required");
         if(musicRequest.getMusic().length == 0 || musicRequest.getMusic() == null) throw new MusicException("Music is required");
+    }
+
+    public void validateIfImageIsNotNull(MusicModel musicModel) {
+        if (musicModel == null) throw new MusicException("Music not found");
     }
 }

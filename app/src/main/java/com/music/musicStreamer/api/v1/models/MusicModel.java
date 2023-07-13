@@ -42,8 +42,4 @@ public class MusicModel {
 
     public MusicModel() {
     }
-
-    public Music toEntity() {
-        return new Music(id, name, artist, album,genre, null, pathName);
-    }
 }

@@ -47,7 +47,7 @@ public class ImageClient implements ImageGateway {
 
         @Override
         public byte[] getImageByFileName(String fileName) {
-                return imageFiles.getInFiles(fileName);
+                return imageFiles.getBytesInFiles(fileName);
         }
 
         @Override

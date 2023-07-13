@@ -7,10 +7,13 @@ import com.music.musicStreamer.exceptions.ImageException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 @Component
 public class ImageFiles implements FilesBase<ImageRequest> {
@@ -38,11 +41,26 @@ public class ImageFiles implements FilesBase<ImageRequest> {
     }
 
     @Override
-    public byte[] getInFiles(String fileName) {
+    public byte[] getBytesInFiles(String fileName) {
         try {
             return Files.readAllBytes(Paths.get(IMAGE_PATH + fileName));
         } catch (IOException e) {
             throw new ImageException(ImageErrorMessage.READ_ERROR);
         }
+    }
+
+    @Override
+    public List<?> getAllInFiles() {
+        return null;
+    }
+
+    @Override
+    public File getFile(String fileName) {
+        return new File(IMAGE_PATH + fileName);
+    }
+
+    @Override
+    public InputStream getInFilesStream(String fileName) {
+        return null;
     }
 }
