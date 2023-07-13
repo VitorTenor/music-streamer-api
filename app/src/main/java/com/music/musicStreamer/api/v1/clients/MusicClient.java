@@ -91,7 +91,7 @@ public class MusicClient implements MusicGateway {
 
     private MusicModel findAndValidateByMusicId(int id) {
         MusicModel musicModel = findMusicById(id);
-        musicValidator.validateIfImageIsNotNull(musicModel);
+        musicValidator.validateIfMusicIsNotNull(musicModel);
         return musicModel;
     }
 

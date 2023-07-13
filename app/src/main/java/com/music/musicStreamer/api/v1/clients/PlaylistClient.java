@@ -2,21 +2,20 @@ package com.music.musicStreamer.api.v1.clients;
 
 import com.music.musicStreamer.api.v1.models.PlaylistModel;
 import com.music.musicStreamer.api.v1.models.PlaylistMusicModel;
-
 import com.music.musicStreamer.api.v1.repositories.MusicRepository;
 import com.music.musicStreamer.api.v1.repositories.PlaylistMusicRepository;
 import com.music.musicStreamer.api.v1.repositories.PlaylistRepository;
 import com.music.musicStreamer.api.v1.repositories.UserRepository;
+import com.music.musicStreamer.core.utils.factories.PlaylistFactory;
+import com.music.musicStreamer.core.utils.validators.PlaylistValidator;
+import com.music.musicStreamer.core.utils.validators.UserValidator;
 import com.music.musicStreamer.entities.music.Music;
 import com.music.musicStreamer.entities.playlist.MusicPlaylistRequest;
 import com.music.musicStreamer.entities.playlist.Playlist;
 import com.music.musicStreamer.entities.playlist.PlaylistMusic;
 import com.music.musicStreamer.entities.playlist.PlaylistRequest;
-import com.music.musicStreamer.enumerators.MusicMessages;
 import com.music.musicStreamer.enumerators.PlaylistMessages;
-import com.music.musicStreamer.exceptions.MusicException;
 import com.music.musicStreamer.exceptions.PlaylistException;
-import com.music.musicStreamer.exceptions.UserException;
 import com.music.musicStreamer.gateways.PlaylistGateway;
 import com.music.musicStreamer.usecases.playlistMusic.GetMusicByPlaylistIdUseCase;
 import lombok.RequiredArgsConstructor;
@@ -29,73 +28,55 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class PlaylistClient implements PlaylistGateway {
+public class PlaylistClient implements PlaylistGateway  {
+    private final UserValidator userValidator;
+    private final PlaylistFactory playlistFactory;
+    private final PlaylistValidator playlistValidator;
     private final PlaylistRepository playlistRepository;
     private final PlaylistMusicRepository playlistMusicRepository;
-    private final UserRepository userRepository;
-    private final MusicRepository musicRepository;
     private final GetMusicByPlaylistIdUseCase getMusicByPlaylistIdUseCase;
 
     @Override
     @Transactional
     public Playlist createPlaylist(PlaylistRequest playlistRequest) {
-        validatePlaylist(playlistRequest);
-        PlaylistModel playlistCreated = new PlaylistModel(playlistRequest.getName(), playlistRequest.getUserId(), new Date(), new Date());
-        try {
-            playlistRepository.save(playlistCreated);
-            return new Playlist(playlistCreated.getName(), playlistCreated.getUserId(), playlistCreated.getId());
-        } catch (Exception e) {
-            throw new PlaylistException(PlaylistMessages.CREATE_PLAYLIST_ERROR);
-        }
+        playlistValidator.validatePlaylist(playlistRequest);
+        PlaylistModel playlistCreated = playlistFactory.createPlaylistModel(playlistRequest);
+
+        save(playlistCreated);
+
+        return playlistFactory.createPlaylist(playlistCreated);
     }
 
     @Override
     @Transactional
     public String addMusicToPlaylist(MusicPlaylistRequest musicPlaylistRequest) {
-        if (!playlistRepository.existsById(musicPlaylistRequest.getPlaylistId())) throw new PlaylistException(PlaylistMessages.NOT_FOUND);
-        if (!musicRepository.existsById(musicPlaylistRequest.getMusicId())) throw new MusicException(MusicMessages.NOT_FOUND);
-        if (!userRepository.existsById(musicPlaylistRequest.getUserId())) throw new UserException("User not found");
-        try {
-            PlaylistMusicModel playlistMusicModel = new PlaylistMusicModel(musicPlaylistRequest.getPlaylistId(), musicPlaylistRequest.getUserId(), musicPlaylistRequest.getMusicId(), new Date(), new Date());
-            playlistMusicRepository.save(playlistMusicModel);
-            return PlaylistMessages.MUSIC_ADDED.getMessage();
-        } catch (Exception e) {
-            throw new PlaylistException(PlaylistMessages.MUSIC_ADDED_ERROR);
-        }
+        playlistValidator.validateMusicPlaylist(musicPlaylistRequest);
+        PlaylistMusicModel playlistMusicModel = playlistFactory.createPlaylistMusicModel(musicPlaylistRequest);
+
+        playlistMusicRepository.save(playlistMusicModel);
+
+        return PlaylistMessages.MUSIC_ADDED.getMessage();
     }
 
     @Override
     public PlaylistMusic getPlaylistById(int id) {
         PlaylistModel playlistModel = playlistRepository.findById(id).orElseThrow(() -> new PlaylistException(PlaylistMessages.NOT_FOUND));
+
         return new PlaylistMusic(playlistModel.getId(), playlistModel.getName(), playlistModel.getUserId(), getMusicByList(id));
     }
 
     @Override
     public List<Playlist> getPlaylistByUserId(int id) {
-        if (!userRepository.existsById(id)) throw new UserException("User not found");
-        try {
-            return playlistRepository.findAllByUserId(id).stream().map(playlist -> new Playlist(playlist.getName(), playlist.getUserId(), playlist.getId())).toList();
-        } catch (Exception e) {
-            throw new PlaylistException(PlaylistMessages.GET_PLAYLIST_BY_USER_ID_ERROR);
-        }
+        userValidator.validateIfExistById(id);
+        return playlistRepository.findAllByUserId(id).stream().map(playlistFactory::createPlaylist).toList();
     }
 
     private List<Music> getMusicByList(int playlistId) {
-        try {
-            List<Music> music1 = new ArrayList<>();
-            for (Music music : getMusicByPlaylistIdUseCase.execute(playlistId)) {
-                Music music2 = new Music(music.getId(), music.getName(), music.getArtist(), music.getAlbum(), music.getGenre(), music.getImage(), music.getPath_name());
-                music1.add(music2);
-            }
-            return music1;
-        }catch (Exception e){
-            throw new PlaylistException(PlaylistMessages.GET_PLAYLIST_BY_PLAYLIST_ID_ERROR);
-        }
+        return new ArrayList<>(getMusicByPlaylistIdUseCase.execute(playlistId));
     }
 
-    private void validatePlaylist(PlaylistRequest playlistRequest) {
-        if (playlistRequest.getName().isEmpty()) throw new PlaylistException(PlaylistMessages.NAME_REQUIRED);
-        if (playlistRequest.validateUserId()) throw new PlaylistException(PlaylistMessages.USER_ID_REQUIRED);
+    private void save(PlaylistModel playlist) {
+        playlistRepository.save(playlist);
     }
 }
 
