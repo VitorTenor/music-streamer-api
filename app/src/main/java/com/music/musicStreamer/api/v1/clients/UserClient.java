@@ -24,7 +24,7 @@ import java.util.regex.Pattern;
 public class UserClient implements UserGateway {
     private final UserRepository userRepository;
     private final Auth auth;
-    private final String REGEX_EMAIL = "^[\\w-\\+]+(\\.[\\w]+)*@[\\w-]+(\\.[\\w]+)*(\\.[a-z]{2,})$";;
+    private final String REGEX_EMAIL = "^[\\w-\\+]+(\\.[\\w]+)*@[\\w-]+(\\.[\\w]+)*(\\.[a-z]{2,})$";
 
     @Override
     @Transactional
