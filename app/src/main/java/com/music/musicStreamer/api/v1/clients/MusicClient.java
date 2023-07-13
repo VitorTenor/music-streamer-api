@@ -3,6 +3,8 @@ package com.music.musicStreamer.api.v1.clients;
 import com.music.musicStreamer.api.v1.models.MusicModel;
 import com.music.musicStreamer.api.v1.repositories.MusicRepository;
 import com.music.musicStreamer.core.GenerateName;
+import com.music.musicStreamer.core.utils.validators.ImageValidator;
+import com.music.musicStreamer.core.utils.validators.MusicValidator;
 import com.music.musicStreamer.entities.music.Music;
 import com.music.musicStreamer.entities.music.MusicDownload;
 import com.music.musicStreamer.entities.music.MusicRequest;
@@ -30,29 +32,42 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class MusicClient implements MusicGateway {
+    private final MusicValidator musicValidator;
     private final GenerateName generateName;
     private final MusicRepository musicRepository;
     private final GetImageByMusicIdUseCase getImageByMusicIdUseCase;
     private final DeleteImageByMusicIdUseCase deleteImageByMusicIdUseCase;
     private final DeleteMusicFromPlaylistUseCase deleteMusicFromPlaylistUseCase;
-    private @Value("${storage.music.path}") String MUSIC_PATH;
-    private @Value("${storage.music.mediaType}") String MUSIC_TYPE;
+    private static @Value("${storage.music.mediaType}") String MUSIC_TYPE;
+    private static @Value("${storage.music.path}") String MUSIC_PATH;
 
 
     @Override
     @Transactional
     public Music saveMusic(MusicRequest musicRequest) {
-        validateMusic(musicRequest);
+        musicValidator.validateMusic(musicRequest);
+
+        String newFileName = generateName.randomName();
+
+        saveInStorage(musicRequest, newFileName);
+
+        return saveInDatabase(toModel(musicRequest, newFileName)).toEntity();
+    }
+
+    private void saveInStorage(MusicRequest musicRequest, String newFileName) {
         try {
-            String newFileName = generateName.randomName();
             Path path = Path.of(MUSIC_PATH + newFileName + MUSIC_TYPE);
             Files.write(path, musicRequest.getMusic());
-            MusicModel musicModel = musicRepository.save(toModel(musicRequest, newFileName));
-            return musicModel.toEntity();
         } catch (IOException e) {
             throw new MusicException("Error to save music");
         }
     }
+
+    private MusicModel saveInDatabase(MusicModel music) {
+        return musicRepository.save(music);
+    }
+
+
     @Override
     public List<Music> getAllMusics() {
         try {
@@ -104,13 +119,7 @@ public class MusicClient implements MusicGateway {
         }
     }
 
-    private void validateMusic(MusicRequest musicRequest) {
-        if(musicRequest.getName().isBlank()) throw new MusicException("Name is required");
-        if(musicRequest.getArtist().isBlank()) throw new MusicException("Artist is required");
-        if(musicRequest.getAlbum().isBlank()) throw new MusicException("Album is required");
-        if(musicRequest.getGenre().isBlank()) throw new MusicException("Genre is required");
-        if(musicRequest.getMusic().length == 0 || musicRequest.getMusic() == null) throw new MusicException("Music is required");
-    }
+
 
     private Music toMusic(MusicModel musicModel) {
         return new Music(

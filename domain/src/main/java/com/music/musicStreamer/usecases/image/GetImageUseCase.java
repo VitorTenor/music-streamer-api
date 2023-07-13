@@ -13,6 +13,6 @@ public class GetImageUseCase {
     }
 
     public byte[] execute(String imageName) {
-        return imageGateway.getImage(imageName);
+        return imageGateway.getImageByFileName(imageName);
     }
 }

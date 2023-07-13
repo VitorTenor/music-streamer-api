@@ -1,121 +1,84 @@
 package com.music.musicStreamer.api.v1.clients;
 
-import com.music.musicStreamer.enumerators.ImageErrorMessage;
 import com.music.musicStreamer.api.v1.models.ImageModel;
 import com.music.musicStreamer.api.v1.repositories.ImageRepository;
 import com.music.musicStreamer.core.GenerateName;
+import com.music.musicStreamer.core.storage.impl.ImageFiles;
+import com.music.musicStreamer.core.utils.factories.ImageFactory;
 import com.music.musicStreamer.core.utils.validators.ImageValidator;
 import com.music.musicStreamer.entities.image.Image;
 import com.music.musicStreamer.entities.image.ImageRequest;
-import com.music.musicStreamer.exceptions.ImageException;
 import com.music.musicStreamer.gateways.ImageGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Date;
 
 @Component
 @RequiredArgsConstructor
 public class ImageClient implements ImageGateway {
-        private static @Value("${storage.image.path}") String IMAGE_PATH;
-        private static @Value("${storage.image.mediaType}") String IMAGE_TYPE;
         private static @Value("${storage.image.url}") String IMAGE_URL;
+
         private final GenerateName generateName;
         private final ImageRepository imageRepository;
         private final ImageValidator imageValidator;
+        private final ImageFactory imageFactory;
+        private final ImageFiles imageFiles;
 
         @Override
         @Transactional
         public Image saveImage(ImageRequest imageRequest) {
                 imageValidator.validateImage(imageRequest);
-
                 String newFileName = generateName.randomName();
-
-                saveInStorage(imageRequest, newFileName);
-
-                ImageModel imageModel =
-                        ImageModel
-                                .builder()
-                                .pathName(newFileName + IMAGE_TYPE)
-                                .musicId(imageRequest.getId())
-                                .created_at(new Date())
-                                .updated_at(new Date())
-                                .build();
-
-                return saveInDatabase(imageModel).toEntity(IMAGE_URL);
-        }
-
-        @Override
-        public byte[] getImage(String getPathName) {
-                try {
-                        return Files.readAllBytes(Paths.get(IMAGE_PATH + getPathName));
-                } catch (IOException e) {
-                        throw new ImageException(ImageErrorMessage.READ_ERROR);
-                }
-        }
-
-        @Override
-        public Image getImageById(int id) {
-                ImageModel imageModel = findByMusicId(id);
-                if (imageModel == null) throw new ImageException(ImageErrorMessage.NOT_FOUND);
-
-                return new Image(imageModel.getMusicId(), imageModel.getPathName(),IMAGE_URL + imageModel.getPathName());
+                imageFiles.saveInFiles(imageRequest, newFileName);
+                ImageModel imageModel = saveInDatabase(imageFactory.createImageModel(imageRequest, newFileName));
+                return imageFactory.createImage(imageModel);
         }
 
         @Override
         @Transactional
         public Boolean deleteImageByMusicId(int id) {
-                ImageModel imageModel = findByMusicId(id);
-                imageValidator.validateIfImageIsNotNull(imageModel);
-
-                deleteInStorage(imageModel.getPathName());
-                deleteInDatabaseById(imageModel.getId());
+                ImageModel imageModel = findAndValidateByMusicId(id);
+                imageFiles.deleteInFiles(imageModel.getPathName());
+                deleteInDatabaseByImageId(imageModel.getId());
                 return true;
         }
 
+        @Override
+        public byte[] getImageByFileName(String fileName) {
+                return imageFiles.getInFiles(fileName);
+        }
 
+        @Override
+        public Image getImageById(int id) {
+                ImageModel imageModel = findAndValidateByImageId(id);
+                return imageFactory.createImage(imageModel);
+        }
 
         @Override
         public Image getImageByMusicId(int id) {
-                ImageModel imageModel = findByMusicId(id);
-                imageValidator.validateIfImageIsNotNull(imageModel);
-
-                return new Image(imageModel.getMusicId(), imageModel.getPathName(),IMAGE_URL + imageModel.getPathName());
+                ImageModel imageModel = findAndValidateByMusicId(id);
+                return imageFactory.createImage(imageModel);
         }
 
-        private ImageModel findByMusicId(int id) {
-                return imageRepository.findByMusicId(id);
-        }
-
-        private void deleteInDatabaseById(int id) {
+        private void deleteInDatabaseByImageId(int id) {
                 imageRepository.deleteById(id);
-        }
-
-        private void deleteInStorage(String getPathName) {
-                try {
-                        Files.delete(Paths.get(IMAGE_PATH + getPathName));
-                } catch (IOException e) {
-                        throw new ImageException(ImageErrorMessage.DELETE_STORAGE);
-                }
         }
 
         private ImageModel saveInDatabase(ImageModel imageModel) {
                 return imageRepository.save(imageModel);
         }
 
-        private void saveInStorage(ImageRequest imageRequest, String newFileName) {
-                Path path = Paths.get(IMAGE_PATH + newFileName + IMAGE_TYPE);
-                try {
-                        Files.write(path, imageRequest.getImage());
-                } catch (IOException e) {
-                        throw new ImageException(ImageErrorMessage.SAVE_STORAGE);
-                }
+        private ImageModel findAndValidateByMusicId(int id) {
+                ImageModel imageModel = imageRepository.findByMusicId(id);
+                imageValidator.validateIfImageIsNotNull(imageModel);
+                return imageModel;
         }
 
+        private ImageModel findAndValidateByImageId(int id) {
+                ImageModel imageModel = imageRepository.findByMusicId(id);
+                imageValidator.validateIfImageIsNotNull(imageModel);
+                return imageModel;
+        }
 }

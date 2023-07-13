@@ -6,7 +6,7 @@ import com.music.musicStreamer.entities.image.ImageRequest;
 
 public interface ImageGateway {
     public Image saveImage(ImageRequest imageRequest);
-    public byte[] getImage(String imageName);
+    public byte[] getImageByFileName(String imageName);
 
     public Image getImageById(int id);
     public Boolean deleteImageByMusicId(int id);
