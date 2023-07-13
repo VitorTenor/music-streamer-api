@@ -5,6 +5,7 @@ import com.music.musicStreamer.core.storage.FilesBase;
 import com.music.musicStreamer.core.utils.factories.MusicFactory;
 import com.music.musicStreamer.entities.music.Music;
 import com.music.musicStreamer.entities.music.MusicRequest;
+import com.music.musicStreamer.enumerators.MusicMessages;
 import com.music.musicStreamer.exceptions.MusicException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,7 +34,7 @@ public class MusicFiles implements FilesBase<MusicRequest> {
             Path path = Path.of(MUSIC_PATH + fileName + MUSIC_TYPE);
             Files.write(path, musicRequest.getMusic());
         } catch (IOException e) {
-            throw new MusicException("Error to save music");
+            throw new MusicException(MusicMessages.SAVE_STORAGE_ERROR);
         }
     }
 
@@ -42,13 +43,13 @@ public class MusicFiles implements FilesBase<MusicRequest> {
         try {
             Files.delete(Path.of(MUSIC_PATH + fileName));
         } catch (Exception e) {
-            throw new MusicException("Error to delete music");
+            throw new MusicException(MusicMessages.DELETE_STORAGE_ERROR);
         }
     }
 
     @Override
     public byte[] getBytesInFiles(String fileName) {
-      return new byte[0];
+      return null;
     }
 
     @Override
@@ -56,7 +57,7 @@ public class MusicFiles implements FilesBase<MusicRequest> {
         try {
             return musicFactory.createMusicList(musicRepository.findAll());
         } catch (Exception e) {
-            throw new MusicException("Error to get musics");
+            throw new MusicException(MusicMessages.GET_ERROR);
         }
     }
     @Override
@@ -65,7 +66,7 @@ public class MusicFiles implements FilesBase<MusicRequest> {
             File file = new File(MUSIC_PATH + fileName);
             return new InputStreamResource(new FileInputStream(file)).getInputStream();
         } catch (Exception e) {
-            throw new MusicException("Error to play music");
+            throw new MusicException(MusicMessages.PLAY_ERROR);
         }
     }
     @Override

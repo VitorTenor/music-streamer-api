@@ -2,7 +2,7 @@ package com.music.musicStreamer.core.storage.impl;
 
 import com.music.musicStreamer.core.storage.FilesBase;
 import com.music.musicStreamer.entities.image.ImageRequest;
-import com.music.musicStreamer.enumerators.ImageErrorMessage;
+import com.music.musicStreamer.enumerators.ImageMessages;
 import com.music.musicStreamer.exceptions.ImageException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -27,7 +27,7 @@ public class ImageFiles implements FilesBase<ImageRequest> {
         try {
             Files.write(path, imageRequest.getImage());
         } catch (IOException e) {
-            throw new ImageException(ImageErrorMessage.SAVE_STORAGE);
+            throw new ImageException(ImageMessages.SAVE_STORAGE_ERROR);
         }
     }
 
@@ -36,7 +36,7 @@ public class ImageFiles implements FilesBase<ImageRequest> {
         try {
             Files.delete(Paths.get(IMAGE_PATH + fileName));
         } catch (IOException e) {
-            throw new ImageException(ImageErrorMessage.DELETE_STORAGE);
+            throw new ImageException(ImageMessages.DELETE_STORAGE_ERROR);
         }
     }
 
@@ -45,7 +45,7 @@ public class ImageFiles implements FilesBase<ImageRequest> {
         try {
             return Files.readAllBytes(Paths.get(IMAGE_PATH + fileName));
         } catch (IOException e) {
-            throw new ImageException(ImageErrorMessage.READ_ERROR);
+            throw new ImageException(ImageMessages.READ_ERROR);
         }
     }
 

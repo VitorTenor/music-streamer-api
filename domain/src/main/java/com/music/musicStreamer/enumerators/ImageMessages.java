@@ -1,10 +1,10 @@
 package com.music.musicStreamer.enumerators;
 
-public enum ImageErrorMessage {
+public enum ImageMessages {
     NOT_FOUND("Image not found"),
     READ_ERROR("Error reading image"),
-    DELETE_STORAGE("Error deleting image in storage"),
-    SAVE_STORAGE("Error saving image in storage"),
+    DELETE_STORAGE_ERROR("Error deleting image in storage"),
+    SAVE_STORAGE_ERROR("Error saving image in storage"),
     IMAGE_IS_REQUIRED("Image is required"),
     ID_IS_REQUIRED("Image id is required");
 
@@ -14,7 +14,7 @@ public enum ImageErrorMessage {
 
     private final String message;
 
-    ImageErrorMessage(String message) {
+    ImageMessages(String message) {
         this.message = message;
     }
 }

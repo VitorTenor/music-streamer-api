@@ -12,6 +12,7 @@ import com.music.musicStreamer.entities.playlist.MusicPlaylistRequest;
 import com.music.musicStreamer.entities.playlist.Playlist;
 import com.music.musicStreamer.entities.playlist.PlaylistMusic;
 import com.music.musicStreamer.entities.playlist.PlaylistRequest;
+import com.music.musicStreamer.enumerators.MusicMessages;
 import com.music.musicStreamer.exceptions.MusicException;
 import com.music.musicStreamer.exceptions.PlaylistException;
 import com.music.musicStreamer.exceptions.UserException;
@@ -51,7 +52,7 @@ public class PlaylistClient implements PlaylistGateway {
     @Transactional
     public String addMusicToPlaylist(MusicPlaylistRequest musicPlaylistRequest) {
         if (!playlistRepository.existsById(musicPlaylistRequest.getPlaylistId())) throw new PlaylistException("Playlist not found");
-        if (!musicRepository.existsById(musicPlaylistRequest.getMusicId())) throw new MusicException("Music not found");
+        if (!musicRepository.existsById(musicPlaylistRequest.getMusicId())) throw new MusicException(MusicMessages.NOT_FOUND);
         if (!userRepository.existsById(musicPlaylistRequest.getUserId())) throw new UserException("User not found");
         try {
             PlaylistMusicModel playlistMusicModel = new PlaylistMusicModel(musicPlaylistRequest.getPlaylistId(), musicPlaylistRequest.getUserId(), musicPlaylistRequest.getMusicId(), new Date(), new Date());

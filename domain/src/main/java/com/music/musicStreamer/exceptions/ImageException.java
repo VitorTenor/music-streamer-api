@@ -1,9 +1,9 @@
 package com.music.musicStreamer.exceptions;
 
-import com.music.musicStreamer.enumerators.ImageErrorMessage;
+import com.music.musicStreamer.enumerators.ImageMessages;
 
 public class ImageException extends RuntimeException {
-    public ImageException(ImageErrorMessage message) {
+    public ImageException(ImageMessages message) {
         super(message.getMessage());
     }
 }
