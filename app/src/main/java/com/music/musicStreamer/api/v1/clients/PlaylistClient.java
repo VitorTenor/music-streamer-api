@@ -13,6 +13,7 @@ import com.music.musicStreamer.entities.playlist.Playlist;
 import com.music.musicStreamer.entities.playlist.PlaylistMusic;
 import com.music.musicStreamer.entities.playlist.PlaylistRequest;
 import com.music.musicStreamer.enumerators.MusicMessages;
+import com.music.musicStreamer.enumerators.PlaylistMessages;
 import com.music.musicStreamer.exceptions.MusicException;
 import com.music.musicStreamer.exceptions.PlaylistException;
 import com.music.musicStreamer.exceptions.UserException;
@@ -44,28 +45,28 @@ public class PlaylistClient implements PlaylistGateway {
             playlistRepository.save(playlistCreated);
             return new Playlist(playlistCreated.getName(), playlistCreated.getUserId(), playlistCreated.getId());
         } catch (Exception e) {
-            throw new PlaylistException("Error creating playlist");
+            throw new PlaylistException(PlaylistMessages.CREATE_PLAYLIST_ERROR);
         }
     }
 
     @Override
     @Transactional
     public String addMusicToPlaylist(MusicPlaylistRequest musicPlaylistRequest) {
-        if (!playlistRepository.existsById(musicPlaylistRequest.getPlaylistId())) throw new PlaylistException("Playlist not found");
+        if (!playlistRepository.existsById(musicPlaylistRequest.getPlaylistId())) throw new PlaylistException(PlaylistMessages.NOT_FOUND);
         if (!musicRepository.existsById(musicPlaylistRequest.getMusicId())) throw new MusicException(MusicMessages.NOT_FOUND);
         if (!userRepository.existsById(musicPlaylistRequest.getUserId())) throw new UserException("User not found");
         try {
             PlaylistMusicModel playlistMusicModel = new PlaylistMusicModel(musicPlaylistRequest.getPlaylistId(), musicPlaylistRequest.getUserId(), musicPlaylistRequest.getMusicId(), new Date(), new Date());
             playlistMusicRepository.save(playlistMusicModel);
-            return "Music added to playlist";
+            return PlaylistMessages.MUSIC_ADDED.getMessage();
         } catch (Exception e) {
-            throw new PlaylistException("Error adding music to playlist");
+            throw new PlaylistException(PlaylistMessages.MUSIC_ADDED_ERROR);
         }
     }
 
     @Override
     public PlaylistMusic getPlaylistById(int id) {
-        PlaylistModel playlistModel = playlistRepository.findById(id).orElseThrow(() -> new PlaylistException("Playlist not found"));
+        PlaylistModel playlistModel = playlistRepository.findById(id).orElseThrow(() -> new PlaylistException(PlaylistMessages.NOT_FOUND));
         return new PlaylistMusic(playlistModel.getId(), playlistModel.getName(), playlistModel.getUserId(), getMusicByList(id));
     }
 
@@ -75,7 +76,7 @@ public class PlaylistClient implements PlaylistGateway {
         try {
             return playlistRepository.findAllByUserId(id).stream().map(playlist -> new Playlist(playlist.getName(), playlist.getUserId(), playlist.getId())).toList();
         } catch (Exception e) {
-            throw new PlaylistException("Error while getting playlist by user id");
+            throw new PlaylistException(PlaylistMessages.GET_PLAYLIST_BY_USER_ID_ERROR);
         }
     }
 
@@ -88,13 +89,13 @@ public class PlaylistClient implements PlaylistGateway {
             }
             return music1;
         }catch (Exception e){
-            throw new PlaylistException("Error while getting music by playlist id");
+            throw new PlaylistException(PlaylistMessages.GET_PLAYLIST_BY_PLAYLIST_ID_ERROR);
         }
     }
 
     private void validatePlaylist(PlaylistRequest playlistRequest) {
-        if (playlistRequest.getName().isEmpty()) throw new PlaylistException("Playlist name is required");
-        if (playlistRequest.validateUserId()) throw new PlaylistException("User id is required");
+        if (playlistRequest.getName().isEmpty()) throw new PlaylistException(PlaylistMessages.NAME_REQUIRED);
+        if (playlistRequest.validateUserId()) throw new PlaylistException(PlaylistMessages.USER_ID_REQUIRED);
     }
 }
 
