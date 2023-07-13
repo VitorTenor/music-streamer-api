@@ -1,8 +1,8 @@
 package com.music.musicStreamer.api.v1.clients;
 
 import com.music.musicStreamer.api.v1.models.UserModel;
-import com.music.musicStreamer.api.v1.models.feign.Auth;
 import com.music.musicStreamer.api.v1.repositories.UserRepository;
+import com.music.musicStreamer.core.feign.Auth;
 import com.music.musicStreamer.core.utils.factories.UserFactory;
 import com.music.musicStreamer.core.utils.validators.UserValidator;
 import com.music.musicStreamer.entities.user.User;
