@@ -8,11 +8,11 @@ import com.music.musicStreamer.entities.playlist.PlaylistRequest;
 import java.util.List;
 
 public interface PlaylistGateway {
-    public Playlist createPlaylist(PlaylistRequest playlistRequest) throws Exception;
+    Playlist createPlaylist(PlaylistRequest playlistRequest);
 
-    public String addMusicToPlaylist(MusicPlaylistRequest musicPlaylistRequest);
+    String addMusicToPlaylist(MusicPlaylistRequest musicPlaylistRequest);
 
-    public PlaylistMusic getPlaylistById(int id);
+    PlaylistMusic getPlaylistById(int id);
 
-    public List<Playlist> getPlaylistByUserId(int id);
+    List<Playlist> getPlaylistByUserId(int id);
 }

@@ -1,7 +1,5 @@
 package com.music.musicStreamer.entities.image;
 
-import java.util.Arrays;
-
 public class ImageRequest {
 
     public ImageRequest(byte[] image, int id) {

@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.music.musicStreamer.api.v1.models.dtos.UserLoginDTO;
 import com.music.musicStreamer.core.token.data.UserDataDetail;
 import com.music.musicStreamer.exceptions.SecurityException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -31,8 +32,7 @@ public class JWTAuthenticateFilter extends UsernamePasswordAuthenticationFilter 
         setFilterProcessesUrl("/getToken");
     }
 
-
-
+    @Override
     public Authentication attemptAuthentication(HttpServletRequest request,
                                                 HttpServletResponse response)  {
         try {

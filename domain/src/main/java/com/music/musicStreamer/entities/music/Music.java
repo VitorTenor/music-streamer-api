@@ -8,17 +8,17 @@ public class Music {
     private String artist;
     private String album;
     private String genre;
-    private String path_name;
+    private String pathName;
     private Image image;
 
-    public Music(int id, String name, String artist, String album, String genre, Image image, String path_name) {
+    public Music(int id, String name, String artist, String album, String genre, Image image, String pathName) {
         this.id = id;
         this.name = name;
         this.artist = artist;
         this.album = album;
         this.genre = genre;
         this.image = image;
-        this.path_name = path_name;
+        this.pathName = pathName;
     }
 
     public Music() {
@@ -47,8 +47,8 @@ public class Music {
         return genre;
     }
 
-    public String getPath_name() {
-        return path_name;
+    public String getPathName() {
+        return pathName;
     }
 
     public Image getImage() {
@@ -74,8 +74,8 @@ public class Music {
         this.genre = genre;
     }
 
-    public void setPath_name(String path_name) {
-        this.path_name = path_name;
+    public void setPathName(String pathName) {
+        this.pathName = pathName;
     }
 
     public void setImage(Image image) {

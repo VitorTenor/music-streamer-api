@@ -7,10 +7,12 @@ import java.util.Random;
 
 @Service
 public class GenerateName {
+
+    private Random random = new Random();
+
     public String randomName() {
         Instant instant = Instant.now();
-        long randomValue = new Random().nextLong();
-        String generatedName = instant.toString() + "_" + Long.toString(randomValue);
+        String generatedName = instant.toString() + "_" + Long.toString(random.nextLong());
         return generatedName.replace(":", "_").replace(".", "_");
     }
 }

@@ -17,14 +17,6 @@ public class PlaylistMusicModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    public PlaylistMusicModel(int playlistId, int userId, int musicId, Date created_at, Date updated_at) {
-        this.playlistId = playlistId;
-        this.userId = userId;
-        this.musicId = musicId;
-        this.created_at = created_at;
-        this.updated_at = updated_at;
-    }
-
     @Column(name = "playlist_id",nullable = false, length = 100)
     private int playlistId;
 
@@ -38,6 +30,13 @@ public class PlaylistMusicModel {
     @Column(nullable = false, length = 100)
     private Date updated_at;
 
+    public PlaylistMusicModel(int playlistId, int userId, int musicId, Date date, Date date1) {
+        this.playlistId = playlistId;
+        this.userId = userId;
+        this.musicId = musicId;
+        this.created_at = date;
+        this.updated_at = date1;
+    }
 
     public PlaylistMusicModel() {
 

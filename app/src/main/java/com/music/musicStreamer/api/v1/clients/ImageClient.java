@@ -10,7 +10,6 @@ import com.music.musicStreamer.entities.image.Image;
 import com.music.musicStreamer.entities.image.ImageRequest;
 import com.music.musicStreamer.gateways.ImageGateway;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
@@ -18,8 +17,6 @@ import javax.transaction.Transactional;
 @Component
 @RequiredArgsConstructor
 public class ImageClient implements ImageGateway {
-        private static @Value("${storage.image.url}") String IMAGE_URL;
-
         private final GenerateName generateName;
         private final ImageRepository imageRepository;
         private final ImageValidator imageValidator;
