@@ -4,14 +4,13 @@ import com.music.musicStreamer.enumerators.ImageErrorMessage;
 import com.music.musicStreamer.api.v1.models.ImageModel;
 import com.music.musicStreamer.api.v1.repositories.ImageRepository;
 import com.music.musicStreamer.core.GenerateName;
-import com.music.musicStreamer.core.utils.Validators;
+import com.music.musicStreamer.core.utils.validators.ImageValidator;
 import com.music.musicStreamer.entities.image.Image;
 import com.music.musicStreamer.entities.image.ImageRequest;
 import com.music.musicStreamer.exceptions.ImageException;
 import com.music.musicStreamer.gateways.ImageGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
@@ -29,12 +28,12 @@ public class ImageClient implements ImageGateway {
         private static @Value("${storage.image.url}") String IMAGE_URL;
         private final GenerateName generateName;
         private final ImageRepository imageRepository;
-        private final Validators validators;
+        private final ImageValidator imageValidator;
 
         @Override
         @Transactional
         public Image saveImage(ImageRequest imageRequest) {
-                validators.validateImage(imageRequest);
+                imageValidator.validateImage(imageRequest);
 
                 String newFileName = generateName.randomName();
 
@@ -73,7 +72,7 @@ public class ImageClient implements ImageGateway {
         @Transactional
         public Boolean deleteImageByMusicId(int id) {
                 ImageModel imageModel = findByMusicId(id);
-                validators.validateIfImageIsNotNull(imageModel);
+                imageValidator.validateIfImageIsNotNull(imageModel);
 
                 deleteInStorage(imageModel.getPathName());
                 deleteInDatabaseById(imageModel.getId());
@@ -85,7 +84,7 @@ public class ImageClient implements ImageGateway {
         @Override
         public Image getImageByMusicId(int id) {
                 ImageModel imageModel = findByMusicId(id);
-                validators.validateIfImageIsNotNull(imageModel);
+                imageValidator.validateIfImageIsNotNull(imageModel);
 
                 return new Image(imageModel.getMusicId(), imageModel.getPathName(),IMAGE_URL + imageModel.getPathName());
         }

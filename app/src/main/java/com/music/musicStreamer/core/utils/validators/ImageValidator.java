@@ -1,4 +1,4 @@
-package com.music.musicStreamer.core.utils;
+package com.music.musicStreamer.core.utils.validators;
 
 import com.music.musicStreamer.api.v1.models.ImageModel;
 import com.music.musicStreamer.api.v1.repositories.MusicRepository;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class Validators {
+public class ImageValidator {
 
     private final MusicRepository musicRepository;
 
