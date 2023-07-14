@@ -1,5 +1,7 @@
 package com.music.musicStreamer;
 
+import com.music.musicStreamer.api.exceptionHandler.TestApplicationExceptionHandler;
+import com.music.musicStreamer.api.exceptionHandler.TestProblem;
 import com.music.musicStreamer.api.v1.clients.*;
 import com.music.musicStreamer.api.v1.controllers.TestImageController;
 import com.music.musicStreamer.api.v1.controllers.TestMusicController;
@@ -14,6 +16,8 @@ import org.junit.runner.RunWith;
 
 @RunWith(JUnitPlatform.class)
 @SelectClasses({
+        TestApplicationExceptionHandler.class,
+        TestProblem.class,
         TestImageClient.class,
         TestMusicClient.class,
         TestPlaylistClient.class,

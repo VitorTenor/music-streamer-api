@@ -42,7 +42,7 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
     }
 
     @ExceptionHandler(PlaylistException.class)
-    public ResponseEntity<Object> handleBusinessException(PlaylistException ex, WebRequest request) {
+    public ResponseEntity<Object> handlePlaylistException(PlaylistException ex, WebRequest request) {
         HttpStatus status = HttpStatus.BAD_REQUEST;
         ProblemType problemType = ProblemType.PLAYLIST_ERROR;
         String detail = ex.getMessage();
@@ -69,7 +69,7 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
     }
 
     @ExceptionHandler(SecurityException.class)
-    public ResponseEntity<Object> handleImageException(SecurityException ex, WebRequest request) {
+    public ResponseEntity<Object> handleSecurityException(SecurityException ex, WebRequest request) {
         HttpStatus status = HttpStatus.BAD_REQUEST;
         ProblemType problemType = ProblemType.SECURITY_ERROR;
         String detail = ex.getMessage();
