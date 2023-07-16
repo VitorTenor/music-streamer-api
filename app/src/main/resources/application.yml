@@ -12,6 +12,7 @@ spring:
     password: mariadb
   jpa:
     generate-ddl: true
+    show-sql: true
     hibernate:
       ddl-auto: update
     properties:
@@ -32,6 +33,10 @@ spring:
     multipart:
       max-file-size: 10MB
       max-request-size: 10MB
+
+logging:
+  level:
+    root: INFO
 
 storage:
   music:
