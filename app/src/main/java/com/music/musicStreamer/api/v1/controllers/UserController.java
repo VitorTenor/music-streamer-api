@@ -12,22 +12,28 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.logging.Logger;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/music-streamer/v1/users")
 public class UserController {
     private final LoginUserUseCase loginUserUseCase;
     private final CreateUserUseCase createUserUseCase;
+    private final Logger logger = Logger.getLogger(UserController.class.getName());
 
     @ApiOperation(value = "Create user")
     @PostMapping("")
     public ResponseEntity<User> register(@RequestBody UserRegisterDTO userRegisterDTO) {
+        logger.info("Create user");
+        logger.info("User email:" + userRegisterDTO.getEmail());
         return ResponseEntity.status(HttpStatus.OK).body(createUserUseCase.execute(userRegisterDTO.toEntity()));
     }
 
     @ApiOperation(value = "Login user")
     @PostMapping("/login")
     public ResponseEntity<UserAuth> login(@RequestBody UserLoginDTO userLogin) {
+        logger.info("Login user");
         return ResponseEntity.status(HttpStatus.OK).body(loginUserUseCase.execute(userLogin.toEntity()));
     }
 }

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,18 +22,21 @@ public class ImageController {
 
     private final GetImageUseCase getImageUseCase;
     private final UploadImageUseCase uploadImageUseCase;
+    private final Logger logger = Logger.getLogger(ImageController.class.getName());
 
 
     @ApiOperation(value = "Upload image for music")
     @PostMapping("/{id}")
     public ResponseEntity<Image> uploadImage(@RequestParam(name = "image")MultipartFile file, @PathVariable("id") int id) throws IOException {
         ImageRequest imageRequest = new ImageRequest(file.getBytes(), id);
+        logger.info("Image uploaded");
         return ResponseEntity.status(HttpStatus.OK).body(uploadImageUseCase.execute(imageRequest));
     }
 
     @ApiOperation(value = "Get image music")
     @GetMapping("/{getPathName}")
     public ResponseEntity<byte[]> getImage(@PathVariable("getPathName") String getPathName) {
+        logger.info("Image get");
         return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.IMAGE_JPEG).body(getImageUseCase.execute(getPathName));
     }
 }
