@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.music.musicStreamer</groupId>
-	<artifactId>musicStreamer-app</artifactId>
+	<artifactId>app</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>musicStreamer</name>
 	<description>A music streamer project</description>
@@ -119,7 +119,7 @@
 
 		<dependency>
 			<groupId>com.music.musicStreamer</groupId>
-			<artifactId>musicStreamer-domain</artifactId>
+			<artifactId>domain</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 
