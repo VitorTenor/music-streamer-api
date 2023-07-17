@@ -2,16 +2,14 @@ package com.music.musicStreamer.api.v1.clients;
 
 import com.music.musicStreamer.api.v1.models.MusicModel;
 import com.music.musicStreamer.api.v1.repositories.MusicRepository;
-import com.music.musicStreamer.core.GenerateName;
+import com.music.musicStreamer.core.utils.GenerateName;
 import com.music.musicStreamer.core.storage.impl.MusicFiles;
 import com.music.musicStreamer.core.utils.factories.MusicFactory;
 import com.music.musicStreamer.core.utils.validators.MusicValidator;
 import com.music.musicStreamer.entities.music.Music;
-import com.music.musicStreamer.entities.music.MusicDownload;
 import com.music.musicStreamer.entities.music.MusicRequest;
 import com.music.musicStreamer.enumerators.MusicMessages;
 import com.music.musicStreamer.exceptions.MusicException;
-import com.music.musicStreamer.gateways.MusicGateway;
 import com.music.musicStreamer.usecases.image.DeleteImageByMusicIdUseCase;
 import com.music.musicStreamer.usecases.playlistMusic.DeleteMusicFromPlaylistUseCase;
 import org.junit.jupiter.api.*;
