@@ -15,14 +15,15 @@ This is the repository for the Back-End project of the Music and Images applicat
 2. Create a PostgreSQL database on your local server or in an appropriate environment. Take note of the connection information, such as URL, username, and password.
 
 3. Clone this repository to your local machine:
-   git clone https://github.com/VitorTenor/musicStreamerApplicationJavaApi.git
+   `git clone https://github.com/VitorTenor/musicStreamerApplicationJavaApi.git`
 
 
 4. Update the database configurations in the `application.yml` file to connect the application to your PostgreSQL database.
 
 5. Run the application using Maven or through your IDE.
 
-6. The server will be running on the default port 8081. You can access the endpoint documentation through Swagger at the following link: `http://localhost:8081/swagger-ui.html`.
+6. The server will be running on the default port 8081. You can access the endpoint documentation through Swagger at the following link: 
+`http://localhost:8081/swagger-ui/index.html`.
 
 ## Features
 
