@@ -1,7 +1,5 @@
 package com.music.musicStreamer.api.v1.models;
 
-import com.music.musicStreamer.entities.user.User;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,7 +9,6 @@ import java.util.Date;
 
 @Getter
 @Setter
-@Data
 @Entity
 @Table(name = "users")
 public class UserModel implements Serializable {

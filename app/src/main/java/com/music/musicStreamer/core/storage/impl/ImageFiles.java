@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -26,7 +25,7 @@ public class ImageFiles implements FilesBase<ImageRequest> {
         Path path = Paths.get(IMAGE_PATH + fileName + IMAGE_TYPE);
         try {
             Files.write(path, imageRequest.getImage());
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new ImageException(ImageMessages.SAVE_STORAGE_ERROR);
         }
     }
@@ -35,7 +34,7 @@ public class ImageFiles implements FilesBase<ImageRequest> {
     public void deleteInFiles(String fileName) {
         try {
             Files.delete(Paths.get(IMAGE_PATH + fileName));
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new ImageException(ImageMessages.DELETE_STORAGE_ERROR);
         }
     }
@@ -44,7 +43,7 @@ public class ImageFiles implements FilesBase<ImageRequest> {
     public byte[] getBytesInFiles(String fileName) {
         try {
             return Files.readAllBytes(Paths.get(IMAGE_PATH + fileName));
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new ImageException(ImageMessages.READ_ERROR);
         }
     }

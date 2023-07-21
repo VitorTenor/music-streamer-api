@@ -31,4 +31,23 @@ public class TestAddMusicPlaylistDTO {
         assertEquals(expectedMusicPlaylistRequest.getUserId(), result.getUserId());
     }
 
+    @Test
+    @Order(2)
+    @DisplayName("002 - Test dto")
+    public void testAddMusicPlaylist(){
+        AddMusicPlaylistDTO addMusicPlaylistDTO = new AddMusicPlaylistDTO();
+        addMusicPlaylistDTO.setPlaylistId(1);
+        addMusicPlaylistDTO.setMusicId(2);
+        addMusicPlaylistDTO.setUserId(3);
+
+        AddMusicPlaylistDTO addMusicPlaylistDTO2 = new AddMusicPlaylistDTO();
+        addMusicPlaylistDTO2.setPlaylistId(addMusicPlaylistDTO.getPlaylistId());
+        addMusicPlaylistDTO2.setMusicId(addMusicPlaylistDTO.getMusicId());
+        addMusicPlaylistDTO2.setUserId(addMusicPlaylistDTO.getUserId());
+
+        assertEquals(addMusicPlaylistDTO.getPlaylistId(), addMusicPlaylistDTO2.getPlaylistId());
+        assertEquals(addMusicPlaylistDTO.getMusicId(), addMusicPlaylistDTO2.getMusicId());
+        assertEquals(addMusicPlaylistDTO.getUserId(), addMusicPlaylistDTO2.getUserId());
+    }
+
 }

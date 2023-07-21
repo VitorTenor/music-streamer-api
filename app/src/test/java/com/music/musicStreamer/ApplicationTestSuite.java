@@ -7,7 +7,9 @@ import com.music.musicStreamer.api.v1.controllers.TestImageController;
 import com.music.musicStreamer.api.v1.controllers.TestMusicController;
 import com.music.musicStreamer.api.v1.controllers.TestPlaylistController;
 import com.music.musicStreamer.api.v1.controllers.TestUserController;
+import com.music.musicStreamer.api.v1.models.*;
 import com.music.musicStreamer.api.v1.models.dtos.*;
+import com.music.musicStreamer.core.storage.impl.TestImageFiles;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.platform.suite.api.SelectClasses;
 import org.junit.runner.RunWith;
@@ -31,6 +33,12 @@ import org.junit.runner.RunWith;
         TestUserLoginDTO.class,
         TestUserRegisterDTO.class,
         TestPlaylistDTO.class,
+        TestImageModel.class,
+        TestMusicModel.class,
+        TestPlaylistModel.class,
+        TestPlaylistMusicModel.class,
+        TestUserModel.class,
+        TestImageFiles.class,
 
 })
 public class ApplicationTestSuite {

@@ -43,4 +43,29 @@ public class TestAddMusicDTO {
         assertEquals(expectedMusicRequest.getGenre(), result.getGenre());
     }
 
+    @Test
+    @Order(2)
+    @DisplayName("002 - Test dto")
+    public void testAddMusic(){
+        AddMusicDTO addMusicDTO = new AddMusicDTO();
+        addMusicDTO.setAlbum("album");
+        addMusicDTO.setArtist("artist");
+        addMusicDTO.setGenre("genre");
+        addMusicDTO.setName("name");
+        addMusicDTO.setMusic(null);
+
+        AddMusicDTO addMusicDTO2 = new AddMusicDTO();
+        addMusicDTO2.setAlbum(addMusicDTO.getAlbum());
+        addMusicDTO2.setArtist(addMusicDTO.getArtist());
+        addMusicDTO2.setGenre(addMusicDTO.getGenre());
+        addMusicDTO2.setName(addMusicDTO.getName());
+        addMusicDTO2.setMusic(addMusicDTO.getMusic());
+
+        assertEquals(addMusicDTO.getAlbum(), addMusicDTO2.getAlbum());
+        assertEquals(addMusicDTO.getArtist(), addMusicDTO2.getArtist());
+        assertEquals(addMusicDTO.getGenre(), addMusicDTO2.getGenre());
+        assertEquals(addMusicDTO.getName(), addMusicDTO2.getName());
+        assertEquals(addMusicDTO.getMusic(), addMusicDTO2.getMusic());
+    }
+
 }
