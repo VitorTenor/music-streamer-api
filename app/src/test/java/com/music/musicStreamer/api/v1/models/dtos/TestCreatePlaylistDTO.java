@@ -28,4 +28,30 @@ public class TestCreatePlaylistDTO {
         assertEquals(expectedPlaylistRequest.getUserId(), result.getUserId());
     }
 
+    @Test
+    @Order(2)
+    @DisplayName("002 - Test Dto")
+    public void testDto() {
+        String name = "My Playlist";
+        int userId = 1;
+
+        CreatePlaylistDTO createPlaylistDTO = new CreatePlaylistDTO();
+        createPlaylistDTO.setName(name);
+        createPlaylistDTO.setUserId(userId);
+
+        CreatePlaylistDTO createPlaylistDTO1 = new CreatePlaylistDTO();
+        createPlaylistDTO1.setName(createPlaylistDTO.getName());
+        createPlaylistDTO1.setUserId(createPlaylistDTO.getUserId());
+
+
+        assertEquals(createPlaylistDTO1.getName(), name);
+        assertEquals(createPlaylistDTO1.getUserId(), userId);
+
+        assertEquals(createPlaylistDTO.getName(), name);
+        assertEquals(createPlaylistDTO.getUserId(), userId);
+
+        assertEquals(createPlaylistDTO1.getName(), createPlaylistDTO.getName());
+        assertEquals(createPlaylistDTO1.getUserId(), createPlaylistDTO.getUserId());
+    }
+
 }
