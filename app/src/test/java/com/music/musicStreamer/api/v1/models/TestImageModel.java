@@ -41,7 +41,7 @@ public class TestImageModel {
     public void testCreateImageModelConstructor() {
         ImageModel imageModel = new ImageModel(1, "pathName", new Date(), new Date());
 
-        assertNotEquals(1, imageModel.getMusicId());
+        assertEquals(1, imageModel.getMusicId());
         assertEquals("pathName", imageModel.getPathName());
         assertEquals(new Date(), imageModel.getCreated_at());
         assertEquals(new Date(), imageModel.getUpdated_at());
