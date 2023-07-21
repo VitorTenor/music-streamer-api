@@ -14,19 +14,19 @@ public class ImageFactory {
     private static @Value("${storage.image.url}") String IMAGE_URL;
 
     public ImageModel createImageModel(ImageRequest imageRequest, String pathName) {
-            return new ImageModel (
-                    imageRequest.getId(),
-                    pathName + IMAGE_TYPE,
-                    new Date(),
-                    new Date()
-            );
+        return new ImageModel(
+                imageRequest.getId(),
+                pathName + IMAGE_TYPE,
+                new Date(),
+                new Date()
+        );
     }
 
     public Image createImage(ImageModel imageModel) {
-            return new Image(
-                    imageModel.getMusicId(),
-                    imageModel.getPathName(),
-                    IMAGE_URL + imageModel.getPathName()
-            );
+        return new Image(
+                imageModel.getMusicId(),
+                imageModel.getPathName(),
+                IMAGE_URL + imageModel.getPathName()
+        );
     }
 }

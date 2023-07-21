@@ -24,7 +24,7 @@ public class UserValidator {
         if (userRequest.getPassword().isBlank()) throw new UserException(UserMessages.PASSWORD_IS_REQUIRED);
         if (userRequest.getPassword().length() < 6) throw new UserException(UserMessages.PASSWORD_IS_TOO_SHORT);
         Optional<UserModel> user = userRepository.findByEmail(userRequest.getEmail());
-        if (user.isPresent())  throw new UserException(UserMessages.USER_ALREADY_EXISTS);
+        if (user.isPresent()) throw new UserException(UserMessages.USER_ALREADY_EXISTS);
     }
 
     public UserModel validateUserLogin(UserAuthRequest userAuthRequest) {

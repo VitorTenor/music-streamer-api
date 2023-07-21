@@ -31,14 +31,14 @@ public class PlaylistController {
 
     @ApiOperation(value = "Add music to playlist")
     @PostMapping("/addSong")
-    public ResponseEntity<String> addSongToPlaylist(@RequestBody AddMusicPlaylistDTO addMusicPlaylist){
+    public ResponseEntity<String> addSongToPlaylist(@RequestBody AddMusicPlaylistDTO addMusicPlaylist) {
         return ResponseEntity.status(HttpStatus.OK).body(addMusicPlaylistUseCase.execute(addMusicPlaylist.toEntity()));
     }
 
     @ApiOperation(value = "Get playlist")
     @GetMapping("/{id}")
     public ResponseEntity<Object> getPlaylistById(@PathVariable("id") int playlistId) {
-            return ResponseEntity.status(HttpStatus.OK).body(getPlaylistByIdUseCase.execute(playlistId));
+        return ResponseEntity.status(HttpStatus.OK).body(getPlaylistByIdUseCase.execute(playlistId));
     }
 
     @ApiOperation(value = "Get all playlists from user")

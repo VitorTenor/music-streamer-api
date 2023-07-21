@@ -2,10 +2,8 @@ package com.music.musicStreamer.api.v1.clients;
 
 import com.music.musicStreamer.api.v1.models.PlaylistModel;
 import com.music.musicStreamer.api.v1.models.PlaylistMusicModel;
-import com.music.musicStreamer.api.v1.repositories.MusicRepository;
 import com.music.musicStreamer.api.v1.repositories.PlaylistMusicRepository;
 import com.music.musicStreamer.api.v1.repositories.PlaylistRepository;
-import com.music.musicStreamer.api.v1.repositories.UserRepository;
 import com.music.musicStreamer.core.utils.factories.PlaylistFactory;
 import com.music.musicStreamer.core.utils.validators.PlaylistValidator;
 import com.music.musicStreamer.core.utils.validators.UserValidator;
@@ -23,12 +21,11 @@ import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class PlaylistClient implements PlaylistGateway  {
+public class PlaylistClient implements PlaylistGateway {
     private final UserValidator userValidator;
     private final PlaylistFactory playlistFactory;
     private final PlaylistValidator playlistValidator;

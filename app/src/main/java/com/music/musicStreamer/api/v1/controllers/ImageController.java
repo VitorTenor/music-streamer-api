@@ -27,7 +27,7 @@ public class ImageController {
 
     @ApiOperation(value = "Upload image for music")
     @PostMapping("/{id}")
-    public ResponseEntity<Image> uploadImage(@RequestParam(name = "image")MultipartFile file, @PathVariable("id") int id) throws IOException {
+    public ResponseEntity<Image> uploadImage(@RequestParam(name = "image") MultipartFile file, @PathVariable("id") int id) throws IOException {
         ImageRequest imageRequest = new ImageRequest(file.getBytes(), id);
         logger.info("Image uploaded");
         return ResponseEntity.status(HttpStatus.OK).body(uploadImageUseCase.execute(imageRequest));

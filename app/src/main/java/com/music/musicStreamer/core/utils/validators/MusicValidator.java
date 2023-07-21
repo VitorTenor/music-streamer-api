@@ -15,11 +15,11 @@ public class MusicValidator {
     private final MusicRepository musicRepository;
 
     public void validateMusic(MusicRequest musicRequest) {
-        if(musicRequest.getName().isBlank()) throw new MusicException(MusicMessages.NAME_REQUIRED);
-        if(musicRequest.getArtist().isBlank()) throw new MusicException(MusicMessages.ARTIST_REQUIRED);
-        if(musicRequest.getAlbum().isBlank()) throw new MusicException(MusicMessages.ALBUM_REQUIRED);
-        if(musicRequest.getGenre().isBlank()) throw new MusicException(MusicMessages.GENRE_REQUIRED);
-        if(musicRequest.getMusic().length == 0 || musicRequest.getMusic() == null) throw new MusicException(MusicMessages.MUSIC_REQUIRED);
+        if (musicRequest.getName().isBlank()) throw new MusicException(MusicMessages.NAME_REQUIRED);
+        if (musicRequest.getArtist().isBlank()) throw new MusicException(MusicMessages.ARTIST_REQUIRED);
+        if (musicRequest.getAlbum().isBlank()) throw new MusicException(MusicMessages.ALBUM_REQUIRED);
+        if (musicRequest.getGenre().isBlank()) throw new MusicException(MusicMessages.GENRE_REQUIRED);
+        if (musicRequest.getMusic().length == 0 || musicRequest.getMusic() == null) throw new MusicException(MusicMessages.MUSIC_REQUIRED);
     }
 
     public void validateIfMusicIsNotNull(MusicModel musicModel) {

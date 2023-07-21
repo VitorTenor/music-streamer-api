@@ -42,7 +42,7 @@ public class UserClient implements UserGateway {
     public UserAuth loginUser(UserAuthRequest userAuthRequest) {
         UserModel user = userValidator.validateUserLogin(userAuthRequest);
         logger.info("User logged :" + user.getEmail());
-        return new UserAuth(user.getId(), user.getName(),user.getEmail(), auth.getToken(userAuthRequest));
+        return new UserAuth(user.getId(), user.getName(), user.getEmail(), auth.getToken(userAuthRequest));
     }
 
     private UserModel save(UserModel userModel) {

@@ -25,25 +25,25 @@ public class PlaylistMusicClient implements PlaylistMusicGateway {
     @Override
     @Transactional
     public Boolean deleteMusicFromPlaylist(int id) {
-            List<PlaylistMusicModel> playlistMusic = playlistMusicRepository.findByMusicId(id);
-            for (PlaylistMusicModel playlistMusicModel : playlistMusic) {
-                playlistMusicRepository.deleteById(playlistMusicModel.getId());
-            }
-            return true;
+        List<PlaylistMusicModel> playlistMusic = playlistMusicRepository.findByMusicId(id);
+        for (PlaylistMusicModel playlistMusicModel : playlistMusic) {
+            playlistMusicRepository.deleteById(playlistMusicModel.getId());
+        }
+        return true;
     }
 
     @Override
     public List<Music> getMusicByPlaylistId(int id) {
-            List<Music> musicList = new ArrayList<>();
+        List<Music> musicList = new ArrayList<>();
 
-            for (PlaylistMusicModel playlistMusicModel : playlistMusicRepository.findAllById(id)) {
-                List<MusicModel> music = musicRepository.findAllById(playlistMusicModel.getMusicId());
+        for (PlaylistMusicModel playlistMusicModel : playlistMusicRepository.findAllById(id)) {
+            List<MusicModel> music = musicRepository.findAllById(playlistMusicModel.getMusicId());
 
-                for (MusicModel musicModel : music) {
-                    musicList.add(playlistMusicFactory.createMusic(musicModel));
-                }
+            for (MusicModel musicModel : music) {
+                musicList.add(playlistMusicFactory.createMusic(musicModel));
             }
+        }
 
-            return musicList;
+        return musicList;
     }
 }
