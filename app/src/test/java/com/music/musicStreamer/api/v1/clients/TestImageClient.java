@@ -41,7 +41,7 @@ public class TestImageClient {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        imageClient = new ImageClient(generateName, imageRepository, imageValidator, imageFactory, imageFiles);
+        imageClient = new ImageClient(imageFiles, generateName, imageFactory, imageValidator, imageRepository);
     }
 
     @Test
