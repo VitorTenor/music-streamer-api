@@ -23,8 +23,8 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class MusicFiles implements FilesBase<MusicRequest> {
-    private static @Value("${storage.music.mediaType}") String MUSIC_TYPE;
-    private static @Value("${storage.music.path}") String MUSIC_PATH;
+    private @Value("${storage.music.mediaType}") String MUSIC_TYPE;
+    private @Value("${storage.music.path}") String MUSIC_PATH;
     private final MusicFactory musicFactory;
     private final MusicRepository musicRepository;
 

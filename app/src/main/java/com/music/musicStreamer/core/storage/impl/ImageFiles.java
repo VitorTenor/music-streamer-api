@@ -16,8 +16,8 @@ import java.util.List;
 
 @Component
 public class ImageFiles implements FilesBase<ImageRequest> {
-    private static @Value("${storage.image.mediaType}") String IMAGE_TYPE;
-    private static @Value("${storage.image.path}") String IMAGE_PATH;
+    private @Value("${storage.image.mediaType}") String IMAGE_TYPE;
+    private @Value("${storage.image.path}") String IMAGE_PATH;
 
 
     @Override
