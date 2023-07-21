@@ -6,7 +6,7 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Music Streammer Workflow
+name: Music Streamer Workflow
 
 on:
   push:
