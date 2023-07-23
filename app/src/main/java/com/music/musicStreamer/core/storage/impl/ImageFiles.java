@@ -2,7 +2,7 @@ package com.music.musicStreamer.core.storage.impl;
 
 import com.music.musicStreamer.core.storage.FilesBase;
 import com.music.musicStreamer.entities.image.ImageRequest;
-import com.music.musicStreamer.enumerators.ImageMessages;
+import com.music.musicStreamer.enums.ImageMessages;
 import com.music.musicStreamer.exceptions.ImageException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

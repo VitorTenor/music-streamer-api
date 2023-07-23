@@ -4,7 +4,7 @@ import com.music.musicStreamer.api.v1.models.UserModel;
 import com.music.musicStreamer.api.v1.repositories.UserRepository;
 import com.music.musicStreamer.entities.user.UserAuthRequest;
 import com.music.musicStreamer.entities.user.UserRequest;
-import com.music.musicStreamer.enumerators.UserMessages;
+import com.music.musicStreamer.enums.UserMessages;
 import com.music.musicStreamer.exceptions.UserException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

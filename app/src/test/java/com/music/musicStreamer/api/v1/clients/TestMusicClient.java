@@ -8,7 +8,7 @@ import com.music.musicStreamer.core.utils.factories.MusicFactory;
 import com.music.musicStreamer.core.utils.validators.MusicValidator;
 import com.music.musicStreamer.entities.music.Music;
 import com.music.musicStreamer.entities.music.MusicRequest;
-import com.music.musicStreamer.enumerators.MusicMessages;
+import com.music.musicStreamer.enums.MusicMessages;
 import com.music.musicStreamer.exceptions.MusicException;
 import com.music.musicStreamer.usecases.image.DeleteImageByMusicIdUseCase;
 import com.music.musicStreamer.usecases.playlistMusic.DeleteMusicFromPlaylistUseCase;

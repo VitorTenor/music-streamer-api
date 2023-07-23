@@ -3,7 +3,7 @@ package com.music.musicStreamer.api.v1.controllers;
 import com.music.musicStreamer.api.v1.models.dtos.AddMusicDTO;
 import com.music.musicStreamer.entities.music.Music;
 import com.music.musicStreamer.entities.music.MusicDownload;
-import com.music.musicStreamer.enumerators.MusicMessages;
+import com.music.musicStreamer.enums.MusicMessages;
 import com.music.musicStreamer.usecases.music.*;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;

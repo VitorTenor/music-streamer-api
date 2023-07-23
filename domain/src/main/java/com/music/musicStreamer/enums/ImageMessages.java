@@ -1,4 +1,4 @@
-package com.music.musicStreamer.enumerators;
+package com.music.musicStreamer.enums;
 
 public enum ImageMessages {
     NOT_FOUND("Image not found"),

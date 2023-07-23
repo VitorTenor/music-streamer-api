@@ -11,7 +11,7 @@ import com.music.musicStreamer.entities.playlist.MusicPlaylistRequest;
 import com.music.musicStreamer.entities.playlist.Playlist;
 import com.music.musicStreamer.entities.playlist.PlaylistMusic;
 import com.music.musicStreamer.entities.playlist.PlaylistRequest;
-import com.music.musicStreamer.enumerators.PlaylistMessages;
+import com.music.musicStreamer.enums.PlaylistMessages;
 import com.music.musicStreamer.usecases.playlistMusic.GetMusicByPlaylistIdUseCase;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;

@@ -1,9 +1,9 @@
 package com.music.musicStreamer.api.exceptionHandler;
 
-import com.music.musicStreamer.enumerators.ImageMessages;
-import com.music.musicStreamer.enumerators.MusicMessages;
-import com.music.musicStreamer.enumerators.PlaylistMessages;
-import com.music.musicStreamer.enumerators.UserMessages;
+import com.music.musicStreamer.enums.ImageMessages;
+import com.music.musicStreamer.enums.MusicMessages;
+import com.music.musicStreamer.enums.PlaylistMessages;
+import com.music.musicStreamer.enums.UserMessages;
 import com.music.musicStreamer.exceptions.*;
 import com.music.musicStreamer.exceptions.SecurityException;
 import org.junit.jupiter.api.*;

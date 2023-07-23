@@ -1,4 +1,4 @@
-package com.music.musicStreamer.enumerators;
+package com.music.musicStreamer.enums;
 
 public enum PlaylistMessages {
     NOT_FOUND("Playlist not found"),

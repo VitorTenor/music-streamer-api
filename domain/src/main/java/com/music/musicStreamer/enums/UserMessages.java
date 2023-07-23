@@ -1,4 +1,4 @@
-package com.music.musicStreamer.enumerators;
+package com.music.musicStreamer.enums;
 
 public enum UserMessages {
     NAME_IS_REQUIRED("Name is required"),
