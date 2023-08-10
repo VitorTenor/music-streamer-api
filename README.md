@@ -1,24 +1,24 @@
 # Music Streamer Application Back-End Project
 
-This is the repository for the Back-End project of the Music and Images application. This project was developed using Spring Boot, Java 17, and Maven, providing functionalities for uploading and downloading music and images, as well as the possibility of playing music. The database used is PostgreSQL, managed and versioned automatically by Flyway. Additionally, security is ensured through token-based authentication provided by Spring Security, and all endpoint documentation is available on Swagger.
+This is the repository for the Back-End project of the Music and Images application. This project was developed using Spring Boot, Java 17, and Maven, providing functionalities for uploading and downloading music and images, as well as the possibility of playing music. The database used is MariaDB, managed and versioned automatically by Flyway. Additionally, security is ensured through token-based authentication provided by Spring Security, and all endpoint documentation is available on Swagger.
 
 ## System Requirements
 
 - Java 17 (JDK 17)
 - Maven
-- PostgreSQL
+- MariaDB
 
 ## How to Run the Project
 
 1. Make sure you have Java 17 installed correctly and Maven configured in your environment.
 
-2. Create a PostgreSQL database on your local server or in an appropriate environment. Take note of the connection information, such as URL, username, and password.
+2. Create a MariaDB database on your local server or in an appropriate environment. Take note of the connection information, such as URL, username, and password.
 
 3. Clone this repository to your local machine:
    `git clone https://github.com/VitorTenor/musicStreamerApplicationJavaApi.git`
 
 
-4. Update the database configurations in the `application.yml` file to connect the application to your PostgreSQL database.
+4. Update the database configurations in the `application.yml` file to connect the application to your MariaDB database.
 
 5. Run the application using Maven or through your IDE.
 
@@ -31,7 +31,7 @@ This is the repository for the Back-End project of the Music and Images applicat
 - Download of preloaded music and images.
 - Music playback through specific endpoints.
 - Security with token-based authentication through Spring Security.
-- PostgreSQL database with automatic migration management and versioning using Flyway.
+- MariaDB database with automatic migration management and versioning using Flyway.
 
 ## Contributions
 
