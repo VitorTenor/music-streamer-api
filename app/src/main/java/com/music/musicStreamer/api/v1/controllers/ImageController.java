@@ -25,16 +25,14 @@ public class ImageController implements ImageControllerOpenApi {
     private final Logger logger = Logger.getLogger(ImageController.class.getName());
 
 
-    @PostMapping("/{id}")
+    @PostMapping(path = "/{id}", consumes = MediaType.IMAGE_JPEG_VALUE)
     public ResponseEntity<Image> uploadImage(@RequestParam(name = "image") MultipartFile file, @PathVariable("id") int id) throws IOException {
         ImageRequest imageRequest = new ImageRequest(file.getBytes(), id);
-        logger.info("Image uploaded");
         return ResponseEntity.status(HttpStatus.OK).body(uploadImageUseCase.execute(imageRequest));
     }
 
     @GetMapping("/{getPathName}")
     public ResponseEntity<byte[]> getImage(@PathVariable("getPathName") String getPathName) {
-        logger.info("Image get");
         return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.IMAGE_JPEG).body(getImageUseCase.execute(getPathName));
     }
 }
