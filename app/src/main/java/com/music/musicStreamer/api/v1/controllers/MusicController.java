@@ -4,7 +4,6 @@ import com.music.musicStreamer.api.v1.models.dtos.AddMusicDTO;
 import com.music.musicStreamer.entities.music.Music;
 import com.music.musicStreamer.entities.music.MusicDownload;
 import com.music.musicStreamer.usecases.music.*;
-import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
@@ -28,25 +27,21 @@ public class MusicController {
     private final DeleteMusicByIdUseCase deleteMusicByIdUseCase;
     private final GetAllMusicsUseCase getAllMusicsUseCase;
 
-    @ApiOperation(value = "Upload music")
     @PostMapping("/upload")
     public ResponseEntity<Music> uploadMusic(@ModelAttribute AddMusicDTO addMusicDTO) throws Exception {
         return ResponseEntity.status(HttpStatus.OK).body(uploadMusicUseCase.execute(addMusicDTO.toEntity()));
     }
 
-    @ApiOperation(value = "Get all musics")
     @GetMapping("")
     public ResponseEntity<Object> getMusics() {
         return ResponseEntity.status(HttpStatus.OK).body(getAllMusicsUseCase.execute());
     }
 
-    @ApiOperation(value = "Get music")
     @GetMapping("/{id}")
     public ResponseEntity<Music> getMusic(@PathVariable("id") Integer id) {
         return ResponseEntity.status(HttpStatus.OK).body(getMusicByIdUseCase.execute(id));
     }
 
-    @ApiOperation(value = "Play music")
     @GetMapping("/play/{id}")
     public ResponseEntity<Object> playMusicById(@PathVariable("id") Integer id) throws IOException {
         return ResponseEntity.status(HttpStatus.OK)
@@ -54,7 +49,6 @@ public class MusicController {
                 .body(playMusicByIdUseCase.execute(id));
     }
 
-    @ApiOperation(value = "Download music")
     @GetMapping("/download/{id}")
     public ResponseEntity downloadMusicById(@PathVariable("id") Integer id) throws Exception {
         MusicDownload music = downloadByIdMusicUseCase.execute(id);
@@ -62,7 +56,6 @@ public class MusicController {
                 .contentType(MediaType.APPLICATION_OCTET_STREAM).contentLength(music.getFile().length()).body(music.getInputStream() + MUSIC_TYPE);
     }
 
-    @ApiOperation(value = "Delete music")
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteMusicById(@PathVariable("id") Integer id) {
         return ResponseEntity.status(HttpStatus.OK).body(deleteMusicByIdUseCase.execute(id));

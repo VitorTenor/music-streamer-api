@@ -47,3 +47,9 @@ storage:
     mediaType: .jpg
     url: http://localhost:8081/music-streamer/v1/images/
 
+document:
+  api:
+    version: v1
+    title: Music Streamer API
+    description: Music Streamer API
+

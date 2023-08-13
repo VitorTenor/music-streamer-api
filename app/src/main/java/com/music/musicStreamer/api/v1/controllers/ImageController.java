@@ -1,10 +1,10 @@
 package com.music.musicStreamer.api.v1.controllers;
 
+import com.music.musicStreamer.api.v1.openApi.ImageControllerOpenApi;
 import com.music.musicStreamer.entities.image.Image;
 import com.music.musicStreamer.entities.image.ImageRequest;
-import com.music.musicStreamer.usecases.image.UploadImageUseCase;
 import com.music.musicStreamer.usecases.image.GetImageUseCase;
-import io.swagger.annotations.ApiOperation;
+import com.music.musicStreamer.usecases.image.UploadImageUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,14 +18,13 @@ import java.util.logging.Logger;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("music-streamer/v1/images")
-public class ImageController {
+public class ImageController implements ImageControllerOpenApi {
 
     private final GetImageUseCase getImageUseCase;
     private final UploadImageUseCase uploadImageUseCase;
     private final Logger logger = Logger.getLogger(ImageController.class.getName());
 
 
-    @ApiOperation(value = "Upload image for music")
     @PostMapping("/{id}")
     public ResponseEntity<Image> uploadImage(@RequestParam(name = "image") MultipartFile file, @PathVariable("id") int id) throws IOException {
         ImageRequest imageRequest = new ImageRequest(file.getBytes(), id);
@@ -33,7 +32,6 @@ public class ImageController {
         return ResponseEntity.status(HttpStatus.OK).body(uploadImageUseCase.execute(imageRequest));
     }
 
-    @ApiOperation(value = "Get image music")
     @GetMapping("/{getPathName}")
     public ResponseEntity<byte[]> getImage(@PathVariable("getPathName") String getPathName) {
         logger.info("Image get");

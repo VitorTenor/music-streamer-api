@@ -6,11 +6,13 @@ import com.music.musicStreamer.entities.user.User;
 import com.music.musicStreamer.entities.user.UserAuth;
 import com.music.musicStreamer.usecases.user.CreateUserUseCase;
 import com.music.musicStreamer.usecases.user.LoginUserUseCase;
-import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.logging.Logger;
 
@@ -22,7 +24,6 @@ public class UserController {
     private final CreateUserUseCase createUserUseCase;
     private final Logger logger = Logger.getLogger(UserController.class.getName());
 
-    @ApiOperation(value = "Create user")
     @PostMapping("")
     public ResponseEntity<User> register(@RequestBody UserRegisterDTO userRegisterDTO) {
         logger.info("Create user");
@@ -30,7 +31,6 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(createUserUseCase.execute(userRegisterDTO.toEntity()));
     }
 
-    @ApiOperation(value = "Login user")
     @PostMapping("/login")
     public ResponseEntity<UserAuth> login(@RequestBody UserLoginDTO userLogin) {
         logger.info("Login user");
