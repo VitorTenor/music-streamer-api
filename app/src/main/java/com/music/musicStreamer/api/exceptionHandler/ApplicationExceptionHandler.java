@@ -1,9 +1,9 @@
 package com.music.musicStreamer.api.exceptionHandler;
 
-import com.music.musicStreamer.exceptions.*;
+import com.google.gson.Gson;
 import com.music.musicStreamer.exceptions.SecurityException;
+import com.music.musicStreamer.exceptions.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -66,7 +66,7 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
     }
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Object> handleUncaught(Exception ex, WebRequest request) {
-        var status = HttpStatus.BAD_REQUEST;
+        var status = HttpStatus.INTERNAL_SERVER_ERROR;
         ProblemType problemType = ProblemType.UNEXPECTED_ERROR;
         var problem = Problem.builder()
                 .timestamp(LocalDateTime.now())
@@ -116,7 +116,7 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
 
     @ExceptionHandler(SecurityException.class)
     public ResponseEntity<Object> handleSecurityException(SecurityException ex, WebRequest request) {
-        HttpStatus status = HttpStatus.BAD_REQUEST;
+        HttpStatus status = HttpStatus.UNAUTHORIZED;
         ProblemType problemType = ProblemType.SECURITY_ERROR;
         String detail = ex.getMessage();
         Problem problem = createProblemBuilder(status, problemType, detail);
@@ -130,6 +130,24 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
         String detail = ex.getMessage();
         Problem problem = createProblemBuilder(status, problemType, detail);
         return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
+    }
+
+    @ExceptionHandler(feign.FeignException.class)
+    public ResponseEntity<Object> handleUncaught(feign.FeignException ex, WebRequest request) {
+        try {
+            Gson gson = new Gson();
+            Object response = gson.fromJson(ex.contentUTF8(), Object.class);
+            HttpStatus status = HttpStatus.valueOf(ex.status());
+
+            return handleExceptionInternal(ex, response, new HttpHeaders(), status, request);
+        } catch (Exception e ){
+            HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+            ProblemType problemType = ProblemType.UNEXPECTED_ERROR;
+
+            Problem problem = createProblemBuilder(status, problemType, ex.getMessage());
+
+            return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
+        }
     }
 
     private Problem createProblemBuilder(HttpStatus status, ProblemType problemType, String detail) {

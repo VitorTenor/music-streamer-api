@@ -33,8 +33,11 @@ public class UserValidator {
     }
 
     public UserModel validateUserLogin(UserAuthRequest userAuthRequest) {
+        logger.info("[UserValidator] Validate user login");
         validateUserEmail(userAuthRequest.getEmail());
+
         if (userAuthRequest.getPassword().isBlank()) throw new UserException(UserMessages.PASSWORD_IS_REQUIRED);
+
         return userRepository.findByEmail(userAuthRequest.getEmail()).orElseThrow(() -> new UserException(UserMessages.NOT_FOUND));
     }
 

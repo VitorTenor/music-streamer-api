@@ -1,6 +1,6 @@
 package com.music.musicStreamer.api.v1.controllers;
 
-import com.music.musicStreamer.api.v1.models.dtos.UserLoginDTO;
+import com.music.musicStreamer.api.v1.request.UserLogin;
 import com.music.musicStreamer.api.v1.request.UserRegister;
 import com.music.musicStreamer.entities.user.User;
 import com.music.musicStreamer.entities.user.UserAuth;
@@ -51,14 +51,15 @@ public class TestUserController {
     @Order(2)
     @DisplayName("002 - Test login() method")
     public void login_ValidUserLoginDTO_ReturnsUserAuth() {
-        UserLoginDTO userLoginDTO = new UserLoginDTO();
-        userLoginDTO.setEmail("johndoe@example.com");
-        userLoginDTO.setPassword("password");
+        UserLogin userLogin = new UserLogin(
+                "johndoe@example.com",
+                "password"
+        );
         UserAuth userAuth = new UserAuth(1, "John Doe", "johndoe@example.com", "token");
 
         when(loginUserUseCase.execute(any())).thenReturn(userAuth);
 
-        ResponseEntity<UserAuth> response = userController.login(userLoginDTO);
+        ResponseEntity<UserAuth> response = userController.login(userLogin);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(userAuth, response.getBody());

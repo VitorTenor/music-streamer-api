@@ -31,7 +31,7 @@ import org.junit.runner.RunWith;
         TestAddMusicDTO.class,
         TestAddMusicPlaylistDTO.class,
         TestCreatePlaylistDTO.class,
-        TestUserLoginDTO.class,
+        TestUserLogin.class,
         TestUserRegister.class,
         TestPlaylistDTO.class,
         TestImageModel.class,

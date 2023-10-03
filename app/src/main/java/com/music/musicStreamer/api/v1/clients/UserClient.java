@@ -2,7 +2,7 @@ package com.music.musicStreamer.api.v1.clients;
 
 import com.music.musicStreamer.api.v1.models.UserModel;
 import com.music.musicStreamer.api.v1.repositories.UserRepository;
-import com.music.musicStreamer.core.feign.Auth;
+import com.music.musicStreamer.core.token.AuthService;
 import com.music.musicStreamer.core.utils.factories.UserFactory;
 import com.music.musicStreamer.core.utils.validators.UserValidator;
 import com.music.musicStreamer.entities.user.User;
@@ -20,10 +20,10 @@ import java.util.logging.Logger;
 @Component
 @AllArgsConstructor
 public class UserClient implements UserGateway {
-    private final Auth auth;
     private final UserFactory userFactory;
     private final UserValidator userValidator;
     private final UserRepository userRepository;
+    private final AuthService authService;
     private final Logger logger = Logger.getLogger(UserClient.class.getName());
 
     @Override
@@ -41,9 +41,13 @@ public class UserClient implements UserGateway {
 
     @Override
     public UserAuth loginUser(UserAuthRequest userAuthRequest) {
+        logger.info("[UserClient] Login user");
+
+        String userDetails = authService.authenticateUser(userAuthRequest.getEmail(), userAuthRequest.getPassword());
+
         UserModel user = userValidator.validateUserLogin(userAuthRequest);
-        logger.info("User logged :" + user.getEmail());
-        return new UserAuth(user.getId(), user.getName(), user.getEmail(), auth.getToken(userAuthRequest));
+        logger.info("[UserClient] User logged => " + user.getEmail());
+        return new UserAuth(user.getId(), user.getName(), user.getEmail(), userDetails);
     }
 
     private UserModel save(UserModel userModel) {

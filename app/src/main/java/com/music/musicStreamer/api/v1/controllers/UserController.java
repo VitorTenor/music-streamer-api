@@ -1,6 +1,6 @@
 package com.music.musicStreamer.api.v1.controllers;
 
-import com.music.musicStreamer.api.v1.models.dtos.UserLoginDTO;
+import com.music.musicStreamer.api.v1.request.UserLogin;
 import com.music.musicStreamer.api.v1.openApi.UserControllerOpenApi;
 import com.music.musicStreamer.api.v1.request.UserRegister;
 import com.music.musicStreamer.entities.user.User;
@@ -31,9 +31,9 @@ public class UserController implements UserControllerOpenApi {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<UserAuth> login(@RequestBody UserLoginDTO userLogin) {
-        logger.info("Login user");
-        logger.info("User email:" + userLogin.getEmail());
+    public ResponseEntity<UserAuth> login(@RequestBody @Valid UserLogin userLogin) {
+        logger.info("[UserController] Login user");
+        logger.info("[UserController] User email:" + userLogin.email());
         return ResponseEntity.status(HttpStatus.OK).body(loginUserUseCase.execute(userLogin.toEntity()));
     }
 }
