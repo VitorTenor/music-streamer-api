@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Logger;
 
 @Service
 @RequiredArgsConstructor
@@ -29,14 +30,18 @@ public class AuthService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private final Logger logger = Logger.getLogger(AuthService.class.getName());
 
 
     public String authenticateUser(String username, String password) {
+        logger.info("[AuthService] Authenticate user");
         UserDetails userDetails = authenticate(username, password);
+
         return generateToken(userDetails);
     }
 
     private String generateToken(UserDetails userDetails) {
+        logger.info("[AuthService] Generate token");
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + jwtExpiration);
 
@@ -49,14 +54,17 @@ public class AuthService {
     }
 
     private UserDetails authenticate(String username, String password) {
+        logger.info("[AuthService] Authenticate user");
         UserModel user = userRepository.findByEmail(username)
                 .orElseThrow(() -> new UserException(UserMessages.NOT_FOUND));
 
-        String hashedPassword = passwordEncoder.encode(password);
+        logger.info("[AuthService] User found => " + user.getEmail());
 
-        if (passwordEncoder.matches(user.getPassword(), hashedPassword)) {
-            return new User(username, hashedPassword, new ArrayList<>());
+        if (passwordEncoder.matches(password, user.getPassword())) {
+            logger.info("[AuthService] User authenticated => " + user.getEmail());
+            return new User(username, user.getPassword(), new ArrayList<>());
         }
+
         throw new SecurityException("Invalid credentials");
     }
 }

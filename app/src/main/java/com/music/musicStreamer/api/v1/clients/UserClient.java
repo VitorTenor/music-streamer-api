@@ -42,10 +42,10 @@ public class UserClient implements UserGateway {
     @Override
     public UserAuth loginUser(UserAuthRequest userAuthRequest) {
         logger.info("[UserClient] Login user");
+        UserModel user = userValidator.validateUserLogin(userAuthRequest);
 
         String userDetails = authService.authenticateUser(userAuthRequest.getEmail(), userAuthRequest.getPassword());
 
-        UserModel user = userValidator.validateUserLogin(userAuthRequest);
         logger.info("[UserClient] User logged => " + user.getEmail());
         return new UserAuth(user.getId(), user.getName(), user.getEmail(), userDetails);
     }

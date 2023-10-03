@@ -11,9 +11,10 @@ import java.util.Date;
 @Setter
 @Entity
 @Table(name = "users")
+@SequenceGenerator(name = "users_seq", sequenceName = "users_seq", allocationSize = 1)
 public class UserModel implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_seq")
     private int id;
     @Column(nullable = false, length = 100)
     private String name;
