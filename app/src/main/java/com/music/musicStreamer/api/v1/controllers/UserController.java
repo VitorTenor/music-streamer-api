@@ -1,6 +1,7 @@
 package com.music.musicStreamer.api.v1.controllers;
 
 import com.music.musicStreamer.api.v1.models.dtos.UserLoginDTO;
+import com.music.musicStreamer.api.v1.openApi.UserControllerOpenApi;
 import com.music.musicStreamer.api.v1.request.UserRegister;
 import com.music.musicStreamer.entities.user.User;
 import com.music.musicStreamer.entities.user.UserAuth;
@@ -17,7 +18,7 @@ import java.util.logging.Logger;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/music-streamer/v1/users")
-public class UserController {
+public class UserController implements UserControllerOpenApi {
     private final LoginUserUseCase loginUserUseCase;
     private final CreateUserUseCase createUserUseCase;
     private final Logger logger = Logger.getLogger(UserController.class.getName());
