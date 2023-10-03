@@ -1,10 +1,10 @@
 package com.music.musicStreamer.api.v1.controller;
 
 import com.music.musicStreamer.api.v1.openApi.ImageControllerOpenApi;
-import com.music.musicStreamer.entities.image.Image;
-import com.music.musicStreamer.entities.image.ImageRequest;
-import com.music.musicStreamer.usecases.image.GetImageUseCase;
-import com.music.musicStreamer.usecases.image.UploadImageUseCase;
+import com.music.musicStreamer.entity.image.Image;
+import com.music.musicStreamer.entity.image.ImageRequest;
+import com.music.musicStreamer.usecase.image.GetImageUseCase;
+import com.music.musicStreamer.usecase.image.UploadImageUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

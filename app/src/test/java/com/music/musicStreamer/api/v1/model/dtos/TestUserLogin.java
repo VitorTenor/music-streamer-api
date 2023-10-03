@@ -1,7 +1,7 @@
 package com.music.musicStreamer.api.v1.model.dtos;
 
 import com.music.musicStreamer.api.v1.request.UserLogin;
-import com.music.musicStreamer.entities.user.UserAuthRequest;
+import com.music.musicStreamer.entity.user.UserAuthRequest;
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;

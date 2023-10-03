@@ -1,8 +1,8 @@
 package com.music.musicStreamer.core.util.factory;
 
 import com.music.musicStreamer.api.v1.model.ImageModel;
-import com.music.musicStreamer.entities.image.Image;
-import com.music.musicStreamer.entities.image.ImageRequest;
+import com.music.musicStreamer.entity.image.Image;
+import com.music.musicStreamer.entity.image.ImageRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 

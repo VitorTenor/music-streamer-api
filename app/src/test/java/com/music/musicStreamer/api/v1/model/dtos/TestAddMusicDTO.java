@@ -1,6 +1,6 @@
 package com.music.musicStreamer.api.v1.model.dtos;
 
-import com.music.musicStreamer.entities.music.MusicRequest;
+import com.music.musicStreamer.entity.music.MusicRequest;
 import org.junit.jupiter.api.*;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;

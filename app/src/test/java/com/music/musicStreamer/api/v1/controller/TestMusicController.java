@@ -1,10 +1,10 @@
 package com.music.musicStreamer.api.v1.controller;
 
 import com.music.musicStreamer.api.v1.model.dtos.AddMusicDTO;
-import com.music.musicStreamer.entities.music.Music;
-import com.music.musicStreamer.entities.music.MusicDownload;
+import com.music.musicStreamer.entity.music.Music;
+import com.music.musicStreamer.entity.music.MusicDownload;
 import com.music.musicStreamer.enums.MusicMessages;
-import com.music.musicStreamer.usecases.music.*;
+import com.music.musicStreamer.usecase.music.*;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;

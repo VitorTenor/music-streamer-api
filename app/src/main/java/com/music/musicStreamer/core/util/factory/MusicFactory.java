@@ -1,9 +1,9 @@
 package com.music.musicStreamer.core.util.factory;
 
 import com.music.musicStreamer.api.v1.model.MusicModel;
-import com.music.musicStreamer.entities.music.Music;
-import com.music.musicStreamer.entities.music.MusicRequest;
-import com.music.musicStreamer.usecases.image.GetImageByMusicIdUseCase;
+import com.music.musicStreamer.entity.music.Music;
+import com.music.musicStreamer.entity.music.MusicRequest;
+import com.music.musicStreamer.usecase.image.GetImageByMusicIdUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

@@ -1,8 +1,8 @@
 package com.music.musicStreamer.core.util.factory;
 
 import com.music.musicStreamer.api.v1.model.UserModel;
-import com.music.musicStreamer.entities.user.User;
-import com.music.musicStreamer.entities.user.UserRequest;
+import com.music.musicStreamer.entity.user.User;
+import com.music.musicStreamer.entity.user.UserRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;

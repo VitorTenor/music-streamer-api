@@ -1,6 +1,6 @@
 package com.music.musicStreamer.api.v1.openApi;
 
-import com.music.musicStreamer.entities.image.Image;
+import com.music.musicStreamer.entity.image.Image;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;

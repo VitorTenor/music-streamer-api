@@ -1,6 +1,6 @@
 package com.music.musicStreamer.api.v1.model.dtos;
 
-import com.music.musicStreamer.entities.music.MusicRequest;
+import com.music.musicStreamer.entity.music.MusicRequest;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 

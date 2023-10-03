@@ -5,7 +5,7 @@ import com.music.musicStreamer.api.v1.model.PlaylistMusicModel;
 import com.music.musicStreamer.api.v1.repository.MusicRepository;
 import com.music.musicStreamer.api.v1.repository.PlaylistMusicRepository;
 import com.music.musicStreamer.core.util.factory.PlaylistMusicFactory;
-import com.music.musicStreamer.entities.music.Music;
+import com.music.musicStreamer.entity.music.Music;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;

@@ -6,9 +6,9 @@ import com.music.musicStreamer.core.util.GenerateName;
 import com.music.musicStreamer.core.storage.impl.ImageFiles;
 import com.music.musicStreamer.core.util.factory.ImageFactory;
 import com.music.musicStreamer.core.util.validator.ImageValidator;
-import com.music.musicStreamer.entities.image.Image;
-import com.music.musicStreamer.entities.image.ImageRequest;
-import com.music.musicStreamer.gateways.ImageGateway;
+import com.music.musicStreamer.entity.image.Image;
+import com.music.musicStreamer.entity.image.ImageRequest;
+import com.music.musicStreamer.gateway.ImageGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

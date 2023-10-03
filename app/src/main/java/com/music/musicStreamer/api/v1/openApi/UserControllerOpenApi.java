@@ -1,7 +1,7 @@
 package com.music.musicStreamer.api.v1.openApi;
 
 import com.music.musicStreamer.api.v1.request.UserRegister;
-import com.music.musicStreamer.entities.user.User;
+import com.music.musicStreamer.entity.user.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;

@@ -5,11 +5,11 @@ import com.music.musicStreamer.api.v1.repository.UserRepository;
 import com.music.musicStreamer.core.token.AuthService;
 import com.music.musicStreamer.core.util.factory.UserFactory;
 import com.music.musicStreamer.core.util.validator.UserValidator;
-import com.music.musicStreamer.entities.user.User;
-import com.music.musicStreamer.entities.user.UserAuth;
-import com.music.musicStreamer.entities.user.UserAuthRequest;
-import com.music.musicStreamer.entities.user.UserRequest;
-import com.music.musicStreamer.gateways.UserGateway;
+import com.music.musicStreamer.entity.user.User;
+import com.music.musicStreamer.entity.user.UserAuth;
+import com.music.musicStreamer.entity.user.UserAuthRequest;
+import com.music.musicStreamer.entity.user.UserRequest;
+import com.music.musicStreamer.gateway.UserGateway;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 

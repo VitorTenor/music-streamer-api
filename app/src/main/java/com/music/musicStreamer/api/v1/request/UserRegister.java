@@ -1,6 +1,6 @@
 package com.music.musicStreamer.api.v1.request;
 
-import com.music.musicStreamer.entities.user.UserRequest;
+import com.music.musicStreamer.entity.user.UserRequest;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;

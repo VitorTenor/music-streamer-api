@@ -6,15 +6,15 @@ import com.music.musicStreamer.core.util.GenerateName;
 import com.music.musicStreamer.core.storage.impl.MusicFiles;
 import com.music.musicStreamer.core.util.factory.MusicFactory;
 import com.music.musicStreamer.core.util.validator.MusicValidator;
-import com.music.musicStreamer.entities.music.Music;
-import com.music.musicStreamer.entities.music.MusicDownload;
-import com.music.musicStreamer.entities.music.MusicRequest;
+import com.music.musicStreamer.entity.music.Music;
+import com.music.musicStreamer.entity.music.MusicDownload;
+import com.music.musicStreamer.entity.music.MusicRequest;
 import com.music.musicStreamer.enums.MusicMessages;
-import com.music.musicStreamer.exceptions.MusicException;
-import com.music.musicStreamer.gateways.MusicGateway;
-import com.music.musicStreamer.usecases.image.DeleteImageByMusicIdUseCase;
+import com.music.musicStreamer.exception.MusicException;
+import com.music.musicStreamer.gateway.MusicGateway;
+import com.music.musicStreamer.usecase.image.DeleteImageByMusicIdUseCase;
 
-import com.music.musicStreamer.usecases.playlistMusic.DeleteMusicFromPlaylistUseCase;
+import com.music.musicStreamer.usecase.playlistMusic.DeleteMusicFromPlaylistUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

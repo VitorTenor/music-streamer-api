@@ -2,9 +2,9 @@ package com.music.musicStreamer.core.util.validator;
 
 import com.music.musicStreamer.api.v1.model.MusicModel;
 import com.music.musicStreamer.api.v1.repository.MusicRepository;
-import com.music.musicStreamer.entities.music.MusicRequest;
+import com.music.musicStreamer.entity.music.MusicRequest;
 import com.music.musicStreamer.enums.MusicMessages;
-import com.music.musicStreamer.exceptions.MusicException;
+import com.music.musicStreamer.exception.MusicException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

@@ -2,10 +2,10 @@ package com.music.musicStreamer.api.v1.controller;
 
 import com.music.musicStreamer.api.v1.request.UserLogin;
 import com.music.musicStreamer.api.v1.request.UserRegister;
-import com.music.musicStreamer.entities.user.User;
-import com.music.musicStreamer.entities.user.UserAuth;
-import com.music.musicStreamer.usecases.user.CreateUserUseCase;
-import com.music.musicStreamer.usecases.user.LoginUserUseCase;
+import com.music.musicStreamer.entity.user.User;
+import com.music.musicStreamer.entity.user.UserAuth;
+import com.music.musicStreamer.usecase.user.CreateUserUseCase;
+import com.music.musicStreamer.usecase.user.LoginUserUseCase;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;

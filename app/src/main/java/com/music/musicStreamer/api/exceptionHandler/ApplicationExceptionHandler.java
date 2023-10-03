@@ -1,8 +1,8 @@
 package com.music.musicStreamer.api.exceptionHandler;
 
 import com.google.gson.Gson;
-import com.music.musicStreamer.exceptions.SecurityException;
-import com.music.musicStreamer.exceptions.*;
+import com.music.musicStreamer.exception.SecurityException;
+import com.music.musicStreamer.exception.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

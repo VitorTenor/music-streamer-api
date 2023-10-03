@@ -1,6 +1,6 @@
 package com.music.musicStreamer.api.v1.model.dtos;
 
-import com.music.musicStreamer.entities.playlist.MusicPlaylistRequest;
+import com.music.musicStreamer.entity.playlist.MusicPlaylistRequest;
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

@@ -2,11 +2,11 @@ package com.music.musicStreamer.api.v1.controller;
 
 import com.music.musicStreamer.api.v1.model.dtos.AddMusicPlaylistDTO;
 import com.music.musicStreamer.api.v1.model.dtos.CreatePlaylistDTO;
-import com.music.musicStreamer.entities.playlist.Playlist;
-import com.music.musicStreamer.usecases.playlist.AddMusicPlaylistUseCase;
-import com.music.musicStreamer.usecases.playlist.CreatePlaylistUseCase;
-import com.music.musicStreamer.usecases.playlist.GetPlaylistByIdUseCase;
-import com.music.musicStreamer.usecases.playlist.GetPlaylistByUserIdUseCase;
+import com.music.musicStreamer.entity.playlist.Playlist;
+import com.music.musicStreamer.usecase.playlist.AddMusicPlaylistUseCase;
+import com.music.musicStreamer.usecase.playlist.CreatePlaylistUseCase;
+import com.music.musicStreamer.usecase.playlist.GetPlaylistByIdUseCase;
+import com.music.musicStreamer.usecase.playlist.GetPlaylistByUserIdUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

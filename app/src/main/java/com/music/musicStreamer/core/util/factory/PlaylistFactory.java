@@ -2,9 +2,9 @@ package com.music.musicStreamer.core.util.factory;
 
 import com.music.musicStreamer.api.v1.model.PlaylistModel;
 import com.music.musicStreamer.api.v1.model.PlaylistMusicModel;
-import com.music.musicStreamer.entities.playlist.MusicPlaylistRequest;
-import com.music.musicStreamer.entities.playlist.Playlist;
-import com.music.musicStreamer.entities.playlist.PlaylistRequest;
+import com.music.musicStreamer.entity.playlist.MusicPlaylistRequest;
+import com.music.musicStreamer.entity.playlist.Playlist;
+import com.music.musicStreamer.entity.playlist.PlaylistRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
