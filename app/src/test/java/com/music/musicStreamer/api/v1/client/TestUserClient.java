@@ -2,7 +2,6 @@ package com.music.musicStreamer.api.v1.client;
 
 import com.music.musicStreamer.api.v1.model.UserModel;
 import com.music.musicStreamer.api.v1.repository.UserRepository;
-import com.music.musicStreamer.core.feign.Auth;
 import com.music.musicStreamer.core.util.factory.UserFactory;
 import com.music.musicStreamer.core.util.validator.UserValidator;
 import com.music.musicStreamer.entity.user.User;
@@ -20,8 +19,6 @@ import static org.mockito.Mockito.when;
 @DisplayName("UserClient Class Test")
 public class TestUserClient {
     @Mock
-    private Auth auth;
-    @Mock
     private UserFactory userFactory;
     @Mock
     private UserValidator userValidator;
@@ -33,7 +30,7 @@ public class TestUserClient {
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
-        userClient = new UserClient(auth, userFactory, userValidator, userRepository);
+        userClient = new UserClient(userFactory, userValidator, userRepository);
     }
 
     @Test
@@ -69,7 +66,6 @@ public class TestUserClient {
         UserAuth expectedUserAuth = new UserAuth(1, "John Doe", "johndoe@example.com", "token");
 
         when(userValidator.validateUserLogin(userAuthRequest)).thenReturn(createdUserModel);
-        when(auth.getToken(userAuthRequest)).thenReturn("token");
 
         UserAuth result = userClient.loginUser(userAuthRequest);
 

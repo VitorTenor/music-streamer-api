@@ -2,7 +2,6 @@ package com.music.musicStreamer.api.v1.client;
 
 import com.music.musicStreamer.api.v1.model.UserModel;
 import com.music.musicStreamer.api.v1.repository.UserRepository;
-import com.music.musicStreamer.core.token.AuthService;
 import com.music.musicStreamer.core.util.factory.UserFactory;
 import com.music.musicStreamer.core.util.validator.UserValidator;
 import com.music.musicStreamer.entity.user.User;
@@ -23,7 +22,6 @@ public class UserClient implements UserGateway {
     private final UserFactory userFactory;
     private final UserValidator userValidator;
     private final UserRepository userRepository;
-    private final AuthService authService;
     private final Logger logger = Logger.getLogger(UserClient.class.getName());
 
     @Override
@@ -44,7 +42,7 @@ public class UserClient implements UserGateway {
         logger.info("[UserClient] Login user");
         UserModel user = userValidator.validateUserLogin(userAuthRequest);
 
-        String userDetails = authService.authenticateUser(userAuthRequest.getEmail(), userAuthRequest.getPassword());
+        String userDetails = "";
 
         logger.info("[UserClient] User logged => " + user.getEmail());
         return new UserAuth(user.getId(), user.getName(), user.getEmail(), userDetails);
