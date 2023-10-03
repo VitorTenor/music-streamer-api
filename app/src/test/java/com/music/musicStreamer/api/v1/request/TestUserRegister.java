@@ -1,4 +1,4 @@
-package com.music.musicStreamer.api.v1.models.dtos;
+package com.music.musicStreamer.api.v1.request;
 
 import com.music.musicStreamer.api.v1.request.UserRegister;
 import com.music.musicStreamer.entities.user.UserRequest;

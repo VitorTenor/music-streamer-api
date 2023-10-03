@@ -9,6 +9,7 @@ import com.music.musicStreamer.api.v1.controllers.TestPlaylistController;
 import com.music.musicStreamer.api.v1.controllers.TestUserController;
 import com.music.musicStreamer.api.v1.models.*;
 import com.music.musicStreamer.api.v1.models.dtos.*;
+import com.music.musicStreamer.api.v1.request.TestUserRegister;
 import com.music.musicStreamer.core.storage.impl.TestImageFiles;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.platform.suite.api.SelectClasses;
