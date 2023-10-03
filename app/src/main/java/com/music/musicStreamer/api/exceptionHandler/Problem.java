@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Builder
 @Getter
@@ -24,4 +25,16 @@ public class Problem {
     private LocalDateTime timestamp;
     @Schema(description = "List of objects or fields that generated the error")
     private String uri;
+    @Schema(description = "List of objects or fields that generated the error")
+    private List<Object> objects;
+
+    @Builder
+    @Getter
+    @Schema(name = "ObjectProblem")
+    public static class Object {
+        @Schema(example = "parameter")
+        private String name;
+        @Schema(example = "The parameter is invalid")
+        private String userMessage;
+    }
 }

@@ -1,7 +1,7 @@
 package com.music.musicStreamer.api.v1.controllers;
 
 import com.music.musicStreamer.api.v1.models.dtos.UserLoginDTO;
-import com.music.musicStreamer.api.v1.models.dtos.UserRegisterDTO;
+import com.music.musicStreamer.api.v1.request.UserRegister;
 import com.music.musicStreamer.entities.user.User;
 import com.music.musicStreamer.entities.user.UserAuth;
 import com.music.musicStreamer.usecases.user.CreateUserUseCase;
@@ -36,12 +36,12 @@ public class TestUserController {
     @Order(1)
     @DisplayName("001 - Test register() method")
     public void register_ValidUserRegisterDTO_ReturnsCreatedUser() {
-        UserRegisterDTO userRegisterDTO = new UserRegisterDTO("John Doe", "johndoe@example.com", "password");
+        UserRegister userRegister = new UserRegister("John Doe", "johndoe@example.com", "password");
         User createdUser = new User(1, "John Doe", "johndoe@example.com");
 
         when(createUserUseCase.execute(any())).thenReturn(createdUser);
 
-        ResponseEntity<User> response = userController.register(userRegisterDTO);
+        ResponseEntity<User> response = userController.register(userRegister);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(createdUser, response.getBody());

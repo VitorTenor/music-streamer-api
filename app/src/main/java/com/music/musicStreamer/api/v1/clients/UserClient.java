@@ -29,11 +29,12 @@ public class UserClient implements UserGateway {
     @Override
     @Transactional
     public User createUser(UserRequest userRequest) {
+        logger.info("[UserClient] Create user");
         userValidator.validateUser(userRequest);
 
         UserModel createdUser = save(userFactory.createUserModel(userRequest));
 
-        logger.info("User created :" + createdUser.getEmail());
+        logger.info("[UserClient] User created => " + createdUser.getEmail());
 
         return userFactory.createUser(createdUser);
     }

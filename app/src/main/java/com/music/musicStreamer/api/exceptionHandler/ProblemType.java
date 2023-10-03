@@ -13,7 +13,8 @@ public enum ProblemType {
     PLAYLIST_ERROR("/playlist-error", "Playlist error"),
     PLAYLIST_MUSIC_ERROR("/playlist-music-error", "Playlist music error"),
     SECURITY_ERROR("/security-error", "Security error"),
-    AUTHENTICATION_ERROR("/authentication-error", "Authentication error");
+    AUTHENTICATION_ERROR("/authentication-error", "Authentication error"),
+    INVALID_FIELD("/invalid-field", "Invalid field");
     private final String title;
     private final String uri;
 

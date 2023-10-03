@@ -10,21 +10,26 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
 @Component
 @RequiredArgsConstructor
 public class UserValidator {
-    private final String REGEX_EMAIL = "^[\\w-\\+]+(\\.[\\w]+)*@[\\w-]+(\\.[\\w]+)*(\\.[a-z]{2,})$";
     private final UserRepository userRepository;
+    private final Logger logger = Logger.getLogger(UserValidator.class.getName());
+    private final String REGEX_EMAIL = "^[\\w-\\+]+(\\.[\\w]+)*@[\\w-]+(\\.[\\w]+)*(\\.[a-z]{2,})$";
 
     public void validateUser(UserRequest userRequest) {
+        logger.info("[UserValidator] Validate user");
         validateUserEmail(userRequest.getEmail());
+
         if (userRequest.getName().isBlank()) throw new UserException(UserMessages.NAME_IS_REQUIRED);
         if (userRequest.getPassword().isBlank()) throw new UserException(UserMessages.PASSWORD_IS_REQUIRED);
         if (userRequest.getPassword().length() < 6) throw new UserException(UserMessages.PASSWORD_IS_TOO_SHORT);
-        Optional<UserModel> user = userRepository.findByEmail(userRequest.getEmail());
-        if (user.isPresent()) throw new UserException(UserMessages.USER_ALREADY_EXISTS);
+        if (userRepository.existsByEmail(userRequest.getEmail())) throw new UserException(UserMessages.USER_ALREADY_EXISTS);
+
+        logger.info("[UserValidator] User is valid");
     }
 
     public UserModel validateUserLogin(UserAuthRequest userAuthRequest) {
@@ -34,9 +39,11 @@ public class UserValidator {
     }
 
     public void validateUserEmail(String email) {
+        logger.info("[UserValidator] Validate user email");
         if (email.isBlank()) throw new UserException(UserMessages.EMAIL_IS_REQUIRED);
         Pattern pattern = Pattern.compile(REGEX_EMAIL);
         if (!pattern.matcher(email).matches()) throw new UserException(UserMessages.EMAIL_IS_INVALID);
+        logger.info("[UserValidator] User email is valid");
     }
 
 

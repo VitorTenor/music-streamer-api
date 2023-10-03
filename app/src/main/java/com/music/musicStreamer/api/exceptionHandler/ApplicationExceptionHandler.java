@@ -3,21 +3,67 @@ package com.music.musicStreamer.api.exceptionHandler;
 import com.music.musicStreamer.exceptions.*;
 import com.music.musicStreamer.exceptions.SecurityException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
+import org.springframework.validation.BindException;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 @RequiredArgsConstructor
 @ControllerAdvice
 public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler {
 
+    @Override
+    protected ResponseEntity<Object> handleBindException(BindException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+        return handleValidationInternal(ex, headers, status, request, ex.getBindingResult());
+    }
+
+    @Override
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+        return handleValidationInternal(ex, headers, status, request, ex.getBindingResult());
+    }
+
+    private ResponseEntity<Object> handleValidationInternal(Exception ex, HttpHeaders headers, HttpStatus status, WebRequest request, BindingResult bindingResult) {
+        ProblemType problemType = ProblemType.INVALID_FIELD;
+
+        List<Problem.Object> list = bindingResult.getAllErrors().stream()
+                .map(objectError -> {
+                    String message = objectError.getDefaultMessage();
+                    String name = objectError.getObjectName();
+                    if (objectError instanceof FieldError) {
+                        name = ((FieldError) objectError).getField();
+                    }
+                    return Problem.Object.builder()
+                            .name(name)
+                            .userMessage(message)
+                            .build();
+                })
+                .collect(java.util.stream.Collectors.toList());
+
+        var problem = Problem.builder()
+                .timestamp(LocalDateTime.now())
+                .status(status.value())
+                .title(problemType.getTitle())
+                .detail("One or more fields are invalid. Fill in correctly and try again.")
+                .userMessage("One or more fields are invalid. Fill in correctly and try again.")
+                .uri(problemType.getUri())
+                .objects(list)
+                .build();
+
+        return handleExceptionInternal(ex, problem, headers, status, request);
+    }
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Object> handleUncaught(Exception ex, WebRequest request) {
         var status = HttpStatus.BAD_REQUEST;
@@ -95,4 +141,15 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
                 .userMessage(detail)
                 .detail(detail).build();
     }
+
+    @Override
+    protected ResponseEntity<Object> handleExceptionInternal(Exception ex, @Nullable Object body, HttpHeaders headers, HttpStatus status, WebRequest request) {
+        if (HttpStatus.INTERNAL_SERVER_ERROR.equals(status)) {
+            request.setAttribute("javax.servlet.error.exception", ex, 0);
+        }
+
+        logger.error(ex.getMessage(), ex);
+        return new ResponseEntity<>(body, headers, status);
+    }
+
 }
