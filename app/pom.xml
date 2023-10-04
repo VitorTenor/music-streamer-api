@@ -93,7 +93,7 @@
 		<dependency>
 			<groupId>com.auth0</groupId>
 			<artifactId>java-jwt</artifactId>
-			<version>3.16.0</version>
+			<version>4.4.0</version>
 		</dependency>
 
 		<!-- Spring Security -->
@@ -101,14 +101,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
-
-		<!-- JWT -->
-		<dependency>
-			<groupId>io.jsonwebtoken</groupId>
-			<artifactId>jjwt</artifactId>
-			<version>0.9.1</version> <!-- Use a versão mais recente disponível -->
-		</dependency>
-
 
 		<!--		Swagger-->
 		<dependency>

@@ -16,8 +16,5 @@ public class MusicStreamerApplication {
 		SpringApplication.run(MusicStreamerApplication.class, args);
 	}
 
-	@Bean
-	public PasswordEncoder getPasswordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+
 }

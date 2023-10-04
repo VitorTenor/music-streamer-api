@@ -2,6 +2,11 @@ server:
   url: http://localhost:{server.port}/music-streamer/v1
   port: 8081
 
+api:
+  security:
+    token:
+      secret: ZM@r&ZqXpvXfx$djzsqnzS3#doQ%*drX@bw^aQ3JHztU3x9uy2BdEuPFuP6buCa
+
 spring:
   mvc:
     pathmatch:
@@ -52,4 +57,6 @@ document:
     version: v1
     title: Music Streamer API
     description: Music Streamer API
+
+
 
