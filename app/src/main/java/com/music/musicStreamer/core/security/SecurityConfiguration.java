@@ -25,7 +25,7 @@ public class SecurityConfiguration {
 
     private final String[] WHITELIST = {
             "/music-streamer/v1/users/login",
-//            "/music-streamer/v1/users/register"
+            "/music-streamer/v1/users/register"
     };
 
     @Bean
