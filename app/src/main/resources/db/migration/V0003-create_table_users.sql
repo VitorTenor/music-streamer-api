@@ -1,10 +1,10 @@
-create if not exists table users (
-    id serial primary key,
-    name varchar(255) not null,
-    email varchar(255) unique not null,
-    password varchar(255) not null,
-    created_at timestamp not null,
-    updated_at timestamp not null,
-    role varchar(255) not null,
-   active boolean not null,
+CREATE TABLE IF NOT EXISTS users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP NOT NULL,
+    role VARCHAR(255) NOT NULL,
+    active BOOLEAN NOT NULL
 );

@@ -1,8 +1,8 @@
-create table if not exists musics (
-    id serial primary key,
-    name varchar(255) not null,
-    artist varchar(255) not null,
-    path_name varchar(255) not null
-    created_at timestamp not null,
-    updated_at timestamp not null
+CREATE TABLE IF NOT EXISTS musics (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    artist VARCHAR(255) NOT NULL,
+    path_name VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP NOT NULL
 );

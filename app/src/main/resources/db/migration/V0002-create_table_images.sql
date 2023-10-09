@@ -1,8 +1,8 @@
-create table if not exists images (
-    id serial primary key,
-    music_id int not null references musics(id),
-    path_name varchar(255) not null
-    created_at timestamp not null,
-    updated_at timestamp not null
+CREATE TABLE IF NOT EXISTS images (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    music_id INT NOT NULL,
+    path_name VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP NOT NULL,
+    FOREIGN KEY (music_id) REFERENCES musics(id)
 );
-

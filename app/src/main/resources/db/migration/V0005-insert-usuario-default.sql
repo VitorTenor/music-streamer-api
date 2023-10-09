@@ -1,9 +1,4 @@
-insert into users(id, name, email, password, created_at, updated_at, role, active) values
-((select next_val as id_val from users_seq for update) , 'admin', 'admin@admin.com', '123456', now(), now(), 'ADMIN', true);
-
-update users_seq set next_val= next_val + 1;
-
-insert into users(id, name, email, password, created_at, updated_at, role, active) values
-((select next_val as id_val from users_seq for update) ,'user', 'user@user.com', '123456', now(), now(), 'USER', true);
-
-update users_seq set next_val= next_val + 1;
+INSERT INTO users (id, name, email, password, created_at, updated_at, role, active)
+VALUES
+    (0,'admin', 'admin@admin.com', '$2a$10$XPT8j0CWsiEjwPqurzWRXOPfENDjbpolLRP8U/81reL43xaYEKeNe', NOW(), NOW(), 0, 1),
+    (1, 'user', 'user@user.com', '$2a$10$XPT8j0CWsiEjwPqurzWRXOPfENDjbpolLRP8U/81reL43xaYEKeNe', NOW(), NOW(), 1, 1);
