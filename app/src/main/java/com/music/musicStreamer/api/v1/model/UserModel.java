@@ -18,10 +18,9 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "users")
-@SequenceGenerator(name = "users_seq", sequenceName = "users_seq", allocationSize = 1)
 public class UserModel implements Serializable, UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_seq")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(nullable = false, length = 100)
     private String name;
