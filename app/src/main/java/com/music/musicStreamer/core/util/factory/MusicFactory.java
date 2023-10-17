@@ -59,14 +59,15 @@ public class MusicFactory {
     }
 
     public MusicModel createModel(MusicRequest musicRequest, String newFileName) {
-        MusicModel musicModel = new MusicModel();
-        musicModel.setName(musicRequest.getName());
-        musicModel.setArtist(musicRequest.getArtist());
-        musicModel.setAlbum(musicRequest.getAlbum());
-        musicModel.setGenre(musicRequest.getGenre());
-        musicModel.setPathName(newFileName + MUSIC_TYPE);
-        musicModel.setCreated_at(new Date());
-        musicModel.setUpdated_at(new Date());
-        return musicModel;
+        return MusicModel
+                .builder()
+                .name(musicRequest.getName())
+                .artist(musicRequest.getArtist())
+                .album(musicRequest.getAlbum())
+                .genre(musicRequest.getGenre())
+                .pathName(newFileName + MUSIC_TYPE)
+                .created_at(new Date())
+                .updated_at(new Date())
+                .build();
     }
 }

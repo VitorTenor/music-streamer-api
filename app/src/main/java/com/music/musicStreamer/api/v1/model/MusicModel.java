@@ -1,5 +1,6 @@
 package com.music.musicStreamer.api.v1.model;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,6 +10,7 @@ import java.util.Date;
 @Entity
 @Setter
 @Getter
+@Builder
 @Table(name = "musics")
 public class MusicModel {
     @Id
