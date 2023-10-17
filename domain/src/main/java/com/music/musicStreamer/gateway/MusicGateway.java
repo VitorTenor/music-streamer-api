@@ -10,7 +10,7 @@ import java.util.List;
 public interface MusicGateway {
     public Music saveMusic(MusicRequest musicRequest);
     public List<Music> getAllMusics();
-    public Object playMusic(int id) throws IOException;
+    public byte[] playMusic(int id) throws IOException;
     public MusicDownload downloadMusic(int id) throws IOException;
     public Music getMusicById(int id);
     public String deleteMusicById(int id);

@@ -81,8 +81,9 @@ public class ImageClient implements ImageGateway {
         LOGGER.info("[ImageClient] Get image by music id");
         ImageModel imageModel = findByMusicId(id);
 
+
         return imageModel != null ?
-                imageFactory.createImage(imageModel) : null;
+                imageFactory.createImage(imageModel) : imageFactory.createDefaultImage();
     }
 
     private void deleteInDatabaseByImageId(int id) {
@@ -98,19 +99,8 @@ public class ImageClient implements ImageGateway {
         LOGGER.info("[ImageClient] Find image by music id");
         LOGGER.info("[ImageClient] Music id => " + musicId);
 
-        Boolean exists = imageRepository.existsByMusicId(musicId);
 
-        if (Boolean.TRUE.equals(exists)){
-            LOGGER.info("[ImageClient] Image found");
-
-            return imageRepository.findByMusicId(musicId);
-        } else {
-            LOGGER.info("[ImageClient] Image not found");
-            LOGGER.info("[ImageClient] Music id => " + musicId);
-            LOGGER.info("[ImageClient] The music does not have an image");
-
-            return null;
-        }
+        return imageRepository.findByMusicId(musicId);
     }
 
     private ImageModel findAndValidateByImageId(int id) {

@@ -46,6 +46,7 @@ storage:
     path: C:/streamerAplication/media/image/
     mediaType: .jpg
     url: http://localhost:8081/music-streamer/v1/images/
+    defaultImage: default.jpg
 
 document:
   api:

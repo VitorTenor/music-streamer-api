@@ -11,7 +11,7 @@ public class PlayMusicByIdUseCase {
     public PlayMusicByIdUseCase(MusicGateway musicGateway) {
         this.musicGateway = musicGateway;
     }
-    public Object execute(final int id) throws IOException {
+    public byte[] execute(final int id) throws IOException {
         return musicGateway.playMusic(id);
     }
 }

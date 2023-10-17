@@ -52,7 +52,7 @@ public class MusicController {
     }
 
     @GetMapping("/play/{musicId}")
-    public ResponseEntity<Object> playMusicById(@PathVariable("musicId") Integer musicId) throws IOException {
+    public ResponseEntity<byte[]> playMusicById(@PathVariable("musicId") Integer musicId) throws IOException {
         LOGGER.info("[MusicController] Play music by id");
         LOGGER.info("[MusicController] Music id: " + musicId);
 

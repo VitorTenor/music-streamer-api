@@ -20,6 +20,7 @@ import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.logging.Logger;
@@ -64,7 +65,7 @@ public class MusicClient implements MusicGateway {
     }
 
     @Override
-    public Object playMusic(int musicId) {
+    public byte[] playMusic(int musicId) throws IOException {
         LOGGER.info("[MusicClient] Play music by id");
 
         MusicModel musicModel = findAndValidateByMusicId(musicId);
@@ -72,7 +73,7 @@ public class MusicClient implements MusicGateway {
         LOGGER.info("[MusicClient] Music found");
         LOGGER.info("[MusicClient] Music id: " + musicModel.getId());
 
-        return musicFiles.getInFilesStream(musicModel.getPathName());
+        return musicFiles.getInFilesStream(musicModel.getPathName()).readAllBytes();
     }
 
     @Override
