@@ -4,6 +4,7 @@ import com.music.musicStreamer.entity.music.MusicRequest;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 public record MusicUpload(
         @NotEmpty(message = "Name is required")
@@ -14,7 +15,7 @@ public record MusicUpload(
         String album,
         @NotEmpty(message = "Genre is required")
         String genre,
-        @NotEmpty(message = "Music is required")
+        @NotNull(message = "Music is required")
         MultipartFile music
 ) {
     public MusicRequest toEntity() throws Exception {
