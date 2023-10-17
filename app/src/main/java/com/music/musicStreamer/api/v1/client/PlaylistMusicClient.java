@@ -30,6 +30,10 @@ public class PlaylistMusicClient implements PlaylistMusicGateway {
         LOGGER.info("[PlaylistMusicClient] Delete music from playlist");
 
         List<PlaylistMusicModel> playlistMusic = playlistMusicRepository.findByMusicId(id);
+        if (playlistMusic.isEmpty()) {
+            LOGGER.info("[PlaylistMusicClient] Music not found in playlist, nothing to delete");
+            return false;
+        }
         for (PlaylistMusicModel playlistMusicModel : playlistMusic) {
             playlistMusicRepository.deleteById(playlistMusicModel.getId());
         }

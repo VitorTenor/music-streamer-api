@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.logging.Logger;
 
 @RestController
@@ -59,19 +60,6 @@ public class MusicController {
         return ResponseEntity.status(HttpStatus.OK)
                 .contentType(MediaType.parseMediaType("audio/mpeg"))
                 .body(playMusicByIdUseCase.execute(musicId));
-    }
-
-    @GetMapping("/download/{musicId}")
-    public ResponseEntity downloadMusicById(@PathVariable("musicId") Integer musicId) throws Exception {
-        LOGGER.info("[MusicController] Download music by id");
-        LOGGER.info("[MusicController] Music id: " + musicId);
-
-        MusicDownload music = downloadByIdMusicUseCase.execute(musicId);
-
-        LOGGER.info("[MusicController] Music name: " + music.getFile().getName());
-
-        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + music.getFile().getName())
-                .contentType(MediaType.APPLICATION_OCTET_STREAM).contentLength(music.getFile().length()).body(music.getInputStream() + MUSIC_TYPE);
     }
 
     @DeleteMapping("/delete/{musicId}")

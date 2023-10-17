@@ -117,11 +117,13 @@ public class MusicClient implements MusicGateway {
         musicRepository.deleteById(musicId);
         LOGGER.info("[MusicClient] Music deleted in database");
 
-        deleteImageByMusicIdUseCase.execute(musicId);
-        LOGGER.info("[MusicClient] Image deleted in database");
+        if (deleteImageByMusicIdUseCase.execute(musicId)) {
+            LOGGER.info("[MusicClient] Image deleted in database");
+        }
 
-        deleteMusicFromPlaylistUseCase.execute(musicId);
-        LOGGER.info("[MusicClient] Music deleted in playlist");
+        if (deleteMusicFromPlaylistUseCase.execute(musicId)) {
+            LOGGER.info("[MusicClient] Music deleted in playlist");
+        }
 
         musicFiles.deleteInFiles(musicModel.getPathName());
         LOGGER.info("[MusicClient] Music deleted in files");

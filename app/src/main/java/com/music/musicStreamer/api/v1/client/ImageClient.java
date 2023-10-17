@@ -52,6 +52,12 @@ public class ImageClient implements ImageGateway {
         LOGGER.info("[ImageClient] Delete image by music id");
 
         ImageModel imageModel = findByMusicId(id);
+
+        if (imageModel == null) {
+            LOGGER.info("[ImageClient] Image not found, nothing to delete");
+            return false;
+        }
+
         imageFiles.deleteInFiles(imageModel.getPathName());
 
         LOGGER.info("[ImageClient] Image deleted in files");
@@ -98,7 +104,6 @@ public class ImageClient implements ImageGateway {
     private ImageModel findByMusicId(int musicId) {
         LOGGER.info("[ImageClient] Find image by music id");
         LOGGER.info("[ImageClient] Music id => " + musicId);
-
 
         return imageRepository.findByMusicId(musicId);
     }
