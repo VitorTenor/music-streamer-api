@@ -1,13 +1,17 @@
 package com.music.musicStreamer.api.v1.client;
 
 import com.music.musicStreamer.api.v1.model.ImageModel;
+import com.music.musicStreamer.api.v1.model.MusicModel;
 import com.music.musicStreamer.api.v1.repository.ImageRepository;
+import com.music.musicStreamer.api.v1.repository.MusicRepository;
 import com.music.musicStreamer.core.util.GenerateName;
 import com.music.musicStreamer.core.storage.impl.ImageFiles;
 import com.music.musicStreamer.core.util.factory.ImageFactory;
 import com.music.musicStreamer.core.util.validator.ImageValidator;
 import com.music.musicStreamer.entity.image.Image;
 import com.music.musicStreamer.entity.image.ImageRequest;
+import com.music.musicStreamer.enums.MusicMessages;
+import com.music.musicStreamer.exception.MusicException;
 import com.music.musicStreamer.gateway.ImageGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -22,12 +26,20 @@ public class ImageClient implements ImageGateway {
     private final ImageFactory imageFactory;
     private final ImageValidator imageValidator;
     private final ImageRepository imageRepository;
+    private final MusicRepository musicRepository;
     private final Logger LOGGER = Logger.getLogger(ImageClient.class.getName());
 
     @Override
     @Transactional
     public Image saveImage(ImageRequest imageRequest) {
         LOGGER.info("[ImageClient] Upload image");
+
+        MusicModel musicModel = musicRepository.findById(imageRequest.getId()).orElseThrow(
+                () -> new MusicException(MusicMessages.NOT_FOUND)
+        );
+
+        LOGGER.info("[ImageClient] Music found");
+        LOGGER.info("[ImageClient] Music name => " + musicModel.getName());
 
         String newFileName = GenerateName.randomName();
 
@@ -37,7 +49,7 @@ public class ImageClient implements ImageGateway {
 
         LOGGER.info("[ImageClient] Image saved in files");
 
-        ImageModel imageModel = saveInDatabase(imageFactory.createImageModel(imageRequest, newFileName));
+        ImageModel imageModel = saveInDatabase(imageFactory.createImageModel(musicModel, newFileName));
 
         LOGGER.info("[ImageClient] Image saved in database => imageId: " + imageModel.getId());
 

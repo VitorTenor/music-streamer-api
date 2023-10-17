@@ -14,8 +14,9 @@ public class ImageModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "music_id", nullable = false, length = 100)
-    private int musicId;
+    @OneToOne
+    @JoinColumn(name = "music_id", referencedColumnName = "id")
+    private MusicModel music;
     @Column(name = "path_name", nullable = false, length = 100)
     private String pathName;
     @Column(nullable = false, length = 100)
@@ -27,8 +28,8 @@ public class ImageModel {
 
     }
 
-    public ImageModel(int musicId, String pathName, Date created_at, Date updated_at) {
-        this.musicId = musicId;
+    public ImageModel(MusicModel music, String pathName, Date created_at, Date updated_at) {
+        this.music = music;
         this.pathName = pathName;
         this.created_at = created_at;
         this.updated_at = updated_at;
