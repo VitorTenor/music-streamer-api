@@ -10,7 +10,6 @@ import java.util.Date;
 @Entity
 @Setter
 @Getter
-@Builder
 @Table(name = "musics")
 public class MusicModel {
     @Id

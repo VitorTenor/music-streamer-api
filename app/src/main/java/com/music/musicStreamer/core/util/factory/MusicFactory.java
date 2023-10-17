@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 @RequiredArgsConstructor
 public class MusicFactory {
     private final GetImageByMusicIdUseCase getImageByMusicIdUseCase;
-    private static @Value("${storage.music.mediaType}") String MUSIC_TYPE;
+    private @Value("${storage.music.mediaType}") String MUSIC_TYPE;
     private final Logger LOGGER = Logger.getLogger(MusicFactory.class.getName());
 
     public Music createMusic(MusicModel musicModel) {
@@ -59,15 +59,14 @@ public class MusicFactory {
     }
 
     public MusicModel createModel(MusicRequest musicRequest, String newFileName) {
-        return MusicModel
-                .builder()
-                .name(musicRequest.getName())
-                .artist(musicRequest.getArtist())
-                .album(musicRequest.getAlbum())
-                .genre(musicRequest.getGenre())
-                .pathName(newFileName + MUSIC_TYPE)
-                .created_at(new Date())
-                .updated_at(new Date())
-                .build();
+        MusicModel musicModel = new MusicModel();
+        musicModel.setName(musicRequest.getName());
+        musicModel.setArtist(musicRequest.getArtist());
+        musicModel.setAlbum(musicRequest.getAlbum());
+        musicModel.setGenre(musicRequest.getGenre());
+        musicModel.setPathName(newFileName + MUSIC_TYPE);
+        musicModel.setCreated_at(new Date());
+        musicModel.setUpdated_at(new Date());
+        return musicModel;
     }
 }

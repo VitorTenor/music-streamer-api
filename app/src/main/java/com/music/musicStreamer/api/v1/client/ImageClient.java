@@ -51,7 +51,7 @@ public class ImageClient implements ImageGateway {
     public Boolean deleteImageByMusicId(int id) {
         LOGGER.info("[ImageClient] Delete image by music id");
 
-        ImageModel imageModel = findAndValidateByMusicId(id);
+        ImageModel imageModel = findByMusicId(id);
         imageFiles.deleteInFiles(imageModel.getPathName());
 
         LOGGER.info("[ImageClient] Image deleted in files");
@@ -78,8 +78,10 @@ public class ImageClient implements ImageGateway {
 
     @Override
     public Image getImageByMusicId(int id) {
-        ImageModel imageModel = findAndValidateByMusicId(id);
-        return imageFactory.createImage(imageModel);
+        LOGGER.info("[ImageClient] Get image by music id");
+        ImageModel imageModel = findByMusicId(id);
+
+        return imageModel != null ? imageFactory.createImage(imageModel) : null;
     }
 
     private void deleteInDatabaseByImageId(int id) {
@@ -91,16 +93,23 @@ public class ImageClient implements ImageGateway {
         return imageRepository.save(imageModel);
     }
 
-    private ImageModel findAndValidateByMusicId(int id) {
+    private ImageModel findByMusicId(int musicId) {
         LOGGER.info("[ImageClient] Find image by music id");
-        LOGGER.info("[ImageClient] Music id => " + id);
+        LOGGER.info("[ImageClient] Music id => " + musicId);
 
-        ImageModel imageModel = imageRepository.findByMusicId(id);
-        imageValidator.validateIfImageIsNotNull(imageModel);
+        Boolean exists = imageRepository.existsByMusicId(musicId);
 
-        LOGGER.info("[ImageClient] Image found");
+        if (Boolean.TRUE.equals(exists)){
+            LOGGER.info("[ImageClient] Image found");
 
-        return imageModel;
+            return imageRepository.findByMusicId(musicId);
+        } else {
+            LOGGER.info("[ImageClient] Image not found");
+            LOGGER.info("[ImageClient] Music id => " + musicId);
+            LOGGER.info("[ImageClient] The music does not have an image");
+
+            return null;
+        }
     }
 
     private ImageModel findAndValidateByImageId(int id) {
