@@ -36,7 +36,7 @@ public class UserClient implements UserGateway {
 
         UserModel createdUser = save(userFactory.createUserModel(userRequest));
 
-        logger.info("[UserClient] User created => " + createdUser.getEmail());
+        logger.info("[UserClient] User created => userId: " + createdUser.getId());
 
         return userFactory.createUser(createdUser);
     }
@@ -46,13 +46,14 @@ public class UserClient implements UserGateway {
         logger.info("[UserClient] Login user");
         UserModel user = userValidator.validateUserLogin(userAuthRequest);
 
-        Authentication authentication = authClient.authenticate(userAuthRequest);
+        authClient.authenticate(userAuthRequest);
 
         logger.info("[UserClient] User logged => " + user.getEmail());
         return new UserAuth(user.getId(), user.getName(), user.getEmail(), tokenService.generateToken(user));
     }
 
     private UserModel save(UserModel userModel) {
+        logger.info("[UserClient] Save user => " + userModel.getEmail());
         return this.userRepository.save(userModel);
     }
 

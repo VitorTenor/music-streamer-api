@@ -1,6 +1,6 @@
 package com.music.musicStreamer.api.v1.controller;
 
-import com.music.musicStreamer.api.v1.model.dtos.AddMusicDTO;
+import com.music.musicStreamer.api.v1.request.MusicUpload;
 import com.music.musicStreamer.entity.music.Music;
 import com.music.musicStreamer.entity.music.MusicDownload;
 import com.music.musicStreamer.usecase.music.*;
@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,38 +27,57 @@ public class MusicController {
     private final DownloadByIdMusicUseCase downloadByIdMusicUseCase;
     private final DeleteMusicByIdUseCase deleteMusicByIdUseCase;
     private final GetAllMusicsUseCase getAllMusicsUseCase;
+    private final Logger LOGGER = Logger.getLogger(MusicController.class.getName());
 
     @PostMapping("/upload")
-    public ResponseEntity<Music> uploadMusic(@ModelAttribute AddMusicDTO addMusicDTO) throws Exception {
-        return ResponseEntity.status(HttpStatus.OK).body(uploadMusicUseCase.execute(addMusicDTO.toEntity()));
+    public ResponseEntity<Music> uploadMusic(@ModelAttribute MusicUpload musicUpload) throws Exception {
+        LOGGER.info("[MusicController] Upload music");
+
+        return ResponseEntity.status(HttpStatus.OK).body(uploadMusicUseCase.execute(musicUpload.toEntity()));
     }
 
     @GetMapping("")
     public ResponseEntity<Object> getMusics() {
+        LOGGER.info("[MusicController] Get all musics");
+
         return ResponseEntity.status(HttpStatus.OK).body(getAllMusicsUseCase.execute());
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Music> getMusic(@PathVariable("id") Integer id) {
-        return ResponseEntity.status(HttpStatus.OK).body(getMusicByIdUseCase.execute(id));
+    @GetMapping("/{musicId}")
+    public ResponseEntity<Music> getMusic(@PathVariable(value = "musicId", required = true) Integer musicId) {
+        LOGGER.info("[MusicController] Get music by id");
+        LOGGER.info("[MusicController] Music id: " + musicId);
+
+        return ResponseEntity.status(HttpStatus.OK).body(getMusicByIdUseCase.execute(musicId));
     }
 
-    @GetMapping("/play/{id}")
-    public ResponseEntity<Object> playMusicById(@PathVariable("id") Integer id) throws IOException {
+    @GetMapping("/play/{musicId}")
+    public ResponseEntity<Object> playMusicById(@PathVariable("musicId") Integer musicId) throws IOException {
+        LOGGER.info("[MusicController] Play music by id");
+        LOGGER.info("[MusicController] Music id: " + musicId);
+
         return ResponseEntity.status(HttpStatus.OK)
                 .contentType(MediaType.parseMediaType("audio/mpeg"))
-                .body(playMusicByIdUseCase.execute(id));
+                .body(playMusicByIdUseCase.execute(musicId));
     }
 
-    @GetMapping("/download/{id}")
-    public ResponseEntity downloadMusicById(@PathVariable("id") Integer id) throws Exception {
-        MusicDownload music = downloadByIdMusicUseCase.execute(id);
+    @GetMapping("/download/{musicId}")
+    public ResponseEntity downloadMusicById(@PathVariable("musicId") Integer musicId) throws Exception {
+        LOGGER.info("[MusicController] Download music by id");
+        LOGGER.info("[MusicController] Music id: " + musicId);
+
+        MusicDownload music = downloadByIdMusicUseCase.execute(musicId);
+
+        LOGGER.info("[MusicController] Music name: " + music.getFile().getName());
+
         return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + music.getFile().getName())
                 .contentType(MediaType.APPLICATION_OCTET_STREAM).contentLength(music.getFile().length()).body(music.getInputStream() + MUSIC_TYPE);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteMusicById(@PathVariable("id") Integer id) {
-        return ResponseEntity.status(HttpStatus.OK).body(deleteMusicByIdUseCase.execute(id));
+    @DeleteMapping("/{musicId}")
+    public ResponseEntity<Object> deleteMusicById(@PathVariable("musicId") Integer musicId) {
+        LOGGER.info("[MusicController] Delete music by id");
+
+        return ResponseEntity.status(HttpStatus.OK).body(deleteMusicByIdUseCase.execute(musicId));
     }
 }

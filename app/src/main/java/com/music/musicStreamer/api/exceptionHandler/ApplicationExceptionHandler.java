@@ -8,6 +8,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -150,6 +151,15 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
         }
     }
 
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<Object> handleBadCredentialsException(BadCredentialsException ex, WebRequest request) {
+        HttpStatus status = HttpStatus.UNAUTHORIZED;
+        ProblemType problemType = ProblemType.SECURITY_ERROR;
+        String detail = ex.getMessage();
+        Problem problem = createProblemBuilder(status, problemType, detail);
+        return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
+    }
+
     private Problem createProblemBuilder(HttpStatus status, ProblemType problemType, String detail) {
         return Problem.builder()
                 .timestamp(LocalDateTime.now())
@@ -157,7 +167,8 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
                 .uri(problemType.getUri())
                 .title(problemType.getTitle())
                 .userMessage(detail)
-                .detail(detail).build();
+                .detail(detail)
+                .build();
     }
 
     @Override

@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.logging.Logger;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/music-streamer/v1/playlists")
@@ -20,7 +22,7 @@ public class PlaylistController {
     private final GetPlaylistByIdUseCase getPlaylistByIdUseCase;
     private final AddMusicPlaylistUseCase addMusicPlaylistUseCase;
     private final GetPlaylistByUserIdUseCase getPlaylistByUserIdUseCase;
-
+    private final Logger LOGGER = Logger.getLogger(PlaylistController.class.getName());
 
     @PostMapping
     public ResponseEntity<Playlist> createPlaylist(@RequestBody CreatePlaylistDTO createPlaylist) throws Exception {

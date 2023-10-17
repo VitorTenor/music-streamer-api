@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
+import java.util.logging.Logger;
 
 @Component
 @RequiredArgsConstructor
@@ -22,14 +23,26 @@ public class ImageClient implements ImageGateway {
     private final ImageFactory imageFactory;
     private final ImageValidator imageValidator;
     private final ImageRepository imageRepository;
+    private final Logger LOGGER = Logger.getLogger(ImageClient.class.getName());
 
     @Override
     @Transactional
     public Image saveImage(ImageRequest imageRequest) {
+        LOGGER.info("[ImageClient] Upload image");
+
         imageValidator.validateImage(imageRequest);
         String newFileName = generateName.randomName();
+
+        LOGGER.info("[ImageClient] New file name => " + newFileName);
+
         imageFiles.saveInFiles(imageRequest, newFileName);
+
+        LOGGER.info("[ImageClient] Image saved in files");
+
         ImageModel imageModel = saveInDatabase(imageFactory.createImageModel(imageRequest, newFileName));
+
+        LOGGER.info("[ImageClient] Image saved in database => imageId: " + imageModel.getId());
+
         return imageFactory.createImage(imageModel);
     }
 
@@ -44,6 +57,9 @@ public class ImageClient implements ImageGateway {
 
     @Override
     public byte[] getImageByFileName(String fileName) {
+        LOGGER.info("[ImageClient] Get image by file name");
+        LOGGER.info("[ImageClient] File name => " + fileName);
+
         return imageFiles.getBytesInFiles(fileName);
     }
 

@@ -2,9 +2,9 @@ package com.music.musicStreamer.entity.image;
 
 public class ImageRequest {
 
-    public ImageRequest(byte[] image, int id) {
+    public ImageRequest(byte[] image, int musicId) {
         this.image = image;
-        this.id = id;
+        this.musicId = musicId;
     }
 
     public byte[] getImage() {
@@ -12,10 +12,10 @@ public class ImageRequest {
     }
 
     public int getId() {
-        return id;
+        return musicId;
     }
 
     private final byte[] image;
-    private final int id;
+    private final int musicId;
 
 }

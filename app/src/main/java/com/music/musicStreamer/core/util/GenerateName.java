@@ -1,18 +1,28 @@
 package com.music.musicStreamer.core.util;
 
-import org.springframework.stereotype.Service;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.time.Instant;
 import java.util.Random;
+import java.util.logging.Logger;
 
-@Service
+@Component
+@RequiredArgsConstructor
 public class GenerateName {
 
-    private Random random = new Random();
+    private final Logger LOGGER = Logger.getLogger(GenerateName.class.getName());
 
     public String randomName() {
+        LOGGER.info("[GenerateName] Generate random name");
+
+        Random random = new Random();
         Instant instant = Instant.now();
-        String generatedName = instant.toString() + "_" + Long.toString(random.nextLong());
-        return generatedName.replace(":", "_").replace(".", "_");
+        String generatedName = (instant.toString() + "_" + random.nextLong())
+                .replace(":", "_").replace(".", "_");
+
+        LOGGER.info("[GenerateName] Generated name => " + generatedName);
+
+        return generatedName;
     }
 }

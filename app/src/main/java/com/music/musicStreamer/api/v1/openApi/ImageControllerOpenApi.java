@@ -17,5 +17,5 @@ public interface ImageControllerOpenApi {
             responses = {
                     @ApiResponse(responseCode = "200", description = "OK"),
             })
-    ResponseEntity<Image> uploadImage(@RequestParam(name = "image") MultipartFile file, @PathVariable("id") int id) throws IOException;
+    ResponseEntity<Image> uploadImageByMusicId(@RequestParam(name = "image") MultipartFile file, @PathVariable("id") int id) throws IOException;
 }

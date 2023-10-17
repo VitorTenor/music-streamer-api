@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS playlists (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id INT SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     user_id INT NOT NULL,
     created_at TIMESTAMP NOT NULL,
@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS playlists (
 );
 
 CREATE TABLE IF NOT EXISTS playlist_musics (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id INT SERIAL PRIMARY KEY,
     user_id INT NOT NULL,
     playlist_id INT NOT NULL,
     music_id INT NOT NULL,
