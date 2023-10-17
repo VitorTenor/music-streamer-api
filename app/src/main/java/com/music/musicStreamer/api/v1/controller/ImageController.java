@@ -27,12 +27,14 @@ public class ImageController {
     @PostMapping(path = "/uploadByMusicId", consumes = MediaType.IMAGE_JPEG_VALUE)
     public ResponseEntity<Image> uploadImageByMusicId(@ModelAttribute @Valid ImageUpload imageUpload) throws IOException {
         LOGGER.info("[ImageController] Upload image");
+
         return ResponseEntity.status(HttpStatus.OK).body(uploadImageUseCase.execute(imageUpload.toEntity()));
     }
 
     @GetMapping("/downloadByPathName/{getPathName}")
     public ResponseEntity<byte[]> getImage(@PathVariable(value = "getPathName", required = true) String getPathName) {
         LOGGER.info("[ImageController] Get image");
+
         return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.IMAGE_JPEG).body(getImageUseCase.execute(getPathName));
     }
 }

@@ -9,13 +9,16 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.logging.Logger;
 
 @Component
 @RequiredArgsConstructor
 public class PlaylistFactory {
+    private final Logger LOGGER = Logger.getLogger(PlaylistFactory.class.getName());
 
     public Playlist createPlaylist(PlaylistModel playlistModel) {
-        return new Playlist(playlistModel.getName(), playlistModel.getUserId(), playlistModel.getId());
+        LOGGER.info("[PlaylistFactory] Create playlist");
+        return new Playlist(playlistModel.getName(), playlistModel.getId());
     }
 
     public PlaylistModel createPlaylistModel(PlaylistRequest playlistRequest) {
@@ -23,6 +26,8 @@ public class PlaylistFactory {
     }
 
     public PlaylistMusicModel createPlaylistMusicModel(MusicPlaylistRequest musicPlaylistRequest) {
+        LOGGER.info("[PlaylistFactory] Create playlist music model");
+
         return new PlaylistMusicModel(musicPlaylistRequest.getPlaylistId(), musicPlaylistRequest.getUserId(), musicPlaylistRequest.getMusicId(), new Date(), new Date());
     }
 

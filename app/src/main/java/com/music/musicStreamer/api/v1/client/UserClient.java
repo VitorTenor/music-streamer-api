@@ -11,7 +11,6 @@ import com.music.musicStreamer.entity.user.UserAuthRequest;
 import com.music.musicStreamer.entity.user.UserRequest;
 import com.music.musicStreamer.gateway.UserGateway;
 import lombok.AllArgsConstructor;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
@@ -26,34 +25,34 @@ public class UserClient implements UserGateway {
     private final TokenService tokenService;
     private final UserValidator userValidator;
     private final UserRepository userRepository;
-    private final Logger logger = Logger.getLogger(UserClient.class.getName());
+    private final Logger LOGGER = Logger.getLogger(UserClient.class.getName());
 
     @Override
     @Transactional
     public User createUser(UserRequest userRequest) {
-        logger.info("[UserClient] Create user");
+        LOGGER.info("[UserClient] Create user");
         userValidator.validateUser(userRequest);
 
         UserModel createdUser = save(userFactory.createUserModel(userRequest));
 
-        logger.info("[UserClient] User created => userId: " + createdUser.getId());
+        LOGGER.info("[UserClient] User created => userId: " + createdUser.getId());
 
         return userFactory.createUser(createdUser);
     }
 
     @Override
     public UserAuth loginUser(UserAuthRequest userAuthRequest) {
-        logger.info("[UserClient] Login user");
+        LOGGER.info("[UserClient] Login user");
         UserModel user = userValidator.validateUserLogin(userAuthRequest);
 
         authClient.authenticate(userAuthRequest);
 
-        logger.info("[UserClient] User logged => " + user.getEmail());
-        return new UserAuth(user.getId(), user.getName(), user.getEmail(), tokenService.generateToken(user));
+        LOGGER.info("[UserClient] User logged => " + user.getEmail());
+        return new UserAuth(user.getName(), user.getEmail(), tokenService.generateToken(user));
     }
 
     private UserModel save(UserModel userModel) {
-        logger.info("[UserClient] Save user => " + userModel.getEmail());
+        LOGGER.info("[UserClient] Save user => " + userModel.getEmail());
         return this.userRepository.save(userModel);
     }
 

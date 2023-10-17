@@ -16,11 +16,11 @@ import java.util.regex.Pattern;
 @RequiredArgsConstructor
 public class UserValidator {
     private final UserRepository userRepository;
-    private final Logger logger = Logger.getLogger(UserValidator.class.getName());
+    private final Logger LOGGER = Logger.getLogger(UserValidator.class.getName());
     private final String REGEX_EMAIL = "^[\\w-\\+]+(\\.[\\w]+)*@[\\w-]+(\\.[\\w]+)*(\\.[a-z]{2,})$";
 
     public void validateUser(UserRequest userRequest) {
-        logger.info("[UserValidator] Validate user");
+        LOGGER.info("[UserValidator] Validate user");
         validateUserEmail(userRequest.getEmail());
 
         if (userRequest.getName().isBlank()) throw new UserException(UserMessages.NAME_IS_REQUIRED);
@@ -28,29 +28,34 @@ public class UserValidator {
         if (userRequest.getPassword().length() < 6) throw new UserException(UserMessages.PASSWORD_IS_TOO_SHORT);
         if (userRepository.existsByEmail(userRequest.getEmail())) throw new UserException(UserMessages.USER_ALREADY_EXISTS);
 
-        logger.info("[UserValidator] User is valid");
+        LOGGER.info("[UserValidator] User is valid");
     }
 
     public UserModel validateUserLogin(UserAuthRequest userAuthRequest) {
-        logger.info("[UserValidator] Validate user login");
+        LOGGER.info("[UserValidator] Validate user login");
+
         validateUserEmail(userAuthRequest.getEmail());
-
         if (userAuthRequest.getPassword().isBlank()) throw new UserException(UserMessages.PASSWORD_IS_REQUIRED);
-
         return userRepository.findByEmail(userAuthRequest.getEmail()).orElseThrow(() -> new UserException(UserMessages.NOT_FOUND));
     }
 
     public void validateUserEmail(String email) {
-        logger.info("[UserValidator] Validate user email");
+        LOGGER.info("[UserValidator] Validate user email");
+
         if (email.isBlank()) throw new UserException(UserMessages.EMAIL_IS_REQUIRED);
         Pattern pattern = Pattern.compile(REGEX_EMAIL);
         if (!pattern.matcher(email).matches()) throw new UserException(UserMessages.EMAIL_IS_INVALID);
-        logger.info("[UserValidator] User email is valid");
+
+        LOGGER.info("[UserValidator] User email is valid");
     }
 
 
     public void validateIfExistById(int id) {
+        LOGGER.info("[UserValidator] Validate if user exist by id");
+
         if (!userRepository.existsById(id)) throw new UserException(UserMessages.NOT_FOUND);
+
+        LOGGER.info("[UserValidator] User exist by id");
     }
 
 }

@@ -49,9 +49,16 @@ public class ImageClient implements ImageGateway {
     @Override
     @Transactional
     public Boolean deleteImageByMusicId(int id) {
+        LOGGER.info("[ImageClient] Delete image by music id");
+
         ImageModel imageModel = findAndValidateByMusicId(id);
         imageFiles.deleteInFiles(imageModel.getPathName());
+
+        LOGGER.info("[ImageClient] Image deleted in files");
+
         deleteInDatabaseByImageId(imageModel.getId());
+        LOGGER.info("[ImageClient] Image deleted in database");
+
         return true;
     }
 
@@ -76,6 +83,7 @@ public class ImageClient implements ImageGateway {
     }
 
     private void deleteInDatabaseByImageId(int id) {
+        LOGGER.info("[ImageClient] Delete image by id");
         imageRepository.deleteById(id);
     }
 
@@ -84,14 +92,24 @@ public class ImageClient implements ImageGateway {
     }
 
     private ImageModel findAndValidateByMusicId(int id) {
+        LOGGER.info("[ImageClient] Find image by music id");
+        LOGGER.info("[ImageClient] Music id => " + id);
+
         ImageModel imageModel = imageRepository.findByMusicId(id);
         imageValidator.validateIfImageIsNotNull(imageModel);
+
+        LOGGER.info("[ImageClient] Image found");
+
         return imageModel;
     }
 
     private ImageModel findAndValidateByImageId(int id) {
+        LOGGER.info("[ImageClient] Find image by id");
+
         ImageModel imageModel = imageRepository.findByMusicId(id);
         imageValidator.validateIfImageIsNotNull(imageModel);
+
+        LOGGER.info("[ImageClient] Image found");
         return imageModel;
     }
 }

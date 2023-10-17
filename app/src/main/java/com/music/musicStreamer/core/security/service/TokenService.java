@@ -3,7 +3,9 @@ package com.music.musicStreamer.core.security.service;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
+import com.auth0.jwt.impl.ClaimsHolder;
 import com.music.musicStreamer.api.v1.model.UserModel;
+import com.music.musicStreamer.core.security.model.UserToken;
 import com.music.musicStreamer.exception.BusinessException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -25,6 +27,7 @@ public class TokenService {
                     .withIssuer("auth0")
                     .withSubject(userModel.getEmail())
                     .withClaim("userId", userModel.getId())
+                    .withClaim("userEmail", userModel.getEmail())
                     .withExpiresAt(generateExpirationDate())
                     .sign(algorithm);
 

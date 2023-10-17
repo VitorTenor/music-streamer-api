@@ -30,6 +30,10 @@ public class ImageValidator {
     }
 
     public void validateIfImageIsNotNull(ImageModel image) {
+        LOGGER.info("[ImageValidator] Validate if image is not null");
+
         if (image == null) throw new ImageException(ImageMessages.NOT_FOUND);
+
+        LOGGER.info("[ImageValidator] Image is not null");
     }
 }

@@ -5,20 +5,14 @@ public class UserAuth {
         this.token = token;
     }
 
-    private int id;
     private String email;
     private String name;
     private final String token;
 
-    public UserAuth(int id, String name, String email, String token) {
+    public UserAuth(String name, String email, String token) {
         this.name = name;
-        this.id = id;
         this.email = email;
         this.token = token;
-    }
-
-    public int getId() {
-        return id;
     }
 
     public String getName() {

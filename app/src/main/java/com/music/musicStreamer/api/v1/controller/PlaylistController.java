@@ -1,7 +1,7 @@
 package com.music.musicStreamer.api.v1.controller;
 
-import com.music.musicStreamer.api.v1.model.dtos.AddMusicPlaylistDTO;
-import com.music.musicStreamer.api.v1.model.dtos.CreatePlaylistDTO;
+import com.music.musicStreamer.api.v1.request.MusicPlaylistRegister;
+import com.music.musicStreamer.api.v1.request.PlaylistRegister;
 import com.music.musicStreamer.entity.playlist.Playlist;
 import com.music.musicStreamer.usecase.playlist.AddMusicPlaylistUseCase;
 import com.music.musicStreamer.usecase.playlist.CreatePlaylistUseCase;
@@ -16,33 +16,51 @@ import java.util.logging.Logger;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/music-streamer/v1/playlists")
-public class PlaylistController {
+@RequestMapping("/music-streamer/v1/playlist")
+public class PlaylistController extends AbstractController {
     private final CreatePlaylistUseCase createPlaylistUseCase;
     private final GetPlaylistByIdUseCase getPlaylistByIdUseCase;
     private final AddMusicPlaylistUseCase addMusicPlaylistUseCase;
     private final GetPlaylistByUserIdUseCase getPlaylistByUserIdUseCase;
     private final Logger LOGGER = Logger.getLogger(PlaylistController.class.getName());
 
-    @PostMapping
-    public ResponseEntity<Playlist> createPlaylist(@RequestBody CreatePlaylistDTO createPlaylist) throws Exception {
-        return ResponseEntity.status(HttpStatus.OK).body(createPlaylistUseCase.execute(createPlaylist.toEntity()));
+    @PostMapping("/createPlaylist")
+    public ResponseEntity<Playlist> createPlaylist(@RequestBody PlaylistRegister playlistRegister) throws Exception {
+        LOGGER.info("[PlaylistController] Create playlist");
+        LOGGER.info("[PlaylistController] Playlist name: " + playlistRegister.name());
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(createPlaylistUseCase.execute(
+                            playlistRegister.toEntity(getUserFromToken().getUserId())
+                ));
     }
 
-    @PostMapping("/addSong")
-    public ResponseEntity<String> addSongToPlaylist(@RequestBody AddMusicPlaylistDTO addMusicPlaylist) {
-        return ResponseEntity.status(HttpStatus.OK).body(addMusicPlaylistUseCase.execute(addMusicPlaylist.toEntity()));
+    @PostMapping("/addSongToPlaylist")
+    public ResponseEntity<String> addSongToPlaylist(@RequestBody MusicPlaylistRegister musicPlaylistRegister) {
+        LOGGER.info("[PlaylistController] Add song to playlist");
+        LOGGER.info("[PlaylistController] Playlist id: " + musicPlaylistRegister.playlistId());
+        LOGGER.info("[PlaylistController] Music id: " + musicPlaylistRegister.musicId());
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(addMusicPlaylistUseCase.execute(
+                        musicPlaylistRegister.toEntity(getUserFromToken().getUserId())
+                ));
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Object> getPlaylistById(@PathVariable("id") int playlistId) {
+    @GetMapping("/getPlaylistById/{playlistId}")
+    public ResponseEntity<Object> getPlaylistById(@PathVariable(value = "playlistId", required = true) int playlistId) {
+        LOGGER.info("[PlaylistController] Get playlist by id");
+        LOGGER.info("[PlaylistController] Playlist id: " + playlistId);
+
         return ResponseEntity.status(HttpStatus.OK).body(getPlaylistByIdUseCase.execute(playlistId));
     }
 
-    @GetMapping("/all/{id}")
-    public ResponseEntity<Object> getAllPlaylistsByUserId(@PathVariable("id") int userId) {
-        Object playlists = getPlaylistByUserIdUseCase.execute(userId);
-        return ResponseEntity.status(HttpStatus.OK).body(playlists);
+    @GetMapping("/getAllPlaylistsByUser")
+    public ResponseEntity<Object> getAllPlaylistsByUserId() {
+        LOGGER.info("[PlaylistController] Get all playlists by user id");
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(getPlaylistByUserIdUseCase.execute(getUserFromToken().getUserId()));
     }
 
 }

@@ -21,19 +21,21 @@ import java.util.logging.Logger;
 public class UserController implements UserControllerOpenApi {
     private final LoginUserUseCase loginUserUseCase;
     private final CreateUserUseCase createUserUseCase;
-    private final Logger logger = Logger.getLogger(UserController.class.getName());
+    private final Logger LOGGER = Logger.getLogger(UserController.class.getName());
 
     @PostMapping("/register")
     public ResponseEntity<User> register(@RequestBody @Valid UserRegister userRegister) {
-        logger.info("[UserController] Create user");
-        logger.info("[UserController] User email => " + userRegister.email());
+        LOGGER.info("[UserController] Create user");
+        LOGGER.info("[UserController] User email => " + userRegister.email());
+
         return ResponseEntity.status(HttpStatus.OK).body(createUserUseCase.execute(userRegister.toEntity()));
     }
 
     @PostMapping("/login")
     public ResponseEntity<UserAuth> login(@RequestBody @Valid UserLogin userLogin) {
-        logger.info("[UserController] Login user");
-        logger.info("[UserController] User email:" + userLogin.email());
+        LOGGER.info("[UserController] Login user");
+        LOGGER.info("[UserController] User email:" + userLogin.email());
+
         return ResponseEntity.status(HttpStatus.OK).body(loginUserUseCase.execute(userLogin.toEntity()));
     }
 }

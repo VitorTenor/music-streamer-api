@@ -154,6 +154,7 @@ public class MusicClient implements MusicGateway {
     }
 
     private MusicModel findMusicById(int id) {
+        LOGGER.info("[MusicClient] Find music by id");
         return musicRepository.findById(id).orElseThrow(() -> new MusicException(MusicMessages.NOT_FOUND));
     }
 }

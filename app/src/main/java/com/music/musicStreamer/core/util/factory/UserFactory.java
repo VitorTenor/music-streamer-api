@@ -28,7 +28,6 @@ public class UserFactory {
 
     public User createUser(UserModel userModel) {
         return new User(
-                userModel.getId(),
                 userModel.getName(),
                 userModel.getEmail()
         );

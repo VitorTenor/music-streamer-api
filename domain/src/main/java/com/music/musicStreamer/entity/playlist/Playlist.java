@@ -4,16 +4,12 @@ public class Playlist {
 
     private int id;
     private String name;
-    private int userId;
 
     public int getId() {
         return id;
     }
     public String getName() {
         return name;
-    }
-    public int getUserId() {
-        return userId;
     }
 
     public void setId(int id) {
@@ -24,13 +20,9 @@ public class Playlist {
         this.name = name;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
 
-    public Playlist(String name, int userId, int id) {
+    public Playlist(String name, int id) {
         this.name = name;
-        this.userId = userId;
         this.id = id;
     }
 
