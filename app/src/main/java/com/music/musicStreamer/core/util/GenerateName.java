@@ -11,9 +11,9 @@ import java.util.logging.Logger;
 @RequiredArgsConstructor
 public class GenerateName {
 
-    private final Logger LOGGER = Logger.getLogger(GenerateName.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(GenerateName.class.getName());
 
-    public String randomName() {
+    public static String randomName() {
         LOGGER.info("[GenerateName] Generate random name");
 
         Random random = new Random();

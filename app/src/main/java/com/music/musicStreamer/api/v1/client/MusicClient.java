@@ -28,7 +28,6 @@ import java.util.logging.Logger;
 @RequiredArgsConstructor
 public class MusicClient implements MusicGateway {
     private final MusicFiles musicFiles;
-    private final GenerateName generateName;
     private final MusicFactory musicFactory;
     private final MusicValidator musicValidator;
     private final MusicRepository musicRepository;
@@ -41,11 +40,7 @@ public class MusicClient implements MusicGateway {
     public Music saveMusic(MusicRequest musicRequest) {
         LOGGER.info("[MusicClient] Save music");
 
-        musicValidator.validateMusic(musicRequest);
-
-        LOGGER.info("[MusicClient] Music is valid");
-
-        String newFileName = generateName.randomName();
+        String newFileName = GenerateName.randomName();
 
         LOGGER.info("[MusicClient] New file name => " + newFileName);
 
