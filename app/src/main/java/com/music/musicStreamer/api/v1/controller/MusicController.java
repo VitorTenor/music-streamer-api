@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/music-streamer/v1/musics")
+@RequestMapping("/music-streamer/v1/music")
 public class MusicController {
 
     private @Value("${storage.image.mediaType}") String MUSIC_TYPE;
@@ -36,14 +36,14 @@ public class MusicController {
         return ResponseEntity.status(HttpStatus.OK).body(uploadMusicUseCase.execute(musicUpload.toEntity()));
     }
 
-    @GetMapping("")
+    @GetMapping("/getAll")
     public ResponseEntity<Object> getMusics() {
         LOGGER.info("[MusicController] Get all musics");
 
         return ResponseEntity.status(HttpStatus.OK).body(getAllMusicsUseCase.execute());
     }
 
-    @GetMapping("/{musicId}")
+    @GetMapping("/getMusic/{musicId}")
     public ResponseEntity<Music> getMusic(@PathVariable(value = "musicId", required = true) Integer musicId) {
         LOGGER.info("[MusicController] Get music by id");
         LOGGER.info("[MusicController] Music id: " + musicId);
@@ -74,7 +74,7 @@ public class MusicController {
                 .contentType(MediaType.APPLICATION_OCTET_STREAM).contentLength(music.getFile().length()).body(music.getInputStream() + MUSIC_TYPE);
     }
 
-    @DeleteMapping("/{musicId}")
+    @DeleteMapping("/delete/{musicId}")
     public ResponseEntity<Object> deleteMusicById(@PathVariable("musicId") Integer musicId) {
         LOGGER.info("[MusicController] Delete music by id");
 

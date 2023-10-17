@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("music-streamer/v1/images")
+@RequestMapping("music-streamer/v1/image")
 public class ImageController {
 
     private final GetImageUseCase getImageUseCase;
