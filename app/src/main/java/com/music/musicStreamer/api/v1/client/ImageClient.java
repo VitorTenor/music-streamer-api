@@ -81,7 +81,9 @@ public class ImageClient implements ImageGateway {
         LOGGER.info("[ImageClient] Get image by music id");
         ImageModel imageModel = findByMusicId(id);
 
-        return imageModel != null ? imageFactory.createImage(imageModel) : null;
+        return imageModel != null ?
+                imageFactory.createImage(imageModel) :
+                new Image(null, null, null);
     }
 
     private void deleteInDatabaseByImageId(int id) {
