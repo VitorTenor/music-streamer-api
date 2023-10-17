@@ -3,13 +3,13 @@ package com.music.musicStreamer.api.v1.request;
 import com.music.musicStreamer.entity.image.ImageRequest;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.IOException;
 
 public record ImageUpload(
-        @NotEmpty(message = "Image is required")
+        @NotNull(message = "Image is required")
         MultipartFile image,
-        @NotEmpty(message = "Music id is required")
+        @NotNull(message = "Music id is required")
         int musicId
 ) {
 

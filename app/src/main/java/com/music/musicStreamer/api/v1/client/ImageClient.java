@@ -19,7 +19,6 @@ import java.util.logging.Logger;
 @RequiredArgsConstructor
 public class ImageClient implements ImageGateway {
     private final ImageFiles imageFiles;
-    private final GenerateName generateName;
     private final ImageFactory imageFactory;
     private final ImageValidator imageValidator;
     private final ImageRepository imageRepository;
@@ -30,8 +29,7 @@ public class ImageClient implements ImageGateway {
     public Image saveImage(ImageRequest imageRequest) {
         LOGGER.info("[ImageClient] Upload image");
 
-        imageValidator.validateImage(imageRequest);
-        String newFileName = generateName.randomName();
+        String newFileName = GenerateName.randomName();
 
         LOGGER.info("[ImageClient] New file name => " + newFileName);
 

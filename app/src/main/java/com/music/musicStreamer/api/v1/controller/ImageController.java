@@ -24,7 +24,7 @@ public class ImageController {
     private final UploadImageUseCase uploadImageUseCase;
     private final Logger LOGGER = Logger.getLogger(ImageController.class.getName());
 
-    @PostMapping(path = "/uploadByMusicId", consumes = MediaType.IMAGE_JPEG_VALUE)
+    @PostMapping(path = "/uploadByMusicId")
     public ResponseEntity<Image> uploadImageByMusicId(@ModelAttribute @Valid ImageUpload imageUpload) throws IOException {
         LOGGER.info("[ImageController] Upload image");
 
