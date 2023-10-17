@@ -68,7 +68,7 @@ public class MusicClient implements MusicGateway {
     public byte[] playMusic(int musicId) throws IOException {
         LOGGER.info("[MusicClient] Play music by id");
 
-        MusicModel musicModel = findAndValidateByMusicId(musicId);
+        MusicModel musicModel = findMusicById(musicId);
 
         LOGGER.info("[MusicClient] Music found");
         LOGGER.info("[MusicClient] Music id: " + musicModel.getId());
@@ -80,7 +80,7 @@ public class MusicClient implements MusicGateway {
     public MusicDownload downloadMusic(int musicId) {
         LOGGER.info("[MusicClient] Download music by id");
 
-        MusicModel musicModel = findAndValidateByMusicId(musicId);
+        MusicModel musicModel = findMusicById(musicId);
 
         LOGGER.info("[MusicClient] Music found");
         LOGGER.info("[MusicClient] Music id: " + musicModel.getId());
@@ -99,7 +99,7 @@ public class MusicClient implements MusicGateway {
         LOGGER.info("[MusicClient] Get music by id");
         LOGGER.info("[MusicClient] Music id: " + musicId);
 
-        MusicModel musicModel = findAndValidateByMusicId(musicId);
+        MusicModel musicModel = findMusicById(musicId);
 
         return musicFactory.createMusic(musicModel);
     }
@@ -109,7 +109,7 @@ public class MusicClient implements MusicGateway {
     public String deleteMusicById(int musicId) {
         LOGGER.info("[MusicClient] Delete music by id");
 
-        MusicModel musicModel = findAndValidateByMusicId(musicId);
+        MusicModel musicModel = findMusicById(musicId);
 
         LOGGER.info("[MusicClient] Music found");
         LOGGER.info("[MusicClient] Music name: " + musicModel.getName());
@@ -127,21 +127,6 @@ public class MusicClient implements MusicGateway {
         LOGGER.info("[MusicClient] Music deleted in files");
 
         return MusicMessages.MUSIC_DELETED.getMessage();
-    }
-
-    private MusicModel findAndValidateByMusicId(int musicId) {
-        LOGGER.info("[MusicClient] Find music by id");
-
-        MusicModel musicModel = findMusicById(musicId);
-
-        LOGGER.info("[MusicClient] Music found");
-
-        musicValidator.validateIfMusicIsNotNull(musicModel);
-
-        LOGGER.info("[MusicClient] Music is valid");
-        LOGGER.info("[MusicClient] Music id: " + musicModel.getId());
-
-        return musicModel;
     }
 
     private MusicModel saveInDatabase(MusicModel music) {
