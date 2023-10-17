@@ -15,6 +15,6 @@ public class GetImageByMusicIdUseCase {
     }
 
     public Image execute(int id) {
-        return imageGateway.getImageById(id);
+        return imageGateway.getImageByMusicId(id);
     }
 }
