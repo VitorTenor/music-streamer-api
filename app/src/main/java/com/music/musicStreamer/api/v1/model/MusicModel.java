@@ -1,6 +1,5 @@
 package com.music.musicStreamer.api.v1.model;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 

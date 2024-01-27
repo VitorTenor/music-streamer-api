@@ -1,11 +1,11 @@
 package com.music.musicStreamer.gateway;
 
-import com.music.musicStreamer.entity.user.UserRegisterEntity;
+import com.music.musicStreamer.entity.user.UserRegisterResponseEntity;
 import com.music.musicStreamer.entity.user.UserAuth;
 import com.music.musicStreamer.entity.user.UserAuthRequest;
-import com.music.musicStreamer.entity.user.UserRequest;
+import com.music.musicStreamer.entity.user.UserRegisterRequestEntity;
 
 public interface UserGateway {
-    public UserRegisterEntity createUser(UserRequest userRequest);
+    public UserRegisterResponseEntity createUser(UserRegisterRequestEntity userRegisterRequestEntity);
     public UserAuth loginUser(UserAuthRequest userAuthRequest);
 }

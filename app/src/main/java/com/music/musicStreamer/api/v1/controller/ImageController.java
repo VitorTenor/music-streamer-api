@@ -2,7 +2,6 @@ package com.music.musicStreamer.api.v1.controller;
 
 import com.music.musicStreamer.api.v1.request.ImageUpload;
 import com.music.musicStreamer.entity.image.Image;
-import com.music.musicStreamer.entity.image.ImageRequest;
 import com.music.musicStreamer.usecase.image.GetImageUseCase;
 import com.music.musicStreamer.usecase.image.UploadImageUseCase;
 import lombok.RequiredArgsConstructor;

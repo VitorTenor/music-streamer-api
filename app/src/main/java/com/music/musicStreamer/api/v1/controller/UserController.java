@@ -3,9 +3,8 @@ package com.music.musicStreamer.api.v1.controller;
 import com.music.musicStreamer.api.v1.assembler.UserRegisterAssembler;
 import com.music.musicStreamer.api.v1.request.UserLogin;
 import com.music.musicStreamer.api.v1.openApi.UserControllerOpenApi;
-import com.music.musicStreamer.api.v1.request.UserRegister;
+import com.music.musicStreamer.api.v1.request.UserRegisterRequest;
 import com.music.musicStreamer.api.v1.response.UserRegisterResponse;
-import com.music.musicStreamer.entity.user.UserRegisterEntity;
 import com.music.musicStreamer.entity.user.UserAuth;
 import com.music.musicStreamer.usecase.user.CreateUserUseCase;
 import com.music.musicStreamer.usecase.user.LoginUserUseCase;
@@ -28,13 +27,11 @@ public class UserController implements UserControllerOpenApi {
 
     @Override
     @PostMapping("/register")
-    public ResponseEntity<UserRegisterResponse> register(@RequestBody @Valid UserRegister userRegister) {
+    public ResponseEntity<UserRegisterResponse> register(@RequestBody @Valid UserRegisterRequest request) {
         LOGGER.info("[UserController] Create user");
-        LOGGER.info("[UserController] User email => " + userRegister.email());
+        LOGGER.info("[UserController] User email => " + request.email());
 
-        var response = userRegisterAssembler.toResponse(
-                createUserUseCase.execute(userRegister.toEntity())
-        );
+        var response = userRegisterAssembler.toResponse(createUserUseCase.execute(request.toEntity()));
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }

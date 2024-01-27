@@ -2,18 +2,15 @@ package com.music.musicStreamer.api.v1.controller;
 
 import com.music.musicStreamer.api.v1.request.MusicUpload;
 import com.music.musicStreamer.entity.music.Music;
-import com.music.musicStreamer.entity.music.MusicDownload;
 import com.music.musicStreamer.usecase.music.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.logging.Logger;
 
 @RestController
