@@ -2,9 +2,7 @@ package com.music.musicStreamer.api.exceptionHandler;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -12,6 +10,8 @@ import java.util.List;
 @Builder
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Schema(name = "Problem")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Problem {

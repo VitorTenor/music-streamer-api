@@ -3,6 +3,7 @@ package com.music.musicStreamer.util;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 import com.jayway.jsonpath.JsonPath;
+import lombok.RequiredArgsConstructor;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultHandler;
 
@@ -10,14 +11,11 @@ import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
+@RequiredArgsConstructor
 public class PayloadExtractor implements ResultHandler {
 
     private MvcResult result;
     private final ObjectMapper jsonMapper;
-
-    public PayloadExtractor(ObjectMapper jsonMapper) {
-        this.jsonMapper = jsonMapper;
-    }
 
     @Override
     public void handle(MvcResult result) {

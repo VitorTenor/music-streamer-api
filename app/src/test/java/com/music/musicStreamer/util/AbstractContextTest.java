@@ -2,6 +2,8 @@ package com.music.musicStreamer.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.music.musicStreamer.MusicStreamerApplication;
+import lombok.RequiredArgsConstructor;
+import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,5 +25,13 @@ public class AbstractContextTest {
 
     @Autowired
     protected MockMvc mockMvc;
+
+    public AbstractContextTest() {
+    }
+
+    @BeforeEach
+    public void beforeTest() {
+        this.payloadExtractor = new PayloadExtractor(jsonMapper);
+    }
 }
 
