@@ -5,7 +5,7 @@ import com.music.musicStreamer.api.v1.repository.UserRepository;
 import com.music.musicStreamer.core.security.service.TokenService;
 import com.music.musicStreamer.core.util.factory.UserFactory;
 import com.music.musicStreamer.core.util.validator.UserValidator;
-import com.music.musicStreamer.entity.user.User;
+import com.music.musicStreamer.entity.user.UserRegisterEntity;
 import com.music.musicStreamer.entity.user.UserAuth;
 import com.music.musicStreamer.entity.user.UserAuthRequest;
 import com.music.musicStreamer.entity.user.UserRequest;
@@ -29,7 +29,7 @@ public class UserClient implements UserGateway {
 
     @Override
     @Transactional
-    public User createUser(UserRequest userRequest) {
+    public UserRegisterEntity createUser(UserRequest userRequest) {
         LOGGER.info("[UserClient] Create user");
         userValidator.validateUser(userRequest);
 

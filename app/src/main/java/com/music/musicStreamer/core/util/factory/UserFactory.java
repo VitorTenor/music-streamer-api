@@ -1,7 +1,7 @@
 package com.music.musicStreamer.core.util.factory;
 
 import com.music.musicStreamer.api.v1.model.UserModel;
-import com.music.musicStreamer.entity.user.User;
+import com.music.musicStreamer.entity.user.UserRegisterEntity;
 import com.music.musicStreamer.entity.user.UserRequest;
 import com.music.musicStreamer.enums.UserRole;
 import lombok.RequiredArgsConstructor;
@@ -26,8 +26,8 @@ public class UserFactory {
         return userModel;
     }
 
-    public User createUser(UserModel userModel) {
-        return new User(
+    public UserRegisterEntity createUser(UserModel userModel) {
+        return new UserRegisterEntity(
                 userModel.getName(),
                 userModel.getEmail()
         );
