@@ -1,0 +1,58 @@
+server:
+  servlet:
+    context-path: /music-streamer
+
+api:
+  security:
+    token:
+      secret: ZM@r&ZqXpvXfx$djzsqnzS3#doQ%*drX@bw^aQ3JHztU3x9uy2BdEuPFuP6buCa
+
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  datasource:
+    url: jdbc:mysql://localhost:3306/musicStreamerTest
+    username: root
+    password: mariadb
+  jpa:
+    generate-ddl: true
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    url: jdbc:mysql://localhost:3306/musicStreamerTest?createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true
+    user: root
+    password: mariadb
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+logging:
+  level:
+    root: INFO
+
+storage:
+  music:
+    path: C:/streamerAplication/media/music/
+    mediaType: .mp3
+  image:
+    path: C:/streamerAplication/media/image/
+    mediaType: .jpg
+    url: http://localhost:8081/music-streamer/v1/images/
+    defaultImage: default.jpg
+
+document:
+  api:
+    version: v1
+    title: Music Streamer API
+    description: Music Streamer API
+
+
+
