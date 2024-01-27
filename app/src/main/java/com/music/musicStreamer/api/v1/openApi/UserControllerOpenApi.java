@@ -10,6 +10,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import javax.validation.Valid;
+
 @Tag(name = "User Controller")
 public interface UserControllerOpenApi {
     @Operation(summary = "Create user",
@@ -19,6 +21,6 @@ public interface UserControllerOpenApi {
                     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = User.class))),
             }
     )
-    public ResponseEntity<User> register(@RequestBody UserRegister userRegister);
+    ResponseEntity<User> register(@RequestBody @Valid UserRegister userRegister);
 
 }

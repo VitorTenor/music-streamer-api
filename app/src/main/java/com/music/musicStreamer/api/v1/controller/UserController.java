@@ -23,6 +23,7 @@ public class UserController implements UserControllerOpenApi {
     private final CreateUserUseCase createUserUseCase;
     private final Logger LOGGER = Logger.getLogger(UserController.class.getName());
 
+    @Override
     @PostMapping("/register")
     public ResponseEntity<User> register(@RequestBody @Valid UserRegister userRegister) {
         LOGGER.info("[UserController] Create user");
