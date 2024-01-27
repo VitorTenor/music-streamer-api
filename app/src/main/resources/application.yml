@@ -1,7 +1,8 @@
 server:
-  url: http://localhost:{server.port}/music-streamer/v1
   port: 8081
 
+servlet:
+  context-path: /music-streamer
 api:
   security:
     token:

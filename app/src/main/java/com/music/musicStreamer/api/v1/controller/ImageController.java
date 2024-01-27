@@ -17,21 +17,21 @@ import java.util.logging.Logger;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("music-streamer/v1/image")
+@RequestMapping("/v1/image")
 public class ImageController {
 
     private final GetImageUseCase getImageUseCase;
     private final UploadImageUseCase uploadImageUseCase;
     private final Logger LOGGER = Logger.getLogger(ImageController.class.getName());
 
-    @PostMapping(path = "/uploadByMusicId")
+    @PostMapping(path = "/upload")
     public ResponseEntity<Image> uploadImageByMusicId(@ModelAttribute @Valid ImageUpload imageUpload) throws IOException {
         LOGGER.info("[ImageController] Upload image");
 
         return ResponseEntity.status(HttpStatus.OK).body(uploadImageUseCase.execute(imageUpload.toEntity()));
     }
 
-    @GetMapping("/downloadByPathName/{getPathName}")
+    @GetMapping("/download/{getPathName}")
     public ResponseEntity<byte[]> getImage(@PathVariable(value = "getPathName", required = true) String getPathName) {
         LOGGER.info("[ImageController] Get image");
 

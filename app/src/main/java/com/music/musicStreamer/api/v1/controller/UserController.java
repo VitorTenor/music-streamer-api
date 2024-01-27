@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/music-streamer/v1/users")
+@RequestMapping("/v1/users")
 public class UserController implements UserControllerOpenApi {
     private final LoginUserUseCase loginUserUseCase;
     private final CreateUserUseCase createUserUseCase;

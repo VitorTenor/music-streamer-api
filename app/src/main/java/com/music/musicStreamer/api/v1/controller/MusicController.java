@@ -18,7 +18,7 @@ import java.util.logging.Logger;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/music-streamer/v1/music")
+@RequestMapping("/v1/music")
 public class MusicController {
 
     private @Value("${storage.image.mediaType}") String MUSIC_TYPE;

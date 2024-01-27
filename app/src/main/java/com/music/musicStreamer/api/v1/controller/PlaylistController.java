@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/music-streamer/v1/playlist")
+@RequestMapping("/v1/playlist")
 public class PlaylistController extends AbstractController {
     private final CreatePlaylistUseCase createPlaylistUseCase;
     private final GetPlaylistByIdUseCase getPlaylistByIdUseCase;
