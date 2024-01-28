@@ -26,7 +26,7 @@ public class UserValidator {
         if (userRegisterRequestEntity.name().isBlank()) throw new UserException(UserMessages.NAME_IS_REQUIRED);
         if (userRegisterRequestEntity.password().isBlank()) throw new UserException(UserMessages.PASSWORD_IS_REQUIRED);
         if (userRegisterRequestEntity.password().length() < 6) throw new UserException(UserMessages.PASSWORD_IS_TOO_SHORT);
-        if (userRepository.existsByEmail(userRegisterRequestEntity.email())) throw new UserException(UserMessages.USER_ALREADY_EXISTS);
+        if (userRepository.existsByEmail(userRegisterRequestEntity.email())) throw new UserException(UserMessages.ALREADY_EXISTS);
 
         LOGGER.info("[UserValidator] User is valid");
     }

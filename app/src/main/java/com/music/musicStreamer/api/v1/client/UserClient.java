@@ -9,6 +9,8 @@ import com.music.musicStreamer.entity.user.UserRegisterResponseEntity;
 import com.music.musicStreamer.entity.user.UserAuth;
 import com.music.musicStreamer.entity.user.UserAuthRequest;
 import com.music.musicStreamer.entity.user.UserRegisterRequestEntity;
+import com.music.musicStreamer.enums.UserMessages;
+import com.music.musicStreamer.exception.UserException;
 import com.music.musicStreamer.gateway.UserGateway;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -31,6 +33,9 @@ public class UserClient implements UserGateway {
     @Transactional
     public UserRegisterResponseEntity createUser(UserRegisterRequestEntity user) {
         LOGGER.info("[UserClient] Create user");
+
+        final var existsByEmail = userRepository.existsByEmail(user.email());
+        if (Boolean.TRUE.equals(existsByEmail)) throw new UserException(UserMessages.ALREADY_EXISTS);
 
         final var createdUser = save(userRegisterFactory.toModel(user));
 

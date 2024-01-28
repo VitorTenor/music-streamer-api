@@ -2,7 +2,6 @@ package com.music.musicStreamer.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.music.musicStreamer.MusicStreamerApplication;
-import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -33,5 +32,14 @@ public class AbstractContextTest {
     public void beforeTest() {
         this.payloadExtractor = new PayloadExtractor(jsonMapper);
     }
+
+
+    /*
+        * Messages
+     */
+    protected final String INVALID_FIELD_TITLE = "Invalid field";
+    protected final String REQUIRED_FIELD = "%s is required";
+    protected final String INVALID_FIELD = "%s is invalid";
+    protected final String ONE_OR_MORE_FIELDS_ARE_INVALID = "One or more fields are invalid. Fill in correctly and try again.";
 }
 
