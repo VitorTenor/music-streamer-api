@@ -10,6 +10,7 @@ import com.music.musicStreamer.api.v1.response.UserRegisterResponse;
 import com.music.musicStreamer.usecase.user.CreateUserUseCase;
 import com.music.musicStreamer.usecase.user.LoginUserUseCase;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,13 +21,14 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 import java.util.logging.Logger;
 
+
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/v1/users")
 public class UserController extends AbstractController implements UserControllerOpenApi  {
     private final LoginUserUseCase loginUserUseCase;
     private final CreateUserUseCase createUserUseCase;
-    private final Logger LOGGER = Logger.getLogger(UserController.class.getName());
 
     /*
     * - Assembler to convert the response from the use case to the response of the API
@@ -37,8 +39,8 @@ public class UserController extends AbstractController implements UserController
     @Override
     @PostMapping("/register")
     public ResponseEntity<UserRegisterResponse> register(@RequestBody @Valid UserRegisterRequest request) {
-        LOGGER.info("[UserController] Create user");
-        LOGGER.info("[UserController] User email => " + request.email());
+        log.info("[UserController] Create user");
+        log.info("[UserController] User email => " + request.email());
 
         var response = userRegisterAssembler.toResponse(createUserUseCase.execute(request.toEntity()));
 
@@ -47,8 +49,8 @@ public class UserController extends AbstractController implements UserController
 
     @PostMapping("/login")
     public ResponseEntity<UserLoginResponse> login(@RequestBody @Valid UserLogin request) {
-        LOGGER.info("[UserController] Login user");
-        LOGGER.info("[UserController] User email:" + request.email());
+        log.info("[UserController] Login user");
+        log.info("[UserController] User email:" + request.email());
 
         var response = userLoginAssembler.toResponse(loginUserUseCase.execute(request.toEntity()));
 
