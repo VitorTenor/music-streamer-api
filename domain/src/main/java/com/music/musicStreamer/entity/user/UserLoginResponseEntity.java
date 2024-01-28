@@ -1,7 +1,7 @@
 package com.music.musicStreamer.entity.user;
 
-public class UserAuth {
-    public UserAuth(final String token) {
+public class UserLoginResponseEntity {
+    public UserLoginResponseEntity(final String token) {
         this.token = token;
     }
 
@@ -9,7 +9,7 @@ public class UserAuth {
     private String name;
     private final String token;
 
-    public UserAuth(String name, String email, String token) {
+    public UserLoginResponseEntity(String name, String email, String token) {
         this.name = name;
         this.email = email;
         this.token = token;

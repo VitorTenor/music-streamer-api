@@ -6,7 +6,7 @@ import com.music.musicStreamer.core.security.service.TokenService;
 import com.music.musicStreamer.core.util.factory.UserRegisterFactory;
 import com.music.musicStreamer.core.util.validator.UserValidator;
 import com.music.musicStreamer.entity.user.UserRegisterResponseEntity;
-import com.music.musicStreamer.entity.user.UserAuth;
+import com.music.musicStreamer.entity.user.UserLoginResponseEntity;
 import com.music.musicStreamer.entity.user.UserAuthRequest;
 import com.music.musicStreamer.entity.user.UserRegisterRequestEntity;
 import com.music.musicStreamer.enums.UserMessages;
@@ -45,14 +45,14 @@ public class UserClient implements UserGateway {
     }
 
     @Override
-    public UserAuth loginUser(final UserAuthRequest userAuthRequest) {
+    public UserLoginResponseEntity loginUser(final UserAuthRequest userAuthRequest) {
         LOGGER.info("[UserClient] Login user");
         UserModel user = userValidator.validateUserLogin(userAuthRequest);
 
         authClient.authenticate(userAuthRequest);
 
         LOGGER.info("[UserClient] User logged => " + user.getEmail());
-        return new UserAuth(user.getName(), user.getEmail(), tokenService.generateToken(user));
+        return new UserLoginResponseEntity(user.getName(), user.getEmail(), tokenService.generateToken(user));
     }
 
     private UserModel save(UserModel userModel) {
