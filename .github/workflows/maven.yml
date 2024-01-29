@@ -13,7 +13,7 @@ jobs:
 
     services:
       mariadb:
-        image: mariadb:11.1.2
+        image: mariadb:latest
         env:
           MYSQL_ROOT_PASSWORD: mariadb
         options: >-
