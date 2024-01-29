@@ -13,7 +13,7 @@ jobs:
 
     services:
       mariadb:
-        image: vitortenorio/music-db
+        image: vitortenorio/music-db:latest
         env:
           MYSQL_ROOT_PASSWORD: mariadb
         options: >-
