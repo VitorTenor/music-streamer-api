@@ -22,7 +22,7 @@ jobs:
           --health-timeout 5s
           --health-retries 5
         ports:
-          - 3306:3306
+          - 127.0.0.1:3306:127.0.0.1:3306
 
     steps:
       - name: Checkout Code
