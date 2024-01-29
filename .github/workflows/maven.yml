@@ -15,7 +15,7 @@ jobs:
       mariadb:
         image: vitortenorio/music-db
         env:
-          MYSQL_ROOT_PASSWORD: mariadb
+          MYSQL_ROOT_PASSWORD: root
         options: >-
           --health-cmd="mysqladmin ping"
           --health-interval 10s

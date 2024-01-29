@@ -14,7 +14,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/musicStreamerTest
     username: root
-    password: mariadb
+    password: root
   jpa:
     generate-ddl: true
     show-sql: true
@@ -28,7 +28,7 @@ spring:
     baseline-on-migrate: true
     url: jdbc:mysql://localhost:3306/musicStreamerTest?createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true
     user: root
-    password: mariadb
+    password: root
   servlet:
     multipart:
       max-file-size: 10MB
