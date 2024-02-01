@@ -35,7 +35,7 @@ public class AbstractContextTest {
 
 
     /*
-        * Messages
+     * Messages
      */
     protected final String INVALID_FIELD_TITLE = "Invalid field";
     protected final String REQUIRED_FIELD = "%s is required";

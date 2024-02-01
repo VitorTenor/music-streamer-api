@@ -5,7 +5,7 @@ import com.music.musicStreamer.entity.user.UserAuthRequest;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
-public record UserLogin(
+public record UserLoginRequest(
         @Email(message = "Email should be valid")
         @NotEmpty(message = "Email is required")
         String email,

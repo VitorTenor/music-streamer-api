@@ -3,7 +3,7 @@ package com.music.musicStreamer.api.v1.controller;
 import com.music.musicStreamer.api.v1.assembler.UserLoginAssembler;
 import com.music.musicStreamer.api.v1.assembler.UserRegisterAssembler;
 import com.music.musicStreamer.api.v1.openApi.UserControllerOpenApi;
-import com.music.musicStreamer.api.v1.request.UserLogin;
+import com.music.musicStreamer.api.v1.request.UserLoginRequest;
 import com.music.musicStreamer.api.v1.request.UserRegisterRequest;
 import com.music.musicStreamer.api.v1.response.UserLoginResponse;
 import com.music.musicStreamer.api.v1.response.UserRegisterResponse;
@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import java.util.logging.Logger;
 
 
 @Slf4j
@@ -47,8 +46,9 @@ public class UserController extends AbstractController implements UserController
         return buildResponseEntity(HttpStatus.CREATED, response);
     }
 
+    @Override
     @PostMapping("/login")
-    public ResponseEntity<UserLoginResponse> login(@RequestBody @Valid UserLogin request) {
+    public ResponseEntity<UserLoginResponse> login(@RequestBody @Valid UserLoginRequest request) {
         log.info("[UserController] Login user");
         log.info("[UserController] User email:" + request.email());
 
