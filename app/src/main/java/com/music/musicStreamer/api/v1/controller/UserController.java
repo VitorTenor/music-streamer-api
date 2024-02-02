@@ -10,7 +10,6 @@ import com.music.musicStreamer.api.v1.response.UserRegisterResponse;
 import com.music.musicStreamer.usecase.user.CreateUserUseCase;
 import com.music.musicStreamer.usecase.user.LoginUserUseCase;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,15 +19,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
+import static com.music.musicStreamer.core.util.factory.LogFactory.info;
 
-@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/v1/users")
 public class UserController extends AbstractController implements UserControllerOpenApi  {
     private final LoginUserUseCase loginUserUseCase;
     private final CreateUserUseCase createUserUseCase;
-
     /*
     * - Assembler to convert the response from the use case to the response of the API
     */
@@ -38,8 +36,8 @@ public class UserController extends AbstractController implements UserController
     @Override
     @PostMapping("/register")
     public ResponseEntity<UserRegisterResponse> register(@RequestBody @Valid UserRegisterRequest request) {
-        log.info("[UserController] Create user");
-        log.info("[UserController] User email => " + request.email());
+        info(this.getClass(),"Create user");
+        info(this.getClass(),"User email => " + request.email());
 
         var response = userRegisterAssembler.toResponse(createUserUseCase.execute(request.toEntity()));
 
@@ -49,8 +47,8 @@ public class UserController extends AbstractController implements UserController
     @Override
     @PostMapping("/login")
     public ResponseEntity<UserLoginResponse> login(@RequestBody @Valid UserLoginRequest request) {
-        log.info("[UserController] Login user");
-        log.info("[UserController] User email:" + request.email());
+        info(this.getClass(),"Login user");
+        info(this.getClass(),"User email:" + request.email());
 
         var response = userLoginAssembler.toResponse(loginUserUseCase.execute(request.toEntity()));
 
