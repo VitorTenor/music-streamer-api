@@ -2,8 +2,8 @@ package com.music.musicStreamer.entity.playlist;
 
 import java.util.Objects;
 
-public class PlaylistRequest {
-    public PlaylistRequest(final String name, final int userId) {
+public class CreatePlaylistEntity {
+    public CreatePlaylistEntity(final String name, final int userId) {
         this.name = name;
         this.userId = userId;
     }

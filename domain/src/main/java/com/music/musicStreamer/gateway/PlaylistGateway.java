@@ -1,18 +1,18 @@
 package com.music.musicStreamer.gateway;
 
 import com.music.musicStreamer.entity.playlist.MusicPlaylistRequest;
-import com.music.musicStreamer.entity.playlist.Playlist;
+import com.music.musicStreamer.entity.playlist.PlaylistEntity;
 import com.music.musicStreamer.entity.playlist.PlaylistMusic;
-import com.music.musicStreamer.entity.playlist.PlaylistRequest;
+import com.music.musicStreamer.entity.playlist.CreatePlaylistEntity;
 
 import java.util.List;
 
 public interface PlaylistGateway {
-    Playlist createPlaylist(PlaylistRequest playlistRequest);
+    PlaylistEntity create(CreatePlaylistEntity createPlaylistEntity);
 
     String addMusicToPlaylist(MusicPlaylistRequest musicPlaylistRequest);
 
     PlaylistMusic getPlaylistById(int id);
 
-    List<Playlist> getPlaylistByUserId(int id);
+    List<PlaylistEntity> getPlaylistByUserId(int id);
 }

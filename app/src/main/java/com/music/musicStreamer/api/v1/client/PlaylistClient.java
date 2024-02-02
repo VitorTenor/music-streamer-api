@@ -9,9 +9,9 @@ import com.music.musicStreamer.core.util.validator.PlaylistValidator;
 import com.music.musicStreamer.core.util.validator.UserValidator;
 import com.music.musicStreamer.entity.music.Music;
 import com.music.musicStreamer.entity.playlist.MusicPlaylistRequest;
-import com.music.musicStreamer.entity.playlist.Playlist;
+import com.music.musicStreamer.entity.playlist.PlaylistEntity;
 import com.music.musicStreamer.entity.playlist.PlaylistMusic;
-import com.music.musicStreamer.entity.playlist.PlaylistRequest;
+import com.music.musicStreamer.entity.playlist.CreatePlaylistEntity;
 import com.music.musicStreamer.enums.PlaylistMessages;
 import com.music.musicStreamer.exception.PlaylistException;
 import com.music.musicStreamer.gateway.PlaylistGateway;
@@ -21,6 +21,7 @@ import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -34,15 +35,16 @@ public class PlaylistClient implements PlaylistGateway {
     private final PlaylistMusicRepository playlistMusicRepository;
     private final GetMusicByPlaylistIdUseCase getMusicByPlaylistIdUseCase;
     private final Logger LOGGER = Logger.getLogger(PlaylistClient.class.getName());
+
     @Override
     @Transactional
-    public Playlist createPlaylist(PlaylistRequest playlistRequest) {
-        playlistValidator.validatePlaylist(playlistRequest);
-        PlaylistModel playlistCreated = playlistFactory.createPlaylistModel(playlistRequest);
+    public PlaylistEntity create(CreatePlaylistEntity playlist) {
+        final var date = new Date();
+        final var playlistCreated = new PlaylistModel(playlist.getName(), playlist.getUserId(), date, date);
 
-        save(playlistCreated);
+        final var playlistModel = save(playlistCreated);
 
-        return playlistFactory.createPlaylist(playlistCreated);
+        return new PlaylistEntity(playlistModel.getId(), playlistModel.getName());
     }
 
     @Override
@@ -73,7 +75,7 @@ public class PlaylistClient implements PlaylistGateway {
     }
 
     @Override
-    public List<Playlist> getPlaylistByUserId(int id) {
+    public List<PlaylistEntity> getPlaylistByUserId(int id) {
         LOGGER.info("[PlaylistClient] Get playlist by user id");
         LOGGER.info("[PlaylistClient] User id: " + id);
 
@@ -88,12 +90,8 @@ public class PlaylistClient implements PlaylistGateway {
         return new ArrayList<>(getMusicByPlaylistIdUseCase.execute(playlistId));
     }
 
-    private void save(PlaylistModel playlist) {
-        LOGGER.info("[PlaylistClient] Save playlist");
-        LOGGER.info("[PlaylistClient] Playlist name: " + playlist.getName());
-        LOGGER.info("[PlaylistClient] Playlist user id: " + playlist.getUserId());
-
-        playlistRepository.save(playlist);
+    private PlaylistModel save(PlaylistModel playlist) {
+        return playlistRepository.save(playlist);
     }
 }
 

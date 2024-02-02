@@ -1,7 +1,7 @@
 package com.music.musicStreamer.usecase.playlist;
 
-import com.music.musicStreamer.entity.playlist.Playlist;
-import com.music.musicStreamer.entity.playlist.PlaylistRequest;
+import com.music.musicStreamer.entity.playlist.PlaylistEntity;
+import com.music.musicStreamer.entity.playlist.CreatePlaylistEntity;
 import com.music.musicStreamer.gateway.PlaylistGateway;
 
 import javax.inject.Named;
@@ -14,7 +14,7 @@ public class CreatePlaylistUseCase {
         this.playlistGateway = playlistGateway;
     }
 
-    public Playlist execute(PlaylistRequest playlistRequest) throws Exception {
-        return playlistGateway.createPlaylist(playlistRequest);
+    public PlaylistEntity execute(CreatePlaylistEntity createPlaylistEntity) {
+        return playlistGateway.create(createPlaylistEntity);
     }
 }

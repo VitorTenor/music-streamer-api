@@ -1,6 +1,6 @@
 package com.music.musicStreamer.usecase.playlist;
 
-import com.music.musicStreamer.entity.playlist.Playlist;
+import com.music.musicStreamer.entity.playlist.PlaylistEntity;
 import com.music.musicStreamer.gateway.PlaylistGateway;
 
 import javax.inject.Named;
@@ -14,7 +14,7 @@ public class GetPlaylistByUserIdUseCase {
         this.playlistGateway = playlistGateway;
     }
 
-    public List<Playlist> execute(int id) {
+    public List<PlaylistEntity> execute(int id) {
         return playlistGateway.getPlaylistByUserId(id);
     }
 }

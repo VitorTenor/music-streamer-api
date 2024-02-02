@@ -1,6 +1,6 @@
 package com.music.musicStreamer.entity.playlist;
 
-public class Playlist {
+public class PlaylistEntity {
 
     private int id;
     private String name;
@@ -21,9 +21,9 @@ public class Playlist {
     }
 
 
-    public Playlist(String name, int id) {
-        this.name = name;
+    public PlaylistEntity(int id, String name) {
         this.id = id;
+        this.name = name;
     }
 
 }
