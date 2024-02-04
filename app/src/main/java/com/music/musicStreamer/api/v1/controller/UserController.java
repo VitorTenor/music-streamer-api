@@ -35,11 +35,11 @@ public class UserController extends AbstractController implements UserController
 
     @Override
     @PostMapping
-    public ResponseEntity<CreateUserOutput> create(@RequestBody @Valid CreateUserInput request) {
+    public ResponseEntity<CreateUserOutput> create(@RequestBody @Valid CreateUserInput input) {
         info(this.getClass(),"Create user");
-        info(this.getClass(),"User email => " + request.email());
+        info(this.getClass(),"User email => " + input.email());
 
-        var response = userRegisterAssembler.toOutput(createUserUseCase.execute(request.toEntity()));
+        var response = userRegisterAssembler.toOutput(createUserUseCase.execute(input.toEntity()));
 
         return buildResponseEntity(HttpStatus.CREATED, response);
     }

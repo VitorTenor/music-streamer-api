@@ -1,6 +1,6 @@
 package com.music.musicStreamer.api.v1.model.input;
 
-import com.music.musicStreamer.entity.user.UserRegisterRequestEntity;
+import com.music.musicStreamer.entity.user.CreateUserEntity;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -16,7 +16,7 @@ public record CreateUserInput(
         @NotEmpty(message = "Password is required")
         String password
 ) {
-    public UserRegisterRequestEntity toEntity() {
-        return new UserRegisterRequestEntity(name, email, password);
+    public CreateUserEntity toEntity() {
+        return new CreateUserEntity(name, email, password);
     }
 }

@@ -4,10 +4,9 @@ import com.music.musicStreamer.api.v1.database.model.UserModel;
 import com.music.musicStreamer.api.v1.database.repository.UserRepository;
 import com.music.musicStreamer.core.security.service.TokenService;
 import com.music.musicStreamer.core.util.factory.UserRegisterFactory;
-import com.music.musicStreamer.entity.user.UserRegisterResponseEntity;
-import com.music.musicStreamer.entity.user.UserLoginResponseEntity;
+import com.music.musicStreamer.entity.user.CreateUserEntity;
 import com.music.musicStreamer.entity.user.UserAuthRequest;
-import com.music.musicStreamer.entity.user.UserRegisterRequestEntity;
+import com.music.musicStreamer.entity.user.UserLoginResponseEntity;
 import com.music.musicStreamer.enums.UserMessages;
 import com.music.musicStreamer.exception.UserException;
 import com.music.musicStreamer.gateway.UserGateway;
@@ -28,13 +27,13 @@ public class UserClient implements UserGateway {
 
     @Override
     @Transactional
-    public UserRegisterResponseEntity createUser(UserRegisterRequestEntity user) {
+    public CreateUserEntity createUser(CreateUserEntity entity) {
         log.info("[UserClient] Create user");
 
-        final var existsByEmail = userRepository.existsByEmail(user.email());
+        final var existsByEmail = userRepository.existsByEmail(entity.email());
         if (Boolean.TRUE.equals(existsByEmail)) throw new UserException(UserMessages.ALREADY_EXISTS);
 
-        final var createdUser = save(userRegisterFactory.toModel(user));
+        final var createdUser = save(userRegisterFactory.toModel(entity));
 
         log.info("[UserClient] User created => userId: " + createdUser.getId());
 
