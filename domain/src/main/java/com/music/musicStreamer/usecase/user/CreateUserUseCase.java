@@ -14,7 +14,7 @@ public class CreateUserUseCase {
     }
 
     public CreateUserEntity execute(final CreateUserEntity entity) {
-        return this.userGateway.createUser(entity);
+        return this.userGateway.create(entity);
     }
 
 }

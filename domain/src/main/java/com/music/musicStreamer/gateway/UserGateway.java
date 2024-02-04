@@ -5,6 +5,6 @@ import com.music.musicStreamer.entity.user.UserAuthRequest;
 import com.music.musicStreamer.entity.user.UserLoginResponseEntity;
 
 public interface UserGateway {
-    CreateUserEntity createUser(CreateUserEntity entity);
+    CreateUserEntity create(CreateUserEntity entity);
     public UserLoginResponseEntity loginUser(UserAuthRequest userAuthRequest);
 }

@@ -27,7 +27,7 @@ public class UserClient implements UserGateway {
 
     @Override
     @Transactional
-    public CreateUserEntity createUser(CreateUserEntity entity) {
+    public CreateUserEntity create(CreateUserEntity entity) {
         log.info("[UserClient] Create user");
 
         final var existsByEmail = userRepository.existsByEmail(entity.email());
