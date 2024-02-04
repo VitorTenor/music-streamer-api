@@ -2,11 +2,11 @@ package com.music.musicStreamer.api.v1.controller;
 
 import com.music.musicStreamer.api.v1.assembler.UserLoginAssembler;
 import com.music.musicStreamer.api.v1.assembler.UserRegisterAssembler;
+import com.music.musicStreamer.api.v1.model.input.CreateUserInput;
+import com.music.musicStreamer.api.v1.model.output.CreateUserOutput;
 import com.music.musicStreamer.api.v1.openApi.UserControllerOpenApi;
 import com.music.musicStreamer.api.v1.request.UserLoginRequest;
-import com.music.musicStreamer.api.v1.request.UserRegisterRequest;
 import com.music.musicStreamer.api.v1.response.UserLoginResponse;
-import com.music.musicStreamer.api.v1.response.UserRegisterResponse;
 import com.music.musicStreamer.usecase.user.CreateUserUseCase;
 import com.music.musicStreamer.usecase.user.LoginUserUseCase;
 import lombok.RequiredArgsConstructor;
@@ -34,8 +34,8 @@ public class UserController extends AbstractController implements UserController
     private final UserRegisterAssembler userRegisterAssembler;
 
     @Override
-    @PostMapping("/register")
-    public ResponseEntity<UserRegisterResponse> register(@RequestBody @Valid UserRegisterRequest request) {
+    @PostMapping
+    public ResponseEntity<CreateUserOutput> create(@RequestBody @Valid CreateUserInput request) {
         info(this.getClass(),"Create user");
         info(this.getClass(),"User email => " + request.email());
 

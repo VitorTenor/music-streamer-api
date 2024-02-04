@@ -1,9 +1,9 @@
 package com.music.musicStreamer.api.v1.openApi;
 
+import com.music.musicStreamer.api.v1.model.input.CreateUserInput;
+import com.music.musicStreamer.api.v1.model.output.CreateUserOutput;
 import com.music.musicStreamer.api.v1.request.UserLoginRequest;
-import com.music.musicStreamer.api.v1.request.UserRegisterRequest;
 import com.music.musicStreamer.api.v1.response.UserLoginResponse;
-import com.music.musicStreamer.api.v1.response.UserRegisterResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -20,10 +20,10 @@ public interface UserControllerOpenApi {
             description = "Create user",
             tags = {"User Controller"},
             responses = {
-                    @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = UserRegisterResponse.class))),
+                    @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = CreateUserOutput.class))),
             }
     )
-    ResponseEntity<UserRegisterResponse> register(@RequestBody @Valid UserRegisterRequest userRegisterRequest);
+    ResponseEntity<CreateUserOutput> create(@RequestBody @Valid CreateUserInput createUserInput);
 
     @Operation(summary = "Login user",
             description = "Login user",

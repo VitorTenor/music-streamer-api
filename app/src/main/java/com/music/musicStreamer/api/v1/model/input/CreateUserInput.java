@@ -1,4 +1,4 @@
-package com.music.musicStreamer.api.v1.request;
+package com.music.musicStreamer.api.v1.model.input;
 
 import com.music.musicStreamer.entity.user.UserRegisterRequestEntity;
 
@@ -6,7 +6,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
-public record UserRegisterRequest(
+public record CreateUserInput(
         @NotEmpty(message = "Name is required")
         String name,
         @Email(message = "Email is invalid")

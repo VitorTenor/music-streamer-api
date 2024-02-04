@@ -1,7 +1,7 @@
 package com.music.musicStreamer.api.v1.controller;
 
 import com.music.musicStreamer.api.exceptionHandler.Problem;
-import com.music.musicStreamer.api.v1.response.UserRegisterResponse;
+import com.music.musicStreamer.api.v1.model.output.CreateUserOutput;
 import com.music.musicStreamer.util.AbstractContextTest;
 import org.junit.jupiter.api.*;
 import org.springframework.http.MediaType;
@@ -23,7 +23,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class TestUserController extends AbstractContextTest {
 
     private final String PATH = "/v1/users";
-    private final String PATH_REGISTER = "/register";
 
     @Test
     @Order(1)
@@ -40,7 +39,7 @@ public class TestUserController extends AbstractContextTest {
                 """;
 
         var request = MockMvcRequestBuilders
-                .post(PATH + PATH_REGISTER)
+                .post(PATH)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonRequest);
 
@@ -52,7 +51,7 @@ public class TestUserController extends AbstractContextTest {
         // assert
         resultActions.andExpect(MockMvcResultMatchers.status().isCreated());
 
-        var user = this.payloadExtractor.as(UserRegisterResponse.class);
+        var user = this.payloadExtractor.as(CreateUserOutput.class);
 
         assertNotNull(user);
         assertEquals("Vitor", user.getName());
@@ -73,7 +72,7 @@ public class TestUserController extends AbstractContextTest {
                         """;
 
         var request = MockMvcRequestBuilders
-                .post(PATH + PATH_REGISTER)
+                .post(PATH)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonRequest);
 
@@ -108,7 +107,7 @@ public class TestUserController extends AbstractContextTest {
                         """;
 
         var request = MockMvcRequestBuilders
-                .post(PATH + "/register")
+                .post(PATH)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonRequest);
 
@@ -144,7 +143,7 @@ public class TestUserController extends AbstractContextTest {
                         """;
 
         var request = MockMvcRequestBuilders
-                .post(PATH + PATH_REGISTER)
+                .post(PATH)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonRequest);
 
@@ -180,7 +179,7 @@ public class TestUserController extends AbstractContextTest {
                         """;
 
         var request = MockMvcRequestBuilders
-                .post(PATH + PATH_REGISTER)
+                .post(PATH)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonRequest);
 
@@ -215,7 +214,7 @@ public class TestUserController extends AbstractContextTest {
                         """;
 
         var request = MockMvcRequestBuilders
-                .post(PATH + PATH_REGISTER)
+                .post(PATH)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonRequest);
 
@@ -252,7 +251,7 @@ public class TestUserController extends AbstractContextTest {
                         """;
 
         var request = MockMvcRequestBuilders
-                .post(PATH + PATH_REGISTER)
+                .post(PATH)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonRequest);
 
