@@ -9,7 +9,8 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @DisplayName("Integration tests for UserController")
@@ -29,19 +30,19 @@ public class TestUserController extends AbstractContextTest {
     @DisplayName("001 - Test user register - success")
     void test001() throws Exception {
         // arrange
-        var jsonRequst =
+        var jsonRequest =
                 """
                             {
                                 "name": "Vitor",
                                 "password": "123456",
                                 "email": "vitor@vitor.com"
                             }
-                        """;
+                """;
 
         var request = MockMvcRequestBuilders
                 .post(PATH + PATH_REGISTER)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(jsonRequst);
+                .content(jsonRequest);
 
         // act
 
@@ -63,7 +64,7 @@ public class TestUserController extends AbstractContextTest {
     @DisplayName("002 - Test user register - withouth email")
     void test002() throws Exception {
         // arrange
-        var jsonRequst =
+        var jsonRequest =
                 """
                             {
                                 "name": "Vitor",
@@ -74,7 +75,7 @@ public class TestUserController extends AbstractContextTest {
         var request = MockMvcRequestBuilders
                 .post(PATH + PATH_REGISTER)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(jsonRequst);
+                .content(jsonRequest);
 
         // act
         var resultActions = this.mockMvc.perform(request);
@@ -98,7 +99,7 @@ public class TestUserController extends AbstractContextTest {
     @DisplayName("003 - Test user register - withouth name")
     void test003() throws Exception {
         // arrange
-        var jsonRequst =
+        var jsonRequest =
                 """
                             {
                                 "email": "vitor@vitor.com",
@@ -109,7 +110,7 @@ public class TestUserController extends AbstractContextTest {
         var request = MockMvcRequestBuilders
                 .post(PATH + "/register")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(jsonRequst);
+                .content(jsonRequest);
 
         // act
 
@@ -134,7 +135,7 @@ public class TestUserController extends AbstractContextTest {
     @DisplayName("004 - Test user register - withouth password")
     void test004() throws Exception {
         // arrange
-        var jsonRequst =
+        var jsonRequest =
                 """
                            {
                                 "name": "Vitor",
@@ -145,7 +146,7 @@ public class TestUserController extends AbstractContextTest {
         var request = MockMvcRequestBuilders
                 .post(PATH + PATH_REGISTER)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(jsonRequst);
+                .content(jsonRequest);
 
         // act
         var resultActions = this.mockMvc.perform(request);
@@ -169,7 +170,7 @@ public class TestUserController extends AbstractContextTest {
     @DisplayName("005 - Test user register - with existing email")
     void test005() throws Exception {
         // arrange
-        var jsonRequst =
+        var jsonRequest =
                 """
                             {
                                 "name": "Vitor",
@@ -181,7 +182,7 @@ public class TestUserController extends AbstractContextTest {
         var request = MockMvcRequestBuilders
                 .post(PATH + PATH_REGISTER)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(jsonRequst);
+                .content(jsonRequest);
 
         // act
 
@@ -204,7 +205,7 @@ public class TestUserController extends AbstractContextTest {
     @DisplayName("006 - Test user register - with invalid email")
     void test006() throws Exception {
         // arrange
-        var jsonRequst =
+        var jsonRequest =
                 """
                             {
                                 "name": "Vitor",
@@ -216,7 +217,7 @@ public class TestUserController extends AbstractContextTest {
         var request = MockMvcRequestBuilders
                 .post(PATH + PATH_REGISTER)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(jsonRequst);
+                .content(jsonRequest);
 
         // act
 
@@ -241,7 +242,7 @@ public class TestUserController extends AbstractContextTest {
     @DisplayName("007 - Test user register - with password too short")
     void test007() throws Exception {
         // arrange
-        var jsonRequst =
+        var jsonRequest =
                 """
                                     {
                                         "name": "Vitor",
@@ -253,7 +254,7 @@ public class TestUserController extends AbstractContextTest {
         var request = MockMvcRequestBuilders
                 .post(PATH + PATH_REGISTER)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(jsonRequst);
+                .content(jsonRequest);
 
         var expectedMessage = "Password must be at least 6 characters";
 

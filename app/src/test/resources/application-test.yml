@@ -5,7 +5,7 @@ server:
 api:
   security:
     token:
-      secret: ZM@r&ZqXpvXfx$djzsqnzS3#doQ%*drX@bw^aQ3JHztU3x9uy2BdEuPFuP6buCa
+      secret: secret
 
 spring:
   mvc:

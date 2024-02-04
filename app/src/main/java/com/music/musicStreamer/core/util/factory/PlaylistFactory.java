@@ -17,7 +17,7 @@ public class PlaylistFactory {
 
     public PlaylistEntity createPlaylist(PlaylistModel playlistModel) {
         LOGGER.info("[PlaylistFactory] Create playlist");
-        return new PlaylistEntity(playlistModel.getName(), playlistModel.getId());
+        return new PlaylistEntity(playlistModel.getId(), playlistModel.getName());
     }
 
     public PlaylistMusicModel createPlaylistMusicModel(MusicPlaylistRequest musicPlaylistRequest) {

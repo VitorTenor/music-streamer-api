@@ -8,10 +8,10 @@ import com.music.musicStreamer.core.util.factory.PlaylistFactory;
 import com.music.musicStreamer.core.util.validator.PlaylistValidator;
 import com.music.musicStreamer.core.util.validator.UserValidator;
 import com.music.musicStreamer.entity.music.Music;
+import com.music.musicStreamer.entity.playlist.CreatePlaylistEntity;
 import com.music.musicStreamer.entity.playlist.MusicPlaylistRequest;
 import com.music.musicStreamer.entity.playlist.PlaylistEntity;
 import com.music.musicStreamer.entity.playlist.PlaylistMusic;
-import com.music.musicStreamer.entity.playlist.CreatePlaylistEntity;
 import com.music.musicStreamer.enums.PlaylistMessages;
 import com.music.musicStreamer.exception.PlaylistException;
 import com.music.musicStreamer.gateway.PlaylistGateway;
@@ -38,11 +38,11 @@ public class PlaylistClient implements PlaylistGateway {
 
     @Override
     @Transactional
-    public PlaylistEntity create(CreatePlaylistEntity playlist) {
+    public PlaylistEntity create(CreatePlaylistEntity create) {
         final var date = new Date();
-        final var playlistCreated = new PlaylistModel(playlist.getName(), playlist.getUserId(), date, date);
+        final var playlist = new PlaylistModel(create.getName(), create.getUserId(), date, date);
 
-        final var playlistModel = save(playlistCreated);
+        final var playlistModel = save(playlist);
 
         return new PlaylistEntity(playlistModel.getId(), playlistModel.getName());
     }
