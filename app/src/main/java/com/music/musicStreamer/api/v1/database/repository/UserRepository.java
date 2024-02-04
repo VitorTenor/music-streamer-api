@@ -1,6 +1,6 @@
-package com.music.musicStreamer.api.v1.repository;
+package com.music.musicStreamer.api.v1.database.repository;
 
-import com.music.musicStreamer.api.v1.model.UserModel;
+import com.music.musicStreamer.api.v1.database.model.UserModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.security.core.userdetails.UserDetails;

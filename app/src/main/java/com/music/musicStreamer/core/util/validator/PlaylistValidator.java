@@ -1,8 +1,7 @@
 package com.music.musicStreamer.core.util.validator;
 
-import com.music.musicStreamer.api.v1.repository.PlaylistRepository;
+import com.music.musicStreamer.api.v1.database.repository.PlaylistRepository;
 import com.music.musicStreamer.entity.playlist.MusicPlaylistRequest;
-import com.music.musicStreamer.entity.playlist.CreatePlaylistEntity;
 import com.music.musicStreamer.enums.PlaylistMessages;
 import com.music.musicStreamer.exception.PlaylistException;
 import lombok.RequiredArgsConstructor;

@@ -1,6 +1,6 @@
 package com.music.musicStreamer.core.storage.impl;
 
-import com.music.musicStreamer.api.v1.repository.MusicRepository;
+import com.music.musicStreamer.api.v1.database.repository.MusicRepository;
 import com.music.musicStreamer.core.storage.FilesBase;
 import com.music.musicStreamer.core.util.factory.MusicFactory;
 import com.music.musicStreamer.entity.music.Music;

@@ -1,6 +1,6 @@
 package com.music.musicStreamer.core.security;
 
-import com.music.musicStreamer.api.v1.repository.UserRepository;
+import com.music.musicStreamer.api.v1.database.repository.UserRepository;
 import com.music.musicStreamer.core.security.service.TokenService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

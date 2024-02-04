@@ -1,10 +1,9 @@
 package com.music.musicStreamer.api.v1.client;
 
-import com.music.musicStreamer.api.v1.model.UserModel;
-import com.music.musicStreamer.api.v1.repository.UserRepository;
+import com.music.musicStreamer.api.v1.database.model.UserModel;
+import com.music.musicStreamer.api.v1.database.repository.UserRepository;
 import com.music.musicStreamer.core.security.service.TokenService;
 import com.music.musicStreamer.core.util.factory.UserRegisterFactory;
-import com.music.musicStreamer.core.util.validator.UserValidator;
 import com.music.musicStreamer.entity.user.UserRegisterResponseEntity;
 import com.music.musicStreamer.entity.user.UserLoginResponseEntity;
 import com.music.musicStreamer.entity.user.UserAuthRequest;
@@ -17,7 +16,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
-import java.util.logging.Logger;
 
 @Slf4j
 @Component

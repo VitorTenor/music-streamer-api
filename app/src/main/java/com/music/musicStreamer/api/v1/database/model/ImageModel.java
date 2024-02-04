@@ -1,4 +1,4 @@
-package com.music.musicStreamer.api.v1.model;
+package com.music.musicStreamer.api.v1.database.model;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,9 +1,9 @@
 package com.music.musicStreamer.api.v1.client;
 
-import com.music.musicStreamer.api.v1.model.PlaylistModel;
-import com.music.musicStreamer.api.v1.model.PlaylistMusicModel;
-import com.music.musicStreamer.api.v1.repository.PlaylistMusicRepository;
-import com.music.musicStreamer.api.v1.repository.PlaylistRepository;
+import com.music.musicStreamer.api.v1.database.model.PlaylistModel;
+import com.music.musicStreamer.api.v1.database.model.PlaylistMusicModel;
+import com.music.musicStreamer.api.v1.database.repository.PlaylistMusicRepository;
+import com.music.musicStreamer.api.v1.database.repository.PlaylistRepository;
 import com.music.musicStreamer.core.util.factory.PlaylistFactory;
 import com.music.musicStreamer.core.util.validator.PlaylistValidator;
 import com.music.musicStreamer.core.util.validator.UserValidator;

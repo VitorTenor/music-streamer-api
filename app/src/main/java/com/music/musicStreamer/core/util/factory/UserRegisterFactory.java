@@ -1,6 +1,6 @@
 package com.music.musicStreamer.core.util.factory;
 
-import com.music.musicStreamer.api.v1.model.UserModel;
+import com.music.musicStreamer.api.v1.database.model.UserModel;
 import com.music.musicStreamer.entity.user.UserRegisterResponseEntity;
 import com.music.musicStreamer.entity.user.UserRegisterRequestEntity;
 import com.music.musicStreamer.enums.UserRole;

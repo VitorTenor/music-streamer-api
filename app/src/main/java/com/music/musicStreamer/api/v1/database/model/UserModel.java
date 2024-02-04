@@ -1,4 +1,4 @@
-package com.music.musicStreamer.api.v1.model;
+package com.music.musicStreamer.api.v1.database.model;
 
 import com.music.musicStreamer.enums.UserRole;
 import lombok.Getter;

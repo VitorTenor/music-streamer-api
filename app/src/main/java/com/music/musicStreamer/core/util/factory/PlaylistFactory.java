@@ -1,7 +1,7 @@
 package com.music.musicStreamer.core.util.factory;
 
-import com.music.musicStreamer.api.v1.model.PlaylistModel;
-import com.music.musicStreamer.api.v1.model.PlaylistMusicModel;
+import com.music.musicStreamer.api.v1.database.model.PlaylistModel;
+import com.music.musicStreamer.api.v1.database.model.PlaylistMusicModel;
 import com.music.musicStreamer.entity.playlist.MusicPlaylistRequest;
 import com.music.musicStreamer.entity.playlist.PlaylistEntity;
 import lombok.RequiredArgsConstructor;

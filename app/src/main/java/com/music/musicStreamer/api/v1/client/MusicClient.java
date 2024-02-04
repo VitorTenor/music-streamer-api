@@ -1,7 +1,7 @@
 package com.music.musicStreamer.api.v1.client;
 
-import com.music.musicStreamer.api.v1.model.MusicModel;
-import com.music.musicStreamer.api.v1.repository.MusicRepository;
+import com.music.musicStreamer.api.v1.database.model.MusicModel;
+import com.music.musicStreamer.api.v1.database.repository.MusicRepository;
 import com.music.musicStreamer.core.util.GenerateName;
 import com.music.musicStreamer.core.storage.impl.MusicFiles;
 import com.music.musicStreamer.core.util.factory.MusicFactory;

@@ -1,6 +1,6 @@
 package com.music.musicStreamer.core.util.validator;
 
-import com.music.musicStreamer.api.v1.repository.UserRepository;
+import com.music.musicStreamer.api.v1.database.repository.UserRepository;
 import com.music.musicStreamer.enums.UserMessages;
 import com.music.musicStreamer.exception.UserException;
 import lombok.RequiredArgsConstructor;

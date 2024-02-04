@@ -1,6 +1,6 @@
 package com.music.musicStreamer.core.util.validator;
 
-import com.music.musicStreamer.api.v1.model.ImageModel;
+import com.music.musicStreamer.api.v1.database.model.ImageModel;
 import com.music.musicStreamer.enums.ImageMessages;
 import com.music.musicStreamer.exception.ImageException;
 import lombok.RequiredArgsConstructor;

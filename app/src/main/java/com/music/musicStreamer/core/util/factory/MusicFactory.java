@@ -1,6 +1,6 @@
 package com.music.musicStreamer.core.util.factory;
 
-import com.music.musicStreamer.api.v1.model.MusicModel;
+import com.music.musicStreamer.api.v1.database.model.MusicModel;
 import com.music.musicStreamer.entity.music.Music;
 import com.music.musicStreamer.entity.music.MusicRequest;
 import com.music.musicStreamer.usecase.image.GetImageByMusicIdUseCase;

@@ -1,6 +1,6 @@
 package com.music.musicStreamer.core.security.service;
 
-import com.music.musicStreamer.api.v1.repository.UserRepository;
+import com.music.musicStreamer.api.v1.database.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
