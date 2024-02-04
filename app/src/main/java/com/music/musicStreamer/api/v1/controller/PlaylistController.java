@@ -33,7 +33,7 @@ public class PlaylistController extends AbstractController {
         info(this.getClass(), "Create playlist");
         info(this.getClass(), "Playlist name: " + request.name());
 
-        final var response = createPlaylistAssembler.toResponse(
+        final var response = createPlaylistAssembler.toOutput(
                 createPlaylistUseCase.execute(request.toEntity(getUserFromToken().getUserId()))
         );
 

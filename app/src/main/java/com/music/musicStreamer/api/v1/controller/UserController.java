@@ -39,7 +39,7 @@ public class UserController extends AbstractController implements UserController
         info(this.getClass(),"Create user");
         info(this.getClass(),"User email => " + request.email());
 
-        var response = userRegisterAssembler.toResponse(createUserUseCase.execute(request.toEntity()));
+        var response = userRegisterAssembler.toOutput(createUserUseCase.execute(request.toEntity()));
 
         return buildResponseEntity(HttpStatus.CREATED, response);
     }
@@ -50,7 +50,7 @@ public class UserController extends AbstractController implements UserController
         info(this.getClass(),"Login user");
         info(this.getClass(),"User email:" + request.email());
 
-        var response = userLoginAssembler.toResponse(loginUserUseCase.execute(request.toEntity()));
+        var response = userLoginAssembler.toOutput(loginUserUseCase.execute(request.toEntity()));
 
         return buildResponseEntity(HttpStatus.OK, response);
     }

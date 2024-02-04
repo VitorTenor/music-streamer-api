@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 public class CreatePlaylistAssembler implements Assembler<PlaylistEntity, CreatePlaylistResponse> {
 
     @Override
-    public CreatePlaylistResponse toResponse(PlaylistEntity entity) {
+    public CreatePlaylistResponse toOutput(PlaylistEntity entity) {
         return CreatePlaylistResponse.builder()
                 .id((long) entity.getId())
                 .name(entity.getName())

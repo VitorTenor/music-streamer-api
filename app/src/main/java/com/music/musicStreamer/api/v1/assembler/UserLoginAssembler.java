@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserLoginAssembler implements Assembler<UserLoginResponseEntity, UserLoginResponse> {
     @Override
-    public UserLoginResponse toResponse(UserLoginResponseEntity entity) {
+    public UserLoginResponse toOutput(UserLoginResponseEntity entity) {
         return UserLoginResponse.builder()
                 .name(entity.getName())
                 .email(entity.getEmail())
