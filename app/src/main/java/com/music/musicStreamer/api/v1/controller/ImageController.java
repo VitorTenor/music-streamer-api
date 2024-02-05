@@ -22,8 +22,8 @@ public class ImageController extends AbstractController {
     /*
      * - Use case
      */
-    private final GetImageByPathNameUseCase getImageByPathNameUseCase;
     private final UploadImageUseCase uploadImageUseCase;
+    private final GetImageByPathNameUseCase getImageByPathNameUseCase;
     /*
      * - Assembler
      */
