@@ -30,7 +30,7 @@ public class ImageController {
         return ResponseEntity.status(HttpStatus.OK).body(uploadImageUseCase.execute(imageUpload.toEntity()));
     }
 
-    @GetMapping("/download/{getPathName}")
+    @GetMapping("/{getPathName}")
     public ResponseEntity<byte[]> getImage(@PathVariable(value = "getPathName", required = true) String getPathName) {
         LOGGER.info("[ImageController] Get image");
 
