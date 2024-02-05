@@ -19,11 +19,14 @@ import static com.music.musicStreamer.core.util.factory.LogFactory.info;
 @RequiredArgsConstructor
 @RequestMapping("/v1/playlists")
 public class PlaylistController extends AbstractController {
+    /*
+     * - Use case
+     */
     private final CreatePlaylistUseCase createPlaylistUseCase;
     private final GetPlaylistByIdUseCase getPlaylistByIdUseCase;
     private final GetPlaylistByUserIdUseCase getPlaylistByUserIdUseCase;
     /*
-     * - Assembler to convert the response from the use case to the response of the API
+     * - Assembler
      */
     private final PlaylistAssembler playlistAssembler;
 

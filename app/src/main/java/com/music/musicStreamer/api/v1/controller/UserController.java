@@ -25,10 +25,13 @@ import static com.music.musicStreamer.core.util.factory.LogFactory.info;
 @RequiredArgsConstructor
 @RequestMapping("/v1/users")
 public class UserController extends AbstractController implements UserControllerOpenApi  {
+    /*
+     * - Use case
+     */
     private final LoginUseCase loginUseCase;
     private final CreateUserUseCase createUserUseCase;
     /*
-    * - Assembler to convert the response from the use case to the response of the API
+    * - Assembler
     */
     private final AuthenticationAssembler authenticationAssembler;
     private final UserAssembler userAssembler;
