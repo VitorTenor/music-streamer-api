@@ -1,13 +1,14 @@
 package com.music.musicStreamer.api.v1.client;
 
-import com.music.musicStreamer.api.v1.database.model.MusicModel;
 import com.music.musicStreamer.api.v1.database.model.PlaylistMusicModel;
 import com.music.musicStreamer.api.v1.database.repository.MusicRepository;
 import com.music.musicStreamer.api.v1.database.repository.PlaylistMusicRepository;
 import com.music.musicStreamer.core.util.factory.PlaylistMusicFactory;
 import com.music.musicStreamer.entity.music.MusicEntity;
 import com.music.musicStreamer.entity.playlistmusic.PlaylistMusicEntity;
+import com.music.musicStreamer.enums.MusicMessages;
 import com.music.musicStreamer.enums.PlaylistMessages;
+import com.music.musicStreamer.exception.MusicException;
 import com.music.musicStreamer.gateway.PlaylistMusicGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -67,10 +68,10 @@ public class PlaylistMusicClient implements PlaylistMusicGateway {
         var musicList = new ArrayList<MusicEntity>();
 
         for (var playlistMusicModel : playlistMusicRepository.findAllById(id)) {
-           var music = musicRepository.findAllById(playlistMusicModel.getMusicId());
-            for (MusicModel musicModel : music) {
-                musicList.add(playlistMusicFactory.createMusic(musicModel));
-            }
+           final var music = musicRepository.findById(playlistMusicModel.getMusicId()).orElseThrow(
+                     () -> new MusicException(MusicMessages.NOT_FOUND)
+           );
+            musicList.add(playlistMusicFactory.createMusic(music));
         }
 
         info(this.getClass(), "Music list size: " + musicList.size());
