@@ -64,6 +64,7 @@ public class MusicController extends AbstractController {
         final var response = musicAssembler.toOutput(
                 getMusicByIdUseCase.execute(musicId.intValue())
         );
+        info(this.getClass(), "Music found");
 
         return buildResponseEntity(HttpStatus.OK, response);
     }
@@ -84,6 +85,7 @@ public class MusicController extends AbstractController {
         info(this.getClass(), "Delete music by id");
 
         final var response = deleteMusicByIdUseCase.execute(musicId.intValue());
+        info(this.getClass(), "Music deleted");
 
         return buildResponseEntity(HttpStatus.OK, response);
     }
