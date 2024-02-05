@@ -1,6 +1,6 @@
 package com.music.musicStreamer.api.v1.client;
 
-import com.music.musicStreamer.entity.user.UserAuthRequest;
+import com.music.musicStreamer.entity.user.LoginEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,13 +15,13 @@ public class AuthClient {
 
     private final AuthenticationManager authenticationManager;
     private final Logger LOGGER = Logger.getLogger(AuthClient.class.getName());
-    public Authentication authenticate(UserAuthRequest userAuthRequest) {
+
+    public Authentication authenticate(LoginEntity entity) {
         LOGGER.info("[AuthClient] Authenticate user");
 
-        UsernamePasswordAuthenticationToken usernamePassword =
-                new UsernamePasswordAuthenticationToken(userAuthRequest.getEmail(), userAuthRequest.getPassword());
+        var usernamePassword = new UsernamePasswordAuthenticationToken(entity.email(), entity.password());
 
-        LOGGER.info("[AuthClient] User email: " + userAuthRequest.getEmail());
+        LOGGER.info("[AuthClient] User email: " + entity.email());
 
         return authenticationManager.authenticate(usernamePassword);
     }

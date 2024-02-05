@@ -1,6 +1,7 @@
 package com.music.musicStreamer.usecase.user;
 
 import com.music.musicStreamer.entity.user.CreateUserEntity;
+import com.music.musicStreamer.entity.user.UserEntity;
 import com.music.musicStreamer.gateway.UserGateway;
 
 import javax.inject.Named;
@@ -13,7 +14,7 @@ public class CreateUserUseCase {
         this.userGateway = userGateway;
     }
 
-    public CreateUserEntity execute(final CreateUserEntity entity) {
+    public UserEntity execute(final CreateUserEntity entity) {
         return this.userGateway.create(entity);
     }
 

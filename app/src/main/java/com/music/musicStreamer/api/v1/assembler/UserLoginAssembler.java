@@ -1,17 +1,17 @@
 package com.music.musicStreamer.api.v1.assembler;
 
-import com.music.musicStreamer.api.v1.response.UserLoginResponse;
-import com.music.musicStreamer.entity.user.UserLoginResponseEntity;
+import com.music.musicStreamer.api.v1.model.output.UserLoginOutput;
+import com.music.musicStreamer.entity.user.AuthenticationEntity;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserLoginAssembler implements Assembler<UserLoginResponseEntity, UserLoginResponse> {
+public class UserLoginAssembler implements Assembler<AuthenticationEntity, UserLoginOutput> {
     @Override
-    public UserLoginResponse toOutput(UserLoginResponseEntity entity) {
-        return UserLoginResponse.builder()
-                .name(entity.getName())
-                .email(entity.getEmail())
-                .token(entity.getToken())
+    public UserLoginOutput toOutput(AuthenticationEntity entity) {
+        return UserLoginOutput.builder()
+                .name(entity.name())
+                .email(entity.email())
+                .token(entity.token())
                 .build();
     }
 }

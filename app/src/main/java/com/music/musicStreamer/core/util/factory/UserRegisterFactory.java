@@ -25,7 +25,7 @@ public class UserRegisterFactory {
         return userModel;
     }
 
-    public CreateUserEntity toEntity(final UserModel model) {
-        return new CreateUserEntity(model.getName(), model.getEmail(), model.getPassword());
+    public CreateUserEntity toEntity(final UserModel userModel) {
+        return new CreateUserEntity(userModel.getName(), userModel.getEmail(), userModel.getPassword());
     }
 }

@@ -1,7 +1,7 @@
 package com.music.musicStreamer.api.v1.controller;
 
 import com.music.musicStreamer.api.exceptionHandler.Problem;
-import com.music.musicStreamer.api.v1.model.output.CreateUserOutput;
+import com.music.musicStreamer.api.v1.model.output.UserOutput;
 import com.music.musicStreamer.util.AbstractContextTest;
 import org.junit.jupiter.api.*;
 import org.springframework.http.MediaType;
@@ -51,7 +51,7 @@ public class TestUserController extends AbstractContextTest {
         // assert
         resultActions.andExpect(MockMvcResultMatchers.status().isCreated());
 
-        var user = this.payloadExtractor.as(CreateUserOutput.class);
+        var user = this.payloadExtractor.as(UserOutput.class);
 
         assertNotNull(user);
         assertEquals("Vitor", user.getName());

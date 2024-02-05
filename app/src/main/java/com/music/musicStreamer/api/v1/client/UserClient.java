@@ -4,9 +4,10 @@ import com.music.musicStreamer.api.v1.database.model.UserModel;
 import com.music.musicStreamer.api.v1.database.repository.UserRepository;
 import com.music.musicStreamer.core.security.service.TokenService;
 import com.music.musicStreamer.core.util.factory.UserRegisterFactory;
+import com.music.musicStreamer.entity.user.AuthenticationEntity;
 import com.music.musicStreamer.entity.user.CreateUserEntity;
-import com.music.musicStreamer.entity.user.UserAuthRequest;
-import com.music.musicStreamer.entity.user.UserLoginResponseEntity;
+import com.music.musicStreamer.entity.user.LoginEntity;
+import com.music.musicStreamer.entity.user.UserEntity;
 import com.music.musicStreamer.enums.UserMessages;
 import com.music.musicStreamer.exception.UserException;
 import com.music.musicStreamer.gateway.UserGateway;
@@ -27,7 +28,7 @@ public class UserClient implements UserGateway {
 
     @Override
     @Transactional
-    public CreateUserEntity create(CreateUserEntity entity) {
+    public UserEntity create(CreateUserEntity entity) {
         log.info("[UserClient] Create user");
 
         final var existsByEmail = userRepository.existsByEmail(entity.email());
@@ -37,23 +38,23 @@ public class UserClient implements UserGateway {
 
         log.info("[UserClient] User created => userId: " + createdUser.getId());
 
-        return userRegisterFactory.toEntity(createdUser);
+        return new UserEntity(createdUser.getName(), createdUser.getEmail());
     }
 
     @Override
-    public UserLoginResponseEntity loginUser(final UserAuthRequest userAuthRequest) {
+    public AuthenticationEntity login(LoginEntity entity) {
         log.info("[UserClient] Login user");
-        final var user = userRepository.findByEmail(userAuthRequest.getEmail())
+        final var user = userRepository.findByEmail(entity.email())
                 .orElseThrow(() -> {
-                    log.info("[UserClient] User not found => " + userAuthRequest.getEmail());
+                    log.info("[UserClient] User not found => " + entity.email());
                     return new UserException(UserMessages.NOT_FOUND);
                 });
 
-        authClient.authenticate(userAuthRequest);
+        authClient.authenticate(entity);
         final var token = tokenService.generateToken(user);
 
         log.info("[UserClient] User logged => " + user.getEmail());
-        return new UserLoginResponseEntity(user.getName(), user.getEmail(), token);
+        return new AuthenticationEntity(user.getName(), user.getEmail(), token);
     }
 
     private UserModel save(UserModel userModel) {

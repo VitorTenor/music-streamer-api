@@ -33,7 +33,6 @@ public class UserModel implements Serializable, UserDetails {
     private Date updated_at;
     private UserRole role;
     private Boolean active;
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return this.role == UserRole.ADMIN ?
@@ -66,5 +65,7 @@ public class UserModel implements Serializable, UserDetails {
     public boolean isEnabled() {
         return this.active;
     }
+
+
 }
 
