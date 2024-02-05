@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+import static com.music.musicStreamer.core.util.factory.LogFactory.info;
+
 @Component
 @RequiredArgsConstructor
 public class PlaylistMusicClient implements PlaylistMusicGateway {
@@ -29,7 +31,10 @@ public class PlaylistMusicClient implements PlaylistMusicGateway {
     @Override
     @Transactional
     public String create(PlaylistMusicEntity entity) {
+        info(this.getClass(), "Create playlist music");
+
         save(playlistMusicFactory.toModel(entity));
+        info(this.getClass(), "Playlist music created");
 
         return PlaylistMessages.MUSIC_ADDED.getMessage();
     }

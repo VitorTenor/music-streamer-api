@@ -4,7 +4,6 @@ import com.music.musicStreamer.api.v1.database.model.PlaylistModel;
 import com.music.musicStreamer.api.v1.database.repository.PlaylistRepository;
 import com.music.musicStreamer.core.util.factory.PlaylistFactory;
 import com.music.musicStreamer.core.util.factory.PlaylistMusicFactory;
-import com.music.musicStreamer.core.util.validator.PlaylistValidator;
 import com.music.musicStreamer.core.util.validator.UserValidator;
 import com.music.musicStreamer.entity.playlist.CreatePlaylistEntity;
 import com.music.musicStreamer.entity.playlist.PlaylistEntity;
@@ -39,9 +38,6 @@ public class PlaylistClient implements PlaylistGateway {
     private final PlaylistRepository playlistRepository;
     // TODO: REMOVE
     private final UserValidator userValidator;
-    // TODO: REMOVE
-    private final PlaylistValidator playlistValidator;
-
 
     private final Logger LOGGER = Logger.getLogger(PlaylistClient.class.getName());
 
