@@ -4,10 +4,9 @@ import com.music.musicStreamer.api.v1.database.model.ImageModel;
 import com.music.musicStreamer.api.v1.database.model.MusicModel;
 import com.music.musicStreamer.api.v1.database.repository.ImageRepository;
 import com.music.musicStreamer.api.v1.database.repository.MusicRepository;
-import com.music.musicStreamer.core.util.GenerateName;
 import com.music.musicStreamer.core.storage.impl.ImageFiles;
+import com.music.musicStreamer.core.util.MainUtils;
 import com.music.musicStreamer.core.util.factory.ImageFactory;
-import com.music.musicStreamer.core.util.validator.ImageValidator;
 import com.music.musicStreamer.entity.image.Image;
 import com.music.musicStreamer.entity.image.ImageRequest;
 import com.music.musicStreamer.enums.MusicMessages;
@@ -24,7 +23,6 @@ import java.util.logging.Logger;
 public class ImageClient implements ImageGateway {
     private final ImageFiles imageFiles;
     private final ImageFactory imageFactory;
-    private final ImageValidator imageValidator;
     private final ImageRepository imageRepository;
     private final MusicRepository musicRepository;
     private final Logger LOGGER = Logger.getLogger(ImageClient.class.getName());
@@ -41,7 +39,7 @@ public class ImageClient implements ImageGateway {
         LOGGER.info("[ImageClient] Music found");
         LOGGER.info("[ImageClient] Music name => " + musicModel.getName());
 
-        String newFileName = GenerateName.randomName();
+        String newFileName = MainUtils.randomName();
 
         LOGGER.info("[ImageClient] New file name => " + newFileName);
 
@@ -122,7 +120,6 @@ public class ImageClient implements ImageGateway {
         LOGGER.info("[ImageClient] Find image by id");
 
         ImageModel imageModel = imageRepository.findByMusicId(id);
-        imageValidator.validateIfImageIsNotNull(imageModel);
 
         LOGGER.info("[ImageClient] Image found");
         return imageModel;

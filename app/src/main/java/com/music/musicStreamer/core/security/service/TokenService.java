@@ -17,7 +17,7 @@ public class TokenService {
 
     @Value("${api.security.token.secret}")
     private String secret;
-    public String generateToken(UserModel userModel){
+    public String generate(UserModel userModel){
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
 
@@ -34,7 +34,7 @@ public class TokenService {
         }
     }
 
-    public String validateToken(String token){
+    public String validate(String token){
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             return JWT.require(algorithm)

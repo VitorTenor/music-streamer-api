@@ -22,9 +22,17 @@ import static com.music.musicStreamer.core.util.factory.LogFactory.info;
 @Component
 @AllArgsConstructor
 public class UserClient implements UserGateway {
+    /*
+     * Clients
+     */
     private final AuthenticationGateway authenticationGateway;
+
+    /*
+     * Factories
+     */
     private final UserFactory userFactory;
     private final TokenService tokenService;
+
     private final UserRepository userRepository;
 
     @Override
@@ -54,7 +62,7 @@ public class UserClient implements UserGateway {
                 });
 
         if (Boolean.TRUE.equals(authenticationGateway.isAuthenticated(entity))) {
-            final var token = tokenService.generateToken(user);
+            final var token = tokenService.generate(user);
             info(this.getClass(), "User logged => " + user.getEmail());
             return userFactory.toEntity(user, token);
         } else {

@@ -2,10 +2,9 @@ package com.music.musicStreamer.api.v1.client;
 
 import com.music.musicStreamer.api.v1.database.model.MusicModel;
 import com.music.musicStreamer.api.v1.database.repository.MusicRepository;
-import com.music.musicStreamer.core.util.GenerateName;
 import com.music.musicStreamer.core.storage.impl.MusicFiles;
+import com.music.musicStreamer.core.util.MainUtils;
 import com.music.musicStreamer.core.util.factory.MusicFactory;
-import com.music.musicStreamer.core.util.validator.MusicValidator;
 import com.music.musicStreamer.entity.music.Music;
 import com.music.musicStreamer.entity.music.MusicDownload;
 import com.music.musicStreamer.entity.music.MusicRequest;
@@ -13,7 +12,6 @@ import com.music.musicStreamer.enums.MusicMessages;
 import com.music.musicStreamer.exception.MusicException;
 import com.music.musicStreamer.gateway.MusicGateway;
 import com.music.musicStreamer.usecase.image.DeleteImageByMusicIdUseCase;
-
 import com.music.musicStreamer.usecase.playlistMusic.DeleteMusicFromPlaylistUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -30,7 +28,6 @@ import java.util.logging.Logger;
 public class MusicClient implements MusicGateway {
     private final MusicFiles musicFiles;
     private final MusicFactory musicFactory;
-    private final MusicValidator musicValidator;
     private final MusicRepository musicRepository;
     private final DeleteImageByMusicIdUseCase deleteImageByMusicIdUseCase;
     private final DeleteMusicFromPlaylistUseCase deleteMusicFromPlaylistUseCase;
@@ -41,7 +38,7 @@ public class MusicClient implements MusicGateway {
     public Music saveMusic(MusicRequest musicRequest) {
         LOGGER.info("[MusicClient] Save music");
 
-        String newFileName = GenerateName.randomName();
+        String newFileName = MainUtils.randomName();
 
         LOGGER.info("[MusicClient] New file name => " + newFileName);
 
