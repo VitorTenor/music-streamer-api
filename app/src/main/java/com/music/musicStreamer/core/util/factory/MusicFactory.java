@@ -34,7 +34,7 @@ public class MusicFactory {
     public List<MusicEntity> toEntityList(final List<MusicModel> musicModel) {
         var musicEntityDTO = new ArrayList<MusicEntity>();
 
-        for (var music : musicModel) {
+        for (final var music : musicModel) {
             var musicEntity2 = new MusicEntity(
                     music.getId(),
                     music.getName(),
