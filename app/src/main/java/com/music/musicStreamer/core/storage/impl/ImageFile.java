@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -65,7 +66,7 @@ public class ImageFile implements FileBase<UploadImageEntity> {
 
     @Override
     public List<?> getAllInFiles() {
-        return null;
+        return Collections.emptyList();
     }
 
     @Override
