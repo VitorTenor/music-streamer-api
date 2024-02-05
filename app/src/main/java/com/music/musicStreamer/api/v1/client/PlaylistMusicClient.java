@@ -53,9 +53,9 @@ public class PlaylistMusicClient implements PlaylistMusicGateway {
             info(this.getClass(), "Music not found in playlist, nothing to delete");
             return Boolean.FALSE;
         }
-        for (PlaylistMusicModel playlistMusicModel : playlistMusic) {
-            playlistMusicRepository.deleteById(playlistMusicModel.getId());
-        }
+        playlistMusic.stream().parallel()
+                .map(PlaylistMusicModel::getId)
+                .forEach(playlistMusicRepository::deleteById);
 
         info(this.getClass(), "Music deleted from playlist");
         return Boolean.TRUE;
@@ -68,26 +68,25 @@ public class PlaylistMusicClient implements PlaylistMusicGateway {
 
         final var musicList = playlistMusicRepository.findAllById(id);
 
-        return musicList.stream().parallel().map(
-                playlistMusicModel -> {
-                    final var music = musicRepository.findById(playlistMusicModel.getMusicId()).orElseThrow(
-                            () -> new MusicException(MusicMessages.NOT_FOUND)
-                    );
-                    return playlistMusicFactory.createMusic(music);
-                }
-        ).toList();
+        return musicList.stream().parallel()
+                .map(
+                        playlistMusicModel -> {
+                            final var music = musicRepository.findById(playlistMusicModel.getMusicId()).orElseThrow(
+                                    () -> new MusicException(MusicMessages.NOT_FOUND)
+                            );
+                            return playlistMusicFactory.createMusic(music);
+                        }
+                ).toList();
     }
 
     @Override
     public List<Long> getMusicIdByPlaylistId(final Long id) {
         info(this.getClass(), "Get music id by playlist id");
-
         return playlistMusicRepository.findMusicIdByPlaylistId(id.intValue());
     }
 
     public void save(PlaylistMusicModel playlistMusicModel) {
         info(this.getClass(), "Save playlist music");
-
         playlistMusicRepository.save(playlistMusicModel);
     }
 }
