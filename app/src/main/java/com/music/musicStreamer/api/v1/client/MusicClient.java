@@ -117,7 +117,7 @@ public class MusicClient implements MusicGateway {
         musicRepository.deleteById(musicId);
         info(this.getClass(), "Music deleted in database");
 
-        if (Boolean.TRUE.equals(imageGateway.delete(musicId))) {
+        if (Boolean.TRUE.equals(imageGateway.deleteByMusicId(musicId))) {
             info(this.getClass(), "Image deleted in database");
         }
 

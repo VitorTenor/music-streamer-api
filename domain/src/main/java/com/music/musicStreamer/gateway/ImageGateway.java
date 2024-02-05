@@ -7,6 +7,6 @@ import com.music.musicStreamer.entity.image.UploadImageEntity;
 public interface ImageGateway {
     ImageEntity save(UploadImageEntity uploadImageEntity);
     byte[] getByFileName(final String imageName);
-    Boolean delete(final int id);
-    ImageEntity getByMusicId(final int id);
+    Boolean deleteByMusicId(final int musicId);
+    ImageEntity getByMusicId(final int musicId);
 }
