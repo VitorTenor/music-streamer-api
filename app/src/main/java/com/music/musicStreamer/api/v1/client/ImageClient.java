@@ -75,7 +75,7 @@ public class ImageClient implements ImageGateway {
     }
 
     @Override
-    public byte[] getImageByFileName(final String fileName) {
+    public byte[] getByFileName(final String fileName) {
         info(this.getClass(), "Get image by file name");
         info(this.getClass(), "File name => " + fileName);
 

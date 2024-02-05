@@ -6,6 +6,7 @@ import com.music.musicStreamer.enums.ImageMessages;
 import com.music.musicStreamer.exception.ImageException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.InputStream;
@@ -16,6 +17,7 @@ import java.util.logging.Logger;
 
 import static com.music.musicStreamer.core.util.factory.LogFactory.info;
 
+@Component
 @RequiredArgsConstructor
 public class ImageFile implements FileBase<UploadImageEntity> {
     private @Value("${storage.image.mediaType}") String IMAGE_TYPE;
