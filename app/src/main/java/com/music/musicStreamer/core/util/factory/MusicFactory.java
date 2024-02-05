@@ -1,7 +1,7 @@
 package com.music.musicStreamer.core.util.factory;
 
 import com.music.musicStreamer.api.v1.database.model.MusicModel;
-import com.music.musicStreamer.entity.music.Music;
+import com.music.musicStreamer.entity.music.MusicEntity;
 import com.music.musicStreamer.entity.music.MusicRequest;
 import com.music.musicStreamer.usecase.image.GetImageByMusicIdUseCase;
 import lombok.RequiredArgsConstructor;
@@ -20,10 +20,10 @@ public class MusicFactory {
     private @Value("${storage.music.mediaType}") String MUSIC_TYPE;
     private final Logger LOGGER = Logger.getLogger(MusicFactory.class.getName());
 
-    public Music createMusic(MusicModel musicModel) {
+    public MusicEntity createMusic(MusicModel musicModel) {
         LOGGER.info("[MusicFactory] Create music");
 
-        return new Music(
+        return new MusicEntity(
                 musicModel.getId(),
                 musicModel.getName(),
                 musicModel.getArtist(),
@@ -35,12 +35,12 @@ public class MusicFactory {
 
     }
 
-    public List<Music> createMusicList(List<MusicModel> musicModel) {
+    public List<MusicEntity> createMusicList(List<MusicModel> musicModel) {
         LOGGER.info("[MusicFactory] Create music list");
-        List<Music> musicDTO = new ArrayList<>();
+        List<MusicEntity> musicEntityDTO = new ArrayList<>();
 
         for (MusicModel music : musicModel) {
-            Music music2 = new Music(
+            MusicEntity musicEntity2 = new MusicEntity(
                     music.getId(),
                     music.getName(),
                     music.getArtist(),
@@ -49,13 +49,13 @@ public class MusicFactory {
                     getImageByMusicIdUseCase.execute(music.getId()),
                     music.getPathName()
             );
-            musicDTO.add(music2);
+            musicEntityDTO.add(musicEntity2);
         }
 
         LOGGER.info("[MusicFactory] Music list created");
-        LOGGER.info("[MusicFactory] Music list size => " + musicDTO.size());
+        LOGGER.info("[MusicFactory] Music list size => " + musicEntityDTO.size());
 
-        return musicDTO;
+        return musicEntityDTO;
     }
 
     public MusicModel createModel(MusicRequest musicRequest, String newFileName) {

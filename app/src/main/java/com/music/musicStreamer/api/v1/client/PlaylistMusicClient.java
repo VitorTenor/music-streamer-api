@@ -5,7 +5,7 @@ import com.music.musicStreamer.api.v1.database.model.PlaylistMusicModel;
 import com.music.musicStreamer.api.v1.database.repository.MusicRepository;
 import com.music.musicStreamer.api.v1.database.repository.PlaylistMusicRepository;
 import com.music.musicStreamer.core.util.factory.PlaylistMusicFactory;
-import com.music.musicStreamer.entity.music.Music;
+import com.music.musicStreamer.entity.music.MusicEntity;
 import com.music.musicStreamer.entity.playlistmusic.PlaylistMusicEntity;
 import com.music.musicStreamer.enums.PlaylistMessages;
 import com.music.musicStreamer.gateway.PlaylistMusicGateway;
@@ -60,11 +60,11 @@ public class PlaylistMusicClient implements PlaylistMusicGateway {
     }
 
     @Override
-    public List<Music> getMusicByPlaylistId(int id) {
+    public List<MusicEntity> getMusicByPlaylistId(int id) {
         info(this.getClass(), "Get music by playlist id");
         info(this.getClass(), "Playlist id: " + id);
 
-        var musicList = new ArrayList<Music>();
+        var musicList = new ArrayList<MusicEntity>();
 
         for (var playlistMusicModel : playlistMusicRepository.findAllById(id)) {
            var music = musicRepository.findAllById(playlistMusicModel.getMusicId());

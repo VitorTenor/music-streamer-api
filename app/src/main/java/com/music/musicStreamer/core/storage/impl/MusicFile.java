@@ -3,7 +3,7 @@ package com.music.musicStreamer.core.storage.impl;
 import com.music.musicStreamer.api.v1.database.repository.MusicRepository;
 import com.music.musicStreamer.core.storage.FileBase;
 import com.music.musicStreamer.core.util.factory.MusicFactory;
-import com.music.musicStreamer.entity.music.Music;
+import com.music.musicStreamer.entity.music.MusicEntity;
 import com.music.musicStreamer.entity.music.MusicRequest;
 import com.music.musicStreamer.enums.MusicMessages;
 import com.music.musicStreamer.exception.MusicException;
@@ -70,7 +70,7 @@ public class MusicFile implements FileBase<MusicRequest> {
     }
 
     @Override
-    public List<Music> getAllInFiles() {
+    public List<MusicEntity> getAllInFiles() {
         LOGGER.info("[MusicFiles] Get all musics in files");
         try {
             return musicFactory.createMusicList(musicRepository.findAll());

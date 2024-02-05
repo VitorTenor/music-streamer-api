@@ -5,8 +5,8 @@ import com.music.musicStreamer.api.v1.database.repository.MusicRepository;
 import com.music.musicStreamer.core.storage.impl.MusicFile;
 import com.music.musicStreamer.core.util.MainUtils;
 import com.music.musicStreamer.core.util.factory.MusicFactory;
-import com.music.musicStreamer.entity.music.Music;
 import com.music.musicStreamer.entity.music.MusicDownload;
+import com.music.musicStreamer.entity.music.MusicEntity;
 import com.music.musicStreamer.entity.music.MusicRequest;
 import com.music.musicStreamer.enums.MusicMessages;
 import com.music.musicStreamer.exception.MusicException;
@@ -41,7 +41,7 @@ public class MusicClient implements MusicGateway {
 
     @Override
     @Transactional
-    public Music saveMusic(MusicRequest musicRequest) {
+    public MusicEntity saveMusic(MusicRequest musicRequest) {
         LOGGER.info("[MusicClient] Save music");
 
         String newFileName = MainUtils.randomName();
@@ -61,7 +61,7 @@ public class MusicClient implements MusicGateway {
     }
 
     @Override
-    public List<Music> getAllMusics() {
+    public List<MusicEntity> getAllMusics() {
         LOGGER.info("[MusicClient] Get all musics");
 
         return musicFiles.getAllInFiles();
@@ -98,7 +98,7 @@ public class MusicClient implements MusicGateway {
     }
 
     @Override
-    public Music getMusicById(int musicId) {
+    public MusicEntity getMusicById(int musicId) {
         LOGGER.info("[MusicClient] Get music by id");
         LOGGER.info("[MusicClient] Music id: " + musicId);
 
