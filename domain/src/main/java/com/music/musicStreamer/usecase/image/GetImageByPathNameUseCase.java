@@ -6,7 +6,7 @@ import javax.inject.Named;
 
 @Named
 public class GetImageByPathNameUseCase {
-    private ImageGateway imageGateway;
+    private final ImageGateway imageGateway;
 
     public GetImageByPathNameUseCase(ImageGateway imageGateway) {
         this.imageGateway = imageGateway;
