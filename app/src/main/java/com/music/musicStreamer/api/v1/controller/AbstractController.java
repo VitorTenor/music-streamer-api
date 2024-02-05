@@ -22,9 +22,9 @@ public class AbstractController {
     public UserToken getUserFromToken() {
         LOGGER.info("[AbstractController] Get user from token");
 
-        String payload = tokenDecode(getToken());
-        Gson gson = new Gson();
-        UserToken userToken = gson.fromJson(payload, UserToken.class);
+        var payload = tokenDecode(getToken());
+        var gson = new Gson();
+        var userToken = gson.fromJson(payload, UserToken.class);
 
         LOGGER.info("[AbstractController] User email: " + userToken.getUserEmail());
         LOGGER.info("[AbstractController] User id: " + userToken.getUserId());

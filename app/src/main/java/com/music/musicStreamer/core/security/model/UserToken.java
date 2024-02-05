@@ -11,3 +11,4 @@ public class UserToken {
     private final String userEmail;
     private final int userId;
 }
+

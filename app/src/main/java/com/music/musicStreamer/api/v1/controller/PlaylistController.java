@@ -35,6 +35,7 @@ public class PlaylistController extends AbstractController {
         info(this.getClass(), "Create playlist");
         info(this.getClass(), "Playlist name: " + input.name());
 
+
         final var response = playlistAssembler.toOutput(
                 createPlaylistUseCase.execute(input.toEntity(getUserFromToken().getUserId()))
         );
