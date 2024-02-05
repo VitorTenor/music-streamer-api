@@ -104,21 +104,23 @@ public class MusicClient implements MusicGateway {
 
     @Override
     @Transactional
-    public String deleteMusicById(final int musicId) {
+    public String deleteMusicById(final Long musicId) {
         info(this.getClass(), "Delete music by id");
 
-        var musicModel = findMusicById(musicId);
+        final var musicIdInt = musicId.intValue();
+
+        var musicModel = findMusicById(musicIdInt);
 
         info(this.getClass(), "Music found");
         info(this.getClass(), "Music id: " + musicModel.getId());
 
-        musicRepository.deleteById(musicId);
+        musicRepository.deleteById(musicIdInt);
         info(this.getClass(), "Music deleted in database");
 
         imageGateway.deleteByMusicId(musicId);
         info(this.getClass(), "Image deleted in database");
 
-        playlistMusicGateway.delete(musicId);
+        playlistMusicGateway.deleteByMusicId(musicId);
         info(this.getClass(), "Music deleted in playlist");
 
         fileBase.deleteInFiles(musicModel.getPathName());

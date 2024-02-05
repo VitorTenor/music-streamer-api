@@ -12,7 +12,7 @@ public class DeleteMusicByIdUseCase {
         this.musicGateway = musicGateway;
     }
 
-    public String execute(int id) {
+    public String execute(final Long id) {
         return musicGateway.deleteMusicById(id);
     }
 }

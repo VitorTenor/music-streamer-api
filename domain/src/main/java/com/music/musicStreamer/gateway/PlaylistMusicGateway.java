@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface PlaylistMusicGateway {
     String create(PlaylistMusicEntity entity);
-    Boolean delete(int id);
+    Boolean deleteByMusicId(final Long id);
     List<MusicEntity> getMusicByPlaylistId(int playlistId);
     List<Long> getMusicIdByPlaylistId(final Long id);
 }

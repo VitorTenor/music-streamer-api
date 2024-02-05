@@ -83,7 +83,7 @@ public class MusicController extends AbstractController {
     public ResponseEntity<String> deleteById(@PathVariable("musicId") final Long musicId) {
         info(this.getClass(), "Delete music by id");
 
-        final var response = deleteMusicByIdUseCase.execute(musicId.intValue());
+        final var response = deleteMusicByIdUseCase.execute(musicId);
         info(this.getClass(), "Music deleted");
 
         return buildResponseEntity(HttpStatus.OK, response);

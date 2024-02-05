@@ -12,5 +12,5 @@ public interface MusicGateway {
     byte[] playMusic(int id);
     MusicDownloadEntity downloadMusic(final Long id);
     MusicEntity getMusicById(int id);
-    String deleteMusicById(int id);
+    String deleteMusicById(final Long id);
 }

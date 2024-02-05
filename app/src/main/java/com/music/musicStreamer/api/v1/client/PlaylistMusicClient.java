@@ -43,10 +43,10 @@ public class PlaylistMusicClient implements PlaylistMusicGateway {
 
     @Override
     @Transactional
-    public Boolean delete(int id) {
+    public Boolean deleteByMusicId(final Long musicId) {
         info(this.getClass(), "Delete music from playlist");
 
-        var playlistMusic = playlistMusicRepository.findByMusicId(id);
+        var playlistMusic = playlistMusicRepository.findByMusicId(musicId.intValue());
         if (playlistMusic.isEmpty()) {
             info(this.getClass(), "Music not found in playlist, nothing to delete");
             return Boolean.FALSE;

@@ -3,7 +3,7 @@ package com.music.musicStreamer.api.v1.controller;
 import com.music.musicStreamer.api.v1.assembler.ImageAssembler;
 import com.music.musicStreamer.api.v1.model.input.ImageInput;
 import com.music.musicStreamer.api.v1.model.output.ImageOutput;
-import com.music.musicStreamer.usecase.image.GetImageUseCase;
+import com.music.musicStreamer.usecase.image.GetImageByPathNameUseCase;
 import com.music.musicStreamer.usecase.image.UploadImageUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,7 +22,7 @@ public class ImageController extends AbstractController {
     /*
      * - Use case
      */
-    private final GetImageUseCase getImageUseCase;
+    private final GetImageByPathNameUseCase getImageByPathNameUseCase;
     private final UploadImageUseCase uploadImageUseCase;
     /*
      * - Assembler
@@ -45,7 +45,7 @@ public class ImageController extends AbstractController {
     public ResponseEntity<byte[]> getImage(@PathVariable(value = "pathName") final String pathName) {
         info(this.getClass(), "Get image");
 
-        final var response = getImageUseCase.execute(pathName);
+        final var response = getImageByPathNameUseCase.execute(pathName);
         info(this.getClass(), "Image retrieved");
 
         return buildResponseEntity(HttpStatus.OK, MediaType.IMAGE_JPEG, response);

@@ -5,10 +5,10 @@ import com.music.musicStreamer.gateway.ImageGateway;
 import javax.inject.Named;
 
 @Named
-public class GetImageUseCase {
+public class GetImageByPathNameUseCase {
     private ImageGateway imageGateway;
 
-    public GetImageUseCase(ImageGateway imageGateway) {
+    public GetImageByPathNameUseCase(ImageGateway imageGateway) {
         this.imageGateway = imageGateway;
     }
 
