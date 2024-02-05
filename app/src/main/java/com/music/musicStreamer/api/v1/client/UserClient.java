@@ -35,7 +35,7 @@ public class UserClient implements UserGateway {
         if (Boolean.TRUE.equals(existsByEmail)) throw new UserException(UserMessages.ALREADY_EXISTS);
 
         final var userModel = userFactory.toModel(entity);
-        final var createdUser = save(userModel);
+        final var createdUser = this.save(userModel);
 
         info(this.getClass(), "User created => userId: " + createdUser.getId());
 
