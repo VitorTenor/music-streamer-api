@@ -7,7 +7,7 @@ import com.music.musicStreamer.core.util.MainUtils;
 import com.music.musicStreamer.core.util.factory.MusicFactory;
 import com.music.musicStreamer.entity.music.MusicDownload;
 import com.music.musicStreamer.entity.music.MusicEntity;
-import com.music.musicStreamer.entity.music.MusicRequest;
+import com.music.musicStreamer.entity.music.SaveMusicEntity;
 import com.music.musicStreamer.enums.MusicMessages;
 import com.music.musicStreamer.exception.MusicException;
 import com.music.musicStreamer.gateway.ImageGateway;
@@ -33,20 +33,20 @@ public class MusicClient implements MusicGateway {
     private final PlaylistMusicGateway playlistMusicGateway;
     private final MusicFactory musicFactory;
     private final MusicRepository musicRepository;
-    private final FileBase<MusicRequest> fileBase;
+    private final FileBase<SaveMusicEntity> fileBase;
 
     @Override
     @Transactional
-    public MusicEntity saveMusic(MusicRequest musicRequest) {
+    public MusicEntity saveMusic(SaveMusicEntity saveMusicEntity) {
         info(this.getClass(), "Save music");
 
         final var newFileName = MainUtils.randomName();
         info(this.getClass(), "New file name => " + newFileName);
 
-        fileBase.saveInFiles(musicRequest, newFileName);
+        fileBase.saveInFiles(saveMusicEntity, newFileName);
         info(this.getClass(), "Music saved in files");
 
-        final var musicModel = saveInDatabase(musicFactory.toModel(musicRequest, newFileName));
+        final var musicModel = saveInDatabase(musicFactory.toModel(saveMusicEntity, newFileName));
         info(this.getClass(), "Music saved in database");
         info(this.getClass(), "musicId => " + musicModel.getId());
 

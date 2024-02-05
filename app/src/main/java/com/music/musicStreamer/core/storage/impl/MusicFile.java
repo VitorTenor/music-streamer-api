@@ -4,7 +4,7 @@ import com.music.musicStreamer.api.v1.database.repository.MusicRepository;
 import com.music.musicStreamer.core.storage.FileBase;
 import com.music.musicStreamer.core.util.factory.MusicFactory;
 import com.music.musicStreamer.entity.music.MusicEntity;
-import com.music.musicStreamer.entity.music.MusicRequest;
+import com.music.musicStreamer.entity.music.SaveMusicEntity;
 import com.music.musicStreamer.enums.MusicMessages;
 import com.music.musicStreamer.exception.MusicException;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,7 @@ import java.util.logging.Logger;
 
 @Component
 @RequiredArgsConstructor
-public class MusicFile implements FileBase<MusicRequest> {
+public class MusicFile implements FileBase<SaveMusicEntity> {
     private @Value("${storage.music.mediaType}") String MUSIC_TYPE;
     private @Value("${storage.music.path}") String MUSIC_PATH;
     private final MusicFactory musicFactory;
@@ -31,7 +31,7 @@ public class MusicFile implements FileBase<MusicRequest> {
     private final Logger LOGGER = Logger.getLogger(MusicFile.class.getName());
 
     @Override
-    public void saveInFiles(MusicRequest musicRequest, String fileName) {
+    public void saveInFiles(SaveMusicEntity saveMusicEntity, String fileName) {
         LOGGER.info("[MusicFiles] Save music in files");
 
         Path path = Path.of(MUSIC_PATH + fileName + MUSIC_TYPE);
@@ -39,7 +39,7 @@ public class MusicFile implements FileBase<MusicRequest> {
         LOGGER.info("[MusicFiles] Path => " + path);
 
         try {
-            Files.write(path, musicRequest.getMusic());
+            Files.write(path, saveMusicEntity.getMusic());
         } catch (IOException e) {
             LOGGER.info("[MusicFiles] Error to save music in files => " + e.getMessage());
 

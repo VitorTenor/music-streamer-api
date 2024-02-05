@@ -2,7 +2,7 @@ package com.music.musicStreamer.core.util.factory;
 
 import com.music.musicStreamer.api.v1.database.model.MusicModel;
 import com.music.musicStreamer.entity.music.MusicEntity;
-import com.music.musicStreamer.entity.music.MusicRequest;
+import com.music.musicStreamer.entity.music.SaveMusicEntity;
 import com.music.musicStreamer.gateway.ImageGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -52,12 +52,12 @@ public class MusicFactory {
         return musicEntityDTO;
     }
 
-    public MusicModel toModel(MusicRequest musicRequest, final String newFileName) {
+    public MusicModel toModel(SaveMusicEntity saveMusicEntity, final String newFileName) {
         var musicModel = new MusicModel();
-        musicModel.setName(musicRequest.getName());
-        musicModel.setArtist(musicRequest.getArtist());
-        musicModel.setAlbum(musicRequest.getAlbum());
-        musicModel.setGenre(musicRequest.getGenre());
+        musicModel.setName(saveMusicEntity.getName());
+        musicModel.setArtist(saveMusicEntity.getArtist());
+        musicModel.setAlbum(saveMusicEntity.getAlbum());
+        musicModel.setGenre(saveMusicEntity.getGenre());
         musicModel.setPathName(newFileName + MUSIC_TYPE);
         musicModel.setCreated_at(new Date());
         musicModel.setUpdated_at(new Date());

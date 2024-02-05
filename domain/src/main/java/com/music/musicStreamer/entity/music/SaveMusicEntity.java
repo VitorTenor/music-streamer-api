@@ -1,9 +1,9 @@
 package com.music.musicStreamer.entity.music;
 
 
-public class MusicRequest {
+public class SaveMusicEntity {
 
-    public MusicRequest(String name, String artist, String album, String genre, byte[] music) {
+    public SaveMusicEntity(String name, String artist, String album, String genre, byte[] music) {
         this.name = name;
         this.artist = artist;
         this.album = album;

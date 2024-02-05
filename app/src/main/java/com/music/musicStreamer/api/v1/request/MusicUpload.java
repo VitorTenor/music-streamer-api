@@ -1,6 +1,6 @@
 package com.music.musicStreamer.api.v1.request;
 
-import com.music.musicStreamer.entity.music.MusicRequest;
+import com.music.musicStreamer.entity.music.SaveMusicEntity;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotEmpty;
@@ -18,7 +18,7 @@ public record MusicUpload(
         @NotNull(message = "Music is required")
         MultipartFile music
 ) {
-    public MusicRequest toEntity() throws Exception {
-        return new MusicRequest(name, artist, album, genre, music.getBytes());
+    public SaveMusicEntity toEntity() throws Exception {
+        return new SaveMusicEntity(name, artist, album, genre, music.getBytes());
     }
 }
