@@ -21,14 +21,13 @@ import static com.music.musicStreamer.core.util.factory.LogFactory.info;
 @Component
 @RequiredArgsConstructor
 public class PlaylistMusicClient implements PlaylistMusicGateway {
-
-    private final PlaylistMusicRepository playlistMusicRepository;
     /*
      * Factories
      */
     private final PlaylistMusicFactory playlistMusicFactory;
 
     private final MusicRepository musicRepository;
+    private final PlaylistMusicRepository playlistMusicRepository;
 
     @Override
     @Transactional
