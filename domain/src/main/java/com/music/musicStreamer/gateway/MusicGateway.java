@@ -8,10 +8,10 @@ import java.io.IOException;
 import java.util.List;
 
 public interface MusicGateway {
-    public Music saveMusic(MusicRequest musicRequest);
-    public List<Music> getAllMusics();
-    public byte[] playMusic(int id) throws IOException;
-    public MusicDownload downloadMusic(int id) throws IOException;
-    public Music getMusicById(int id);
-    public String deleteMusicById(int id);
+    Music saveMusic(MusicRequest musicRequest);
+    List<Music> getAllMusics();
+    byte[] playMusic(int id) throws IOException;
+    MusicDownload downloadMusic(int id) throws IOException;
+    Music getMusicById(int id);
+    String deleteMusicById(int id);
 }
