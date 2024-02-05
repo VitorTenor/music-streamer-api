@@ -12,7 +12,7 @@ public class GetImageUseCase {
         this.imageGateway = imageGateway;
     }
 
-    public byte[] execute(String imageName) {
-        return imageGateway.getByFileName(imageName);
+    public byte[] execute(String pathName) {
+        return imageGateway.getByFileName(pathName);
     }
 }

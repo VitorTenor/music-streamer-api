@@ -20,12 +20,12 @@ import static com.music.musicStreamer.core.util.factory.LogFactory.info;
 @RequestMapping("/v1/images")
 public class ImageController extends AbstractController {
     /*
-     * Use case
+     * - Use case
      */
     private final GetImageUseCase getImageUseCase;
     private final UploadImageUseCase uploadImageUseCase;
     /*
-     * Assembler
+     * - Assembler
      */
     private final ImageAssembler imageAssembler;
 
@@ -42,10 +42,10 @@ public class ImageController extends AbstractController {
     }
 
     @GetMapping("/{pathName}")
-    public ResponseEntity<byte[]> getImage(@PathVariable(value = "pathName") String input) {
+    public ResponseEntity<byte[]> getImage(@PathVariable(value = "pathName") final String pathName) {
         info(this.getClass(), "Get image");
 
-        final var response = getImageUseCase.execute(input);
+        final var response = getImageUseCase.execute(pathName);
         info(this.getClass(), "Image retrieved");
 
         return buildResponseEntity(HttpStatus.OK, MediaType.IMAGE_JPEG, response);
