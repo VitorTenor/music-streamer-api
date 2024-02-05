@@ -34,7 +34,8 @@ public class PlaylistMusicClient implements PlaylistMusicGateway {
     public String create(PlaylistMusicEntity entity) {
         info(this.getClass(), "Create playlist music");
 
-        save(playlistMusicFactory.toModel(entity));
+        this.save(playlistMusicFactory.toModel(entity));
+
         info(this.getClass(), "Playlist music created");
 
         return PlaylistMessages.MUSIC_ADDED.getMessage();
