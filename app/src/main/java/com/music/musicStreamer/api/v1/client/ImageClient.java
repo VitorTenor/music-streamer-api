@@ -26,13 +26,13 @@ public class ImageClient implements ImageGateway {
      * Factory
      */
     private final ImageFactory imageFactory;
-
-    private final FileBase<UploadImageEntity> fileBase;
-    private final ImageRepository imageRepository;
     /*
      * Clients
      */
     private final MusicGateway musicGateway;
+
+    private final ImageRepository imageRepository;
+    private final FileBase<UploadImageEntity> fileBase;
 
     @Override
     @Transactional
