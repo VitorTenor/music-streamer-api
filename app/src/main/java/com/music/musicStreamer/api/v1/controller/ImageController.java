@@ -1,7 +1,8 @@
 package com.music.musicStreamer.api.v1.controller;
 
-import com.music.musicStreamer.api.v1.request.ImageUpload;
-import com.music.musicStreamer.entity.image.Image;
+import com.music.musicStreamer.api.v1.assembler.ImageAssembler;
+import com.music.musicStreamer.api.v1.model.output.ImageOutput;
+import com.music.musicStreamer.api.v1.request.ImageInput;
 import com.music.musicStreamer.usecase.image.GetImageUseCase;
 import com.music.musicStreamer.usecase.image.UploadImageUseCase;
 import lombok.RequiredArgsConstructor;
@@ -11,29 +12,43 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.io.IOException;
-import java.util.logging.Logger;
+
+import static com.music.musicStreamer.core.util.factory.LogFactory.info;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/v1/images")
-public class ImageController {
-
+public class ImageController extends AbstractController {
+    /*
+     * Use case
+     */
     private final GetImageUseCase getImageUseCase;
     private final UploadImageUseCase uploadImageUseCase;
-    private final Logger LOGGER = Logger.getLogger(ImageController.class.getName());
+    /*
+     * Assembler
+     */
+    private final ImageAssembler imageAssembler;
+
 
     @PostMapping
-    public ResponseEntity<Image> upload(@ModelAttribute @Valid ImageUpload imageUpload) throws IOException {
-        LOGGER.info("[ImageController] Upload image");
+    public ResponseEntity<ImageOutput> upload(@ModelAttribute @Valid ImageInput input) {
+        info(this.getClass(), "Upload image");
 
-        return ResponseEntity.status(HttpStatus.OK).body(uploadImageUseCase.execute(imageUpload.toEntity()));
+        final var response = imageAssembler.toOutput(
+                uploadImageUseCase.execute(input.toEntity())
+        );
+        info(this.getClass(), "Image uploaded");
+
+        return buildResponseEntity(HttpStatus.CREATED, response);
     }
 
     @GetMapping("/{pathName}")
-    public ResponseEntity<byte[]> getImage(@PathVariable(value = "pathName") String getPathName) {
-        LOGGER.info("[ImageController] Get image");
+    public ResponseEntity<byte[]> getImage(@PathVariable(value = "pathName") String input) {
+        info(this.getClass(), "Get image");
 
-        return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.IMAGE_JPEG).body(getImageUseCase.execute(getPathName));
+        final var response = getImageUseCase.execute(input);
+        info(this.getClass(), "Image retrieved");
+
+        return buildResponseEntity(HttpStatus.OK, MediaType.IMAGE_JPEG, response);
     }
 }

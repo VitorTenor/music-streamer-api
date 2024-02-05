@@ -2,7 +2,7 @@ package com.music.musicStreamer.core.util.factory;
 
 import com.music.musicStreamer.api.v1.database.model.ImageModel;
 import com.music.musicStreamer.api.v1.database.model.MusicModel;
-import com.music.musicStreamer.entity.image.Image;
+import com.music.musicStreamer.entity.image.ImageEntity;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -23,16 +23,16 @@ public class ImageFactory {
         );
     }
 
-    public Image createImage(ImageModel imageModel) {
-        return new Image(
+    public ImageEntity createImage(ImageModel imageModel) {
+        return new ImageEntity(
                 imageModel.getMusic().getId(),
                 imageModel.getPathName(),
                 IMAGE_URL + imageModel.getPathName()
         );
     }
 
-    public Image createDefaultImage() {
-        return new Image(
+    public ImageEntity createDefaultImage() {
+        return new ImageEntity(
                 null,
                 DEFAULT_IMAGE,
                 IMAGE_URL + DEFAULT_IMAGE

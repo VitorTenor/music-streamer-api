@@ -1,6 +1,6 @@
 package com.music.musicStreamer.usecase.image;
 
-import com.music.musicStreamer.entity.image.Image;
+import com.music.musicStreamer.entity.image.ImageEntity;
 import com.music.musicStreamer.gateway.ImageGateway;
 
 import javax.inject.Named;
@@ -14,7 +14,7 @@ public class GetImageByMusicIdUseCase {
         this.imageGateway = imageGateway;
     }
 
-    public Image execute(int id) {
+    public ImageEntity execute(int id) {
         return imageGateway.getImageByMusicId(id);
     }
 }

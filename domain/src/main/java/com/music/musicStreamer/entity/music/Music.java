@@ -1,6 +1,6 @@
 package com.music.musicStreamer.entity.music;
 
-import com.music.musicStreamer.entity.image.Image;
+import com.music.musicStreamer.entity.image.ImageEntity;
 
 public class Music {
     private Integer id;
@@ -9,15 +9,15 @@ public class Music {
     private String album;
     private String genre;
     private String pathName;
-    private Image image;
+    private ImageEntity imageEntity;
 
-    public Music(int id, String name, String artist, String album, String genre, Image image, String pathName) {
+    public Music(int id, String name, String artist, String album, String genre, ImageEntity imageEntity, String pathName) {
         this.id = id;
         this.name = name;
         this.artist = artist;
         this.album = album;
         this.genre = genre;
-        this.image = image;
+        this.imageEntity = imageEntity;
         this.pathName = pathName;
     }
 
@@ -51,8 +51,8 @@ public class Music {
         return pathName;
     }
 
-    public Image getImage() {
-        return image;
+    public ImageEntity getImage() {
+        return imageEntity;
     }
     public void setId(Integer id) {
         this.id = id;
@@ -78,8 +78,8 @@ public class Music {
         this.pathName = pathName;
     }
 
-    public void setImage(Image image) {
-        this.image = image;
+    public void setImage(ImageEntity imageEntity) {
+        this.imageEntity = imageEntity;
     }
 
 }

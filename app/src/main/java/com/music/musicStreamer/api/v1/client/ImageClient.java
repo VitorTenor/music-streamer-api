@@ -7,7 +7,7 @@ import com.music.musicStreamer.api.v1.database.repository.MusicRepository;
 import com.music.musicStreamer.core.storage.impl.ImageFiles;
 import com.music.musicStreamer.core.util.MainUtils;
 import com.music.musicStreamer.core.util.factory.ImageFactory;
-import com.music.musicStreamer.entity.image.Image;
+import com.music.musicStreamer.entity.image.ImageEntity;
 import com.music.musicStreamer.entity.image.ImageRequest;
 import com.music.musicStreamer.enums.MusicMessages;
 import com.music.musicStreamer.exception.MusicException;
@@ -29,7 +29,7 @@ public class ImageClient implements ImageGateway {
 
     @Override
     @Transactional
-    public Image saveImage(ImageRequest imageRequest) {
+    public ImageEntity saveImage(ImageRequest imageRequest) {
         LOGGER.info("[ImageClient] Upload image");
 
         MusicModel musicModel = musicRepository.findById(imageRequest.getId()).orElseThrow(
@@ -85,13 +85,13 @@ public class ImageClient implements ImageGateway {
     }
 
     @Override
-    public Image getImageById(int id) {
+    public ImageEntity getImageById(int id) {
         ImageModel imageModel = findAndValidateByImageId(id);
         return imageFactory.createImage(imageModel);
     }
 
     @Override
-    public Image getImageByMusicId(int id) {
+    public ImageEntity getImageByMusicId(int id) {
         LOGGER.info("[ImageClient] Get image by music id");
         ImageModel imageModel = findByMusicId(id);
 

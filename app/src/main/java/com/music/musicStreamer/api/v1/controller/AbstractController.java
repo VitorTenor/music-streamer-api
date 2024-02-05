@@ -5,6 +5,7 @@ import com.music.musicStreamer.core.security.model.UserToken;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
@@ -45,5 +46,9 @@ public class AbstractController {
 
     protected <T> ResponseEntity<T> buildResponseEntity(final HttpStatus status, final T response) {
         return ResponseEntity.status(status).body(response);
+    }
+
+    protected <T> ResponseEntity<T> buildResponseEntity(final HttpStatus status, final MediaType mediaType, final T response) {
+        return ResponseEntity.status(status).contentType(mediaType).body(response);
     }
 }

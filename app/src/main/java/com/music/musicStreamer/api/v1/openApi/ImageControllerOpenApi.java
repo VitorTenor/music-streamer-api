@@ -1,6 +1,6 @@
 package com.music.musicStreamer.api.v1.openApi;
 
-import com.music.musicStreamer.entity.image.Image;
+import com.music.musicStreamer.entity.image.ImageEntity;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -17,5 +17,5 @@ public interface ImageControllerOpenApi {
             responses = {
                     @ApiResponse(responseCode = "200", description = "OK"),
             })
-    ResponseEntity<Image> uploadImageByMusicId(@RequestParam(name = "image") MultipartFile file, @PathVariable("id") int id) throws IOException;
+    ResponseEntity<ImageEntity> uploadImageByMusicId(@RequestParam(name = "image") MultipartFile file, @PathVariable("id") int id) throws IOException;
 }

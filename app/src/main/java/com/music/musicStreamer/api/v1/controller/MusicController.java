@@ -42,7 +42,7 @@ public class MusicController {
     }
 
     @GetMapping("/getMusic/{musicId}")
-    public ResponseEntity<Music> getMusic(@PathVariable(value = "musicId", required = true) Integer musicId) {
+    public ResponseEntity<Music> getMusic(@PathVariable(value = "musicId") Integer musicId) {
         LOGGER.info("[MusicController] Get music by id");
         LOGGER.info("[MusicController] Music id: " + musicId);
 
