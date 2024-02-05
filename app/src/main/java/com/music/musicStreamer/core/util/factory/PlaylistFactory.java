@@ -8,14 +8,15 @@ import com.music.musicStreamer.entity.playlist.PlaylistEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
 @Component
 @RequiredArgsConstructor
 public class PlaylistFactory {
-    public PlaylistEntity createPlaylist(PlaylistModel playlistModel) {
-        return new PlaylistEntity((long) playlistModel.getId(), playlistModel.getName(), null);
+    public PlaylistEntity toEntity(PlaylistModel playlistModel) {
+        return new PlaylistEntity((long) playlistModel.getId(), playlistModel.getName(), Collections.EMPTY_LIST);
     }
 
     public PlaylistMusicModel createPlaylistMusicModel(MusicPlaylistRequest musicPlaylistRequest) {
