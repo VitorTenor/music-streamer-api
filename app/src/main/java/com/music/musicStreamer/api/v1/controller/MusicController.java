@@ -19,7 +19,7 @@ import static com.music.musicStreamer.core.util.factory.LogFactory.info;
 @RequestMapping("/v1/musics")
 public class MusicController extends AbstractController {
     /*
-     * - UseCase
+     * UseCase
      */
     private final GetAllMusicsUseCase getAllUseCase;
     private final UploadMusicUseCase uploadMusicUseCase;
@@ -27,7 +27,7 @@ public class MusicController extends AbstractController {
     private final PlayMusicByIdUseCase playMusicByIdUseCase;
     private final DeleteMusicByIdUseCase deleteMusicByIdUseCase;
     /*
-     * - Assembler
+     * Assembler
      */
     private final MusicAssembler musicAssembler;
 

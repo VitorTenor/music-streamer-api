@@ -20,12 +20,12 @@ import static com.music.musicStreamer.core.util.factory.LogFactory.info;
 @RequestMapping("/v1/images")
 public class ImageController extends AbstractController {
     /*
-     * - Use case
+     * Use case
      */
     private final UploadImageUseCase uploadImageUseCase;
     private final GetImageByPathNameUseCase getImageByPathNameUseCase;
     /*
-     * - Assembler
+     * Assembler
      */
     private final ImageAssembler imageAssembler;
 

@@ -23,13 +23,13 @@ import static com.music.musicStreamer.core.util.factory.LogFactory.info;
 @RequestMapping("/v1/playlists")
 public class PlaylistController extends AbstractController {
     /*
-     * - Use case
+     * Use case
      */
     private final GetPlaylistByIdUseCase getById;
     private final GetPlaylistByUserIdUseCase getAllByUserId;
     private final CreatePlaylistUseCase createPlaylistUseCase;
     /*
-     * - Assembler
+     * Assembler
      */
     private final PlaylistAssembler playlistAssembler;
     private final PlaylistWithMusicAssembler playlistWithMusicAssembler;

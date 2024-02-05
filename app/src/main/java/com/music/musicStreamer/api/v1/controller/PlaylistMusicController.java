@@ -17,7 +17,7 @@ import static com.music.musicStreamer.core.util.factory.LogFactory.info;
 @RequestMapping("v1/playlist-music")
 public class PlaylistMusicController extends AbstractController {
     /*
-     * - Use case
+     * Use case
      */
     private final CreatePlaylistMusicUseCase createPlaylistMusicUseCase;
 
