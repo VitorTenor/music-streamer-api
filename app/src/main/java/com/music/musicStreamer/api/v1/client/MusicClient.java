@@ -21,6 +21,7 @@ import java.util.List;
 
 import static com.music.musicStreamer.core.util.factory.LogFactory.info;
 
+
 @Component
 @RequiredArgsConstructor
 public class MusicClient implements MusicGateway {
