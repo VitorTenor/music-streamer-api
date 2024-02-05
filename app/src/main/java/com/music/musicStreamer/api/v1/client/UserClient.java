@@ -52,11 +52,14 @@ public class UserClient implements UserGateway {
                     return new UserException(UserMessages.NOT_FOUND);
                 });
 
-        authClient.authenticate(entity);
-        final var token = tokenService.generateToken(user);
-
-        log.info("[UserClient] User logged => " + user.getEmail());
-        return userFactory.toEntity(user, token);
+        if (authClient.authenticate(entity)) {
+            final var token = tokenService.generateToken(user);
+            log.info("[UserClient] User logged => " + user.getEmail());
+            return userFactory.toEntity(user, token);
+        } else {
+            log.info("[UserClient] User not authenticated => " + entity.email());
+            throw new UserException(UserMessages.UNAUTHORIZED);
+        }
     }
 
     private UserModel save(final UserModel userModel) {

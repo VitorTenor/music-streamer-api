@@ -7,11 +7,12 @@ public enum UserMessages {
     ALREADY_EXISTS("User already exists"),
     NOT_FOUND("User not found"),
     EMAIL_IS_REQUIRED("Email is required"),
-    EMAIL_IS_INVALID("Email is invalid");
+    EMAIL_IS_INVALID("Email is invalid"),
+    UNAUTHORIZED("Unauthorized"),;
 
     private final String message;
 
-    public String getMessage() {
+    public String message() {
         return message;
     }
 

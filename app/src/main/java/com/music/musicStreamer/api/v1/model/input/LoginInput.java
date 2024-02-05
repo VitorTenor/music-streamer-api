@@ -6,7 +6,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
 public record LoginInput(
-        @Email(message = "Email should be valid")
+        @Email(message = "Email is invalid")
         @NotEmpty(message = "Email is required")
         String email,
         @NotEmpty(message = "Password is required")
