@@ -17,7 +17,7 @@ import static com.music.musicStreamer.core.util.factory.LogFactory.info;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/v1/music")
+@RequestMapping("/v1/musics")
 public class MusicController extends AbstractController {
     /*
      * - UseCase
@@ -32,7 +32,7 @@ public class MusicController extends AbstractController {
      */
     private final MusicAssembler musicAssembler;
 
-    @PostMapping("/upload")
+    @PostMapping("/uploads")
     public ResponseEntity<MusicOutput> uploadMusic(@ModelAttribute MusicUpload musicUpload) throws Exception {
         info(this.getClass(), "Upload music");
 
