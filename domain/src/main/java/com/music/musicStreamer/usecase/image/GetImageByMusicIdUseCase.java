@@ -15,6 +15,6 @@ public class GetImageByMusicIdUseCase {
     }
 
     public ImageEntity execute(int id) {
-        return imageGateway.getImageByMusicId(id);
+        return imageGateway.getByMusicId(id);
     }
 }

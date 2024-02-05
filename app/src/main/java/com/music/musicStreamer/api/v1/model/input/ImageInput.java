@@ -1,6 +1,6 @@
-package com.music.musicStreamer.api.v1.request;
+package com.music.musicStreamer.api.v1.model.input;
 
-import com.music.musicStreamer.entity.image.ImageRequest;
+import com.music.musicStreamer.entity.image.UploadImageEntity;
 import com.music.musicStreamer.enums.ImageMessages;
 import com.music.musicStreamer.exception.ImageException;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -17,10 +17,10 @@ public record ImageInput(
         @NotNull(message = "Music id is required")
         int musicId
 ) {
-    public ImageRequest toEntity() {
+    public UploadImageEntity toEntity() {
         try {
             var imageBytes = image.getBytes();
-            return new ImageRequest(imageBytes, musicId);
+            return new UploadImageEntity(imageBytes, musicId);
         } catch (Exception e) {
             throw new ImageException(ImageMessages.READ_ERROR);
         }

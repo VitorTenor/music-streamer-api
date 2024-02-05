@@ -1,7 +1,7 @@
 package com.music.musicStreamer.usecase.image;
 
 import com.music.musicStreamer.entity.image.ImageEntity;
-import com.music.musicStreamer.entity.image.ImageRequest;
+import com.music.musicStreamer.entity.image.UploadImageEntity;
 import com.music.musicStreamer.gateway.ImageGateway;
 
 import javax.inject.Named;
@@ -15,7 +15,7 @@ public class UploadImageUseCase {
         this.imageGateway = imageGateway;
     }
 
-    public ImageEntity execute(final ImageRequest imageRequest) {
-        return imageGateway.saveImage(imageRequest);
+    public ImageEntity execute(final UploadImageEntity uploadImageEntity) {
+        return imageGateway.save(uploadImageEntity);
     }
 }

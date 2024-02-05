@@ -2,7 +2,7 @@ package com.music.musicStreamer.api.v1.client;
 
 import com.music.musicStreamer.api.v1.database.model.MusicModel;
 import com.music.musicStreamer.api.v1.database.repository.MusicRepository;
-import com.music.musicStreamer.core.storage.impl.MusicFiles;
+import com.music.musicStreamer.core.storage.impl.MusicFile;
 import com.music.musicStreamer.core.util.MainUtils;
 import com.music.musicStreamer.core.util.factory.MusicFactory;
 import com.music.musicStreamer.entity.music.Music;
@@ -32,7 +32,7 @@ public class MusicClient implements MusicGateway {
      */
     private final ImageGateway imageGateway;
     private final PlaylistMusicGateway playlistMusicGateway;
-    private final MusicFiles musicFiles;
+    private final MusicFile musicFiles;
     private final MusicFactory musicFactory;
     private final MusicRepository musicRepository;
 
@@ -120,7 +120,7 @@ public class MusicClient implements MusicGateway {
         musicRepository.deleteById(musicId);
         LOGGER.info("[MusicClient] Music deleted in database");
 
-        if (Boolean.TRUE.equals(imageGateway.deleteImageByMusicId(musicId))) {
+        if (Boolean.TRUE.equals(imageGateway.deleteByMusicId(musicId))) {
             LOGGER.info("[MusicClient] Image deleted in database");
         }
 

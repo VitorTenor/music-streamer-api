@@ -1,8 +1,8 @@
 package com.music.musicStreamer.api.v1.controller;
 
 import com.music.musicStreamer.api.v1.assembler.ImageAssembler;
+import com.music.musicStreamer.api.v1.model.input.ImageInput;
 import com.music.musicStreamer.api.v1.model.output.ImageOutput;
-import com.music.musicStreamer.api.v1.request.ImageInput;
 import com.music.musicStreamer.usecase.image.GetImageUseCase;
 import com.music.musicStreamer.usecase.image.UploadImageUseCase;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +28,6 @@ public class ImageController extends AbstractController {
      * Assembler
      */
     private final ImageAssembler imageAssembler;
-
 
     @PostMapping
     public ResponseEntity<ImageOutput> upload(@ModelAttribute @Valid ImageInput input) {

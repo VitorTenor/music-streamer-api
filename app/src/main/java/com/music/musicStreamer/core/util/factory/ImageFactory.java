@@ -14,24 +14,26 @@ public class ImageFactory {
     private @Value("${storage.image.url}") String IMAGE_URL;
     private @Value("${storage.image.defaultImage}") String DEFAULT_IMAGE;
 
-    public ImageModel createImageModel(MusicModel musicModel, String pathName) {
+    public ImageModel toModel(final MusicModel musicModel, final String pathName) {
+        final var path = pathName + IMAGE_TYPE;
         return new ImageModel(
                 musicModel,
-                pathName + IMAGE_TYPE,
+                path,
                 new Date(),
                 new Date()
         );
     }
 
-    public ImageEntity createImage(ImageModel imageModel) {
+    public ImageEntity toEntity(final ImageModel imageModel) {
+        final var url = IMAGE_URL + imageModel.getPathName();
         return new ImageEntity(
                 imageModel.getMusic().getId(),
                 imageModel.getPathName(),
-                IMAGE_URL + imageModel.getPathName()
+                url
         );
     }
 
-    public ImageEntity createDefaultImage() {
+    public ImageEntity toEntityDefault() {
         return new ImageEntity(
                 null,
                 DEFAULT_IMAGE,

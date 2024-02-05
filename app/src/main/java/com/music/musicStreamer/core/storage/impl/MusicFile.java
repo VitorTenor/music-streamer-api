@@ -1,7 +1,7 @@
 package com.music.musicStreamer.core.storage.impl;
 
 import com.music.musicStreamer.api.v1.database.repository.MusicRepository;
-import com.music.musicStreamer.core.storage.FilesBase;
+import com.music.musicStreamer.core.storage.FileBase;
 import com.music.musicStreamer.core.util.factory.MusicFactory;
 import com.music.musicStreamer.entity.music.Music;
 import com.music.musicStreamer.entity.music.MusicRequest;
@@ -23,12 +23,12 @@ import java.util.logging.Logger;
 
 @Component
 @RequiredArgsConstructor
-public class MusicFiles implements FilesBase<MusicRequest> {
+public class MusicFile implements FileBase<MusicRequest> {
     private @Value("${storage.music.mediaType}") String MUSIC_TYPE;
     private @Value("${storage.music.path}") String MUSIC_PATH;
     private final MusicFactory musicFactory;
     private final MusicRepository musicRepository;
-    private final Logger LOGGER = Logger.getLogger(MusicFiles.class.getName());
+    private final Logger LOGGER = Logger.getLogger(MusicFile.class.getName());
 
     @Override
     public void saveInFiles(MusicRequest musicRequest, String fileName) {

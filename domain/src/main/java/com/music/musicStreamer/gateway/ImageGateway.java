@@ -1,15 +1,12 @@
 package com.music.musicStreamer.gateway;
 
 import com.music.musicStreamer.entity.image.ImageEntity;
-import com.music.musicStreamer.entity.image.ImageRequest;
+import com.music.musicStreamer.entity.image.UploadImageEntity;
 
 
 public interface ImageGateway {
-    public ImageEntity saveImage(ImageRequest imageRequest);
-    public byte[] getImageByFileName(String imageName);
-
-    public ImageEntity getImageById(int id);
-    public Boolean deleteImageByMusicId(int id);
-
-    public ImageEntity getImageByMusicId(int id);
+    ImageEntity save(UploadImageEntity uploadImageEntity);
+    byte[] getImageByFileName(final String imageName);
+    Boolean deleteByMusicId(final int id);
+    ImageEntity getByMusicId(final int id);
 }

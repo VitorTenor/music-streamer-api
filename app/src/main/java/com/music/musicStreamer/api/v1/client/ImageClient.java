@@ -1,14 +1,13 @@
 package com.music.musicStreamer.api.v1.client;
 
 import com.music.musicStreamer.api.v1.database.model.ImageModel;
-import com.music.musicStreamer.api.v1.database.model.MusicModel;
 import com.music.musicStreamer.api.v1.database.repository.ImageRepository;
 import com.music.musicStreamer.api.v1.database.repository.MusicRepository;
-import com.music.musicStreamer.core.storage.impl.ImageFiles;
+import com.music.musicStreamer.core.storage.FileBase;
 import com.music.musicStreamer.core.util.MainUtils;
 import com.music.musicStreamer.core.util.factory.ImageFactory;
 import com.music.musicStreamer.entity.image.ImageEntity;
-import com.music.musicStreamer.entity.image.ImageRequest;
+import com.music.musicStreamer.entity.image.UploadImageEntity;
 import com.music.musicStreamer.enums.MusicMessages;
 import com.music.musicStreamer.exception.MusicException;
 import com.music.musicStreamer.gateway.ImageGateway;
@@ -16,112 +15,102 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
-import java.util.logging.Logger;
+import java.util.Objects;
+
+import static com.music.musicStreamer.core.util.factory.LogFactory.info;
 
 @Component
 @RequiredArgsConstructor
 public class ImageClient implements ImageGateway {
-    private final ImageFiles imageFiles;
+    /*
+     * Factory
+     */
     private final ImageFactory imageFactory;
+
+    private final FileBase<UploadImageEntity> fileBase;
     private final ImageRepository imageRepository;
     private final MusicRepository musicRepository;
-    private final Logger LOGGER = Logger.getLogger(ImageClient.class.getName());
 
     @Override
     @Transactional
-    public ImageEntity saveImage(ImageRequest imageRequest) {
-        LOGGER.info("[ImageClient] Upload image");
+    public ImageEntity save(UploadImageEntity entity) {
+        info(this.getClass(), "Upload image");
 
-        MusicModel musicModel = musicRepository.findById(imageRequest.getId()).orElseThrow(
-                () -> new MusicException(MusicMessages.NOT_FOUND)
-        );
+        final var musicModel = musicRepository.findById(entity.musicId())
+                .orElseThrow(() -> new MusicException(MusicMessages.NOT_FOUND));
 
-        LOGGER.info("[ImageClient] Music found");
-        LOGGER.info("[ImageClient] Music name => " + musicModel.getName());
+        info(this.getClass(), "Music found");
+        info(this.getClass(), "Music name => " + musicModel.getName());
 
-        String newFileName = MainUtils.randomName();
+        final var newFileName = MainUtils.randomName();
+        info(this.getClass(), "New file name => " + newFileName);
 
-        LOGGER.info("[ImageClient] New file name => " + newFileName);
+        fileBase.saveInFiles(entity, newFileName);
+        info(this.getClass(), "Image saved in files");
 
-        imageFiles.saveInFiles(imageRequest, newFileName);
+        final var imageModel = saveInDatabase(imageFactory.toModel(musicModel, newFileName));
+        info(this.getClass(), "Image saved in database => imageId: " + imageModel.getId());
 
-        LOGGER.info("[ImageClient] Image saved in files");
-
-        ImageModel imageModel = saveInDatabase(imageFactory.createImageModel(musicModel, newFileName));
-
-        LOGGER.info("[ImageClient] Image saved in database => imageId: " + imageModel.getId());
-
-        return imageFactory.createImage(imageModel);
+        return imageFactory.toEntity(imageModel);
     }
 
     @Override
     @Transactional
-    public Boolean deleteImageByMusicId(int id) {
-        LOGGER.info("[ImageClient] Delete image by music id");
+    public Boolean deleteByMusicId(final int id) {
+        info(this.getClass(), "Delete image by music id");
 
-        ImageModel imageModel = findByMusicId(id);
-
-        if (imageModel == null) {
-            LOGGER.info("[ImageClient] Image not found, nothing to delete");
-            return false;
+        final var imageModel = findByMusicId(id);
+        if (Objects.isNull(imageModel)) {
+            info(this.getClass(), "Image not found, nothing to delete");
+            return Boolean.FALSE;
         }
 
-        imageFiles.deleteInFiles(imageModel.getPathName());
-
-        LOGGER.info("[ImageClient] Image deleted in files");
+        fileBase.deleteInFiles(imageModel.getPathName());
+        info(this.getClass(), "Image deleted in files");
 
         deleteInDatabaseByImageId(imageModel.getId());
-        LOGGER.info("[ImageClient] Image deleted in database");
+        info(this.getClass(), "Image deleted in database");
 
-        return true;
+        return Boolean.TRUE;
     }
 
     @Override
-    public byte[] getImageByFileName(String fileName) {
-        LOGGER.info("[ImageClient] Get image by file name");
-        LOGGER.info("[ImageClient] File name => " + fileName);
+    public byte[] getImageByFileName(final String fileName) {
+        info(this.getClass(), "Get image by file name");
+        info(this.getClass(), "File name => " + fileName);
 
-        return imageFiles.getBytesInFiles(fileName);
+        return fileBase.getBytesInFiles(fileName);
     }
 
     @Override
-    public ImageEntity getImageById(int id) {
-        ImageModel imageModel = findAndValidateByImageId(id);
-        return imageFactory.createImage(imageModel);
+    public ImageEntity getByMusicId(int id) {
+        info(this.getClass(), "Get image by music id");
+        final var imageModel = findByMusicId(id);
+
+        if (Objects.isNull(imageModel)) {
+            info(this.getClass(), "Image not found");
+            info(this.getClass(), "Return default image");
+            return imageFactory.toEntityDefault();
+        } else {
+            info(this.getClass(), "Image found");
+            return imageFactory.toEntity(imageModel);
+        }
     }
 
-    @Override
-    public ImageEntity getImageByMusicId(int id) {
-        LOGGER.info("[ImageClient] Get image by music id");
-        ImageModel imageModel = findByMusicId(id);
-
-
-        return imageModel != null ?
-                imageFactory.createImage(imageModel) : imageFactory.createDefaultImage();
-    }
-
-    private void deleteInDatabaseByImageId(int id) {
-        LOGGER.info("[ImageClient] Delete image by id");
+    private void deleteInDatabaseByImageId(final int id) {
+        info(this.getClass(), "Delete image by id");
         imageRepository.deleteById(id);
     }
 
-    private ImageModel saveInDatabase(ImageModel imageModel) {
+    private ImageModel saveInDatabase(final ImageModel imageModel) {
+        info(this.getClass(), "Save image in database");
         return imageRepository.save(imageModel);
     }
 
-    private ImageModel findByMusicId(int musicId) {
-        LOGGER.info("[ImageClient] Find image by music id");
-        LOGGER.info("[ImageClient] Music id => " + musicId);
+    private ImageModel findByMusicId(final int musicId) {
+        info(this.getClass(), "Find image by music id");
+        info(this.getClass(), "Music id => " + musicId);
 
         return imageRepository.findByMusicId(musicId);
-    }
-
-    private ImageModel findAndValidateByImageId(int id) {
-        LOGGER.info("[ImageClient] Find image by id");
-
-        ImageModel imageModel = imageRepository.findByMusicId(id);
-
-        LOGGER.info("[ImageClient] Image found");
-        return imageModel;
     }
 }
