@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 import static com.music.musicStreamer.core.util.factory.LogFactory.info;
 
@@ -43,20 +44,23 @@ public class PlaylistController extends AbstractController {
         return buildResponseEntity(HttpStatus.CREATED, response);
     }
 
-    @GetMapping("/getPlaylistById/{playlistId}")
-    public ResponseEntity<Object> getPlaylistById(@PathVariable(value = "playlistId", required = true) int playlistId) {
+    @GetMapping("/{playlistId}")
+    public ResponseEntity<Object> getById(@PathVariable(value = "playlistId") final int playlistId) {
         info(this.getClass(), "Get playlist by id");
         info(this.getClass(), "Playlist id: " + playlistId);
 
         return ResponseEntity.status(HttpStatus.OK).body(getPlaylistByIdUseCase.execute(playlistId));
     }
 
-    @GetMapping("/getAllPlaylistsByUser")
-    public ResponseEntity<Object> getAllPlaylistsByUserId() {
+    @GetMapping("/user")
+    public ResponseEntity<List<PlaylistOutput>> getAllByUserId() {
         info(this.getClass(), "Get all playlists by user id");
 
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(getPlaylistByUserIdUseCase.execute(getUserFromToken().getUserId()));
+        final var response = playlistAssembler.toOutputList(
+                getPlaylistByUserIdUseCase.execute(getUserFromToken().getUserId())
+        );
+
+        return buildResponseEntity(HttpStatus.OK, response);
     }
 
 }
