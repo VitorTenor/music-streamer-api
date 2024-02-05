@@ -64,6 +64,6 @@ public class UserClient implements UserGateway {
 
     private UserModel save(final UserModel userModel) {
         info(this.getClass(), "Save user => " + userModel.getEmail());
-        return this.userRepository.save(userModel);
+        return userRepository.save(userModel);
     }
 }
