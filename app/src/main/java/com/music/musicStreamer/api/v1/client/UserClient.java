@@ -53,7 +53,7 @@ public class UserClient implements UserGateway {
                     return new UserException(UserMessages.NOT_FOUND);
                 });
 
-        if (authenticationGateway.isAuthenticated(entity)) {
+        if (Boolean.TRUE.equals(authenticationGateway.isAuthenticated(entity))) {
             final var token = tokenService.generateToken(user);
             info(this.getClass(), "User logged => " + user.getEmail());
             return userFactory.toEntity(user, token);
