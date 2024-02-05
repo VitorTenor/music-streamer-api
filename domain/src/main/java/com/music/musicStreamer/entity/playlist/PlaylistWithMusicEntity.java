@@ -7,7 +7,6 @@ import java.util.List;
 public record PlaylistWithMusicEntity(
         int id,
         String name,
-        int userId,
         List<Music> music
 ) {
 }

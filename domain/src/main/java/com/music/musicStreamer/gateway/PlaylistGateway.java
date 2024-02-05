@@ -7,7 +7,7 @@ import com.music.musicStreamer.entity.playlist.PlaylistWithMusicEntity;
 import java.util.List;
 
 public interface PlaylistGateway {
-    PlaylistEntity create(CreatePlaylistEntity createPlaylistEntity);
-    PlaylistWithMusicEntity getById(int id);
-    List<PlaylistEntity> getByUserId(int id);
+    PlaylistEntity create(CreatePlaylistEntity entity);
+    PlaylistWithMusicEntity getById(final int id);
+    List<PlaylistEntity> getByUserId(final int userId);
 }

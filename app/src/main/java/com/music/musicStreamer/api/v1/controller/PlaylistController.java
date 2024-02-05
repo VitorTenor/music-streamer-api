@@ -1,8 +1,10 @@
 package com.music.musicStreamer.api.v1.controller;
 
 import com.music.musicStreamer.api.v1.assembler.PlaylistAssembler;
+import com.music.musicStreamer.api.v1.assembler.PlaylistWithMusicAssembler;
 import com.music.musicStreamer.api.v1.model.input.CreatePlaylistInput;
 import com.music.musicStreamer.api.v1.model.output.PlaylistOutput;
+import com.music.musicStreamer.api.v1.model.output.PlaylistWithMusicOutput;
 import com.music.musicStreamer.usecase.playlist.CreatePlaylistUseCase;
 import com.music.musicStreamer.usecase.playlist.GetPlaylistByIdUseCase;
 import com.music.musicStreamer.usecase.playlist.GetPlaylistByUserIdUseCase;
@@ -24,12 +26,13 @@ public class PlaylistController extends AbstractController {
      * - Use case
      */
     private final CreatePlaylistUseCase createPlaylistUseCase;
-    private final GetPlaylistByIdUseCase getPlaylistByIdUseCase;
-    private final GetPlaylistByUserIdUseCase getPlaylistByUserIdUseCase;
+    private final GetPlaylistByIdUseCase getById;
+    private final GetPlaylistByUserIdUseCase getAllByUserId;
     /*
      * - Assembler
      */
     private final PlaylistAssembler playlistAssembler;
+    private final PlaylistWithMusicAssembler playlistWithMusicAssembler;
 
     @PostMapping
     public ResponseEntity<PlaylistOutput> create(@RequestBody @Valid CreatePlaylistInput input) {
@@ -45,11 +48,15 @@ public class PlaylistController extends AbstractController {
     }
 
     @GetMapping("/{playlistId}")
-    public ResponseEntity<Object> getById(@PathVariable(value = "playlistId") final int playlistId) {
+    public ResponseEntity<PlaylistWithMusicOutput> getById(@PathVariable(value = "playlistId") final int playlistId) {
         info(this.getClass(), "Get playlist by id");
         info(this.getClass(), "Playlist id: " + playlistId);
 
-        return ResponseEntity.status(HttpStatus.OK).body(getPlaylistByIdUseCase.execute(playlistId));
+        final var response = playlistWithMusicAssembler.toOutput(
+                getById.execute(playlistId)
+        );
+
+        return buildResponseEntity(HttpStatus.OK, response);
     }
 
     @GetMapping("/user")
@@ -57,7 +64,7 @@ public class PlaylistController extends AbstractController {
         info(this.getClass(), "Get all playlists by user id");
 
         final var response = playlistAssembler.toOutputList(
-                getPlaylistByUserIdUseCase.execute(getUserFromToken().getUserId())
+                getAllByUserId.execute(getUserFromToken().getUserId())
         );
 
         return buildResponseEntity(HttpStatus.OK, response);

@@ -32,7 +32,7 @@ public class PlaylistMusicFactory {
     }
 
     public PlaylistWithMusicEntity toEntity(PlaylistModel model, List<Music> musicList) {
-        return new PlaylistWithMusicEntity(model.getId(), model.getName(), model.getUserId(), musicList);
+        return new PlaylistWithMusicEntity(model.getId(), model.getName(), musicList);
     }
 
     public PlaylistMusicModel toModel(PlaylistMusicEntity entity) {

@@ -66,11 +66,11 @@ public class PlaylistClient implements PlaylistGateway {
     }
 
     @Override
-    public List<PlaylistEntity> getByUserId(final int id) {
+    public List<PlaylistEntity> getByUserId(final int userId) {
         info(this.getClass(), "Get playlist by user id");
-        info(this.getClass(), "User id: " + id);
+        info(this.getClass(), "User id: " + userId);
 
-        return playlistRepository.findAllByUserId(id).stream().map(playlist -> {
+        return playlistRepository.findAllByUserId(userId).stream().map(playlist -> {
             final var musicIds = playlistMusicGateway.getMusicIdByPlaylistId((long) playlist.getId());
             return playlistFactory.toEntity(playlist, musicIds);
         }).toList();
