@@ -73,7 +73,7 @@ public class MusicFile implements FileBase<MusicRequest> {
     public List<MusicEntity> getAllInFiles() {
         LOGGER.info("[MusicFiles] Get all musics in files");
         try {
-            return musicFactory.createMusicList(musicRepository.findAll());
+            return musicFactory.toEntityList(musicRepository.findAll());
         } catch (Exception e) {
             LOGGER.info("[MusicFiles] Error to get all musics in files => " + e.getMessage());
 

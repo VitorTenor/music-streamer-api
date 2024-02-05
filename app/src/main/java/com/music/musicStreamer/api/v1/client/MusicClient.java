@@ -48,11 +48,11 @@ public class MusicClient implements MusicGateway {
         fileBase.saveInFiles(musicRequest, newFileName);
         info(this.getClass(), "Music saved in files");
 
-        final var musicModel = saveInDatabase(musicFactory.createModel(musicRequest, newFileName));
+        final var musicModel = saveInDatabase(musicFactory.toModel(musicRequest, newFileName));
         info(this.getClass(), "Music saved in database");
         info(this.getClass(), "musicId => " + musicModel.getId());
 
-        return musicFactory.createMusic(musicModel);
+        return musicFactory.toEntity(musicModel);
     }
 
     @Override
@@ -99,7 +99,7 @@ public class MusicClient implements MusicGateway {
 
         MusicModel musicModel = findMusicById(musicId);
 
-        return musicFactory.createMusic(musicModel);
+        return musicFactory.toEntity(musicModel);
     }
 
     @Override

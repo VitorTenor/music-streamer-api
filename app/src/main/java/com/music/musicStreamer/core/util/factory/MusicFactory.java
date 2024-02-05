@@ -18,7 +18,7 @@ public class MusicFactory {
     private final GetImageByMusicIdUseCase getImageByMusicIdUseCase;
     private @Value("${storage.music.mediaType}") String MUSIC_TYPE;
 
-    public MusicEntity createMusic(MusicModel musicModel) {
+    public MusicEntity toEntity(final MusicModel musicModel) {
         return new MusicEntity(
                 musicModel.getId(),
                 musicModel.getName(),
@@ -31,11 +31,11 @@ public class MusicFactory {
 
     }
 
-    public List<MusicEntity> createMusicList(List<MusicModel> musicModel) {
-        List<MusicEntity> musicEntityDTO = new ArrayList<>();
+    public List<MusicEntity> toEntityList(final List<MusicModel> musicModel) {
+        var musicEntityDTO = new ArrayList<MusicEntity>();
 
-        for (MusicModel music : musicModel) {
-            MusicEntity musicEntity2 = new MusicEntity(
+        for (var music : musicModel) {
+            var musicEntity2 = new MusicEntity(
                     music.getId(),
                     music.getName(),
                     music.getArtist(),
@@ -50,8 +50,8 @@ public class MusicFactory {
         return musicEntityDTO;
     }
 
-    public MusicModel createModel(MusicRequest musicRequest, String newFileName) {
-        MusicModel musicModel = new MusicModel();
+    public MusicModel toModel(MusicRequest musicRequest, final String newFileName) {
+        var musicModel = new MusicModel();
         musicModel.setName(musicRequest.getName());
         musicModel.setArtist(musicRequest.getArtist());
         musicModel.setAlbum(musicRequest.getAlbum());
