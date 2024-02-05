@@ -50,7 +50,6 @@ public class MusicController extends AbstractController {
         final var response = musicAssembler.toOutputList(
                 getAllUseCase.execute()
         );
-
         info(this.getClass(), "Musics found: " + response.size());
 
         return buildResponseEntity(HttpStatus.OK, response);
