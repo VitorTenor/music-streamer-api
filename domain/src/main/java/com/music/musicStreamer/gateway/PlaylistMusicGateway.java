@@ -8,6 +8,6 @@ import java.util.List;
 public interface PlaylistMusicGateway {
     String create(PlaylistMusicEntity entity);
     Boolean delete(int id);
-    List<MusicEntity> getMusicByPlaylistId(int id);
+    List<MusicEntity> getMusicByPlaylistId(int playlistId);
     List<Long> getMusicIdByPlaylistId(final Long id);
 }
