@@ -37,7 +37,6 @@ public class MusicFactory {
 
         for (final var music : musicModel) {
             final var image = imageGateway.getByMusicId(music.getId());
-
             var musicEntity2 = new MusicEntity(
                     music.getId(),
                     music.getName(),
