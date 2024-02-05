@@ -13,6 +13,6 @@ public class DeleteImageByMusicIdUseCase {
     }
 
     public Boolean execute(int id) {
-        return imageGateway.deleteByMusicId(id);
+        return imageGateway.delete(id);
     }
 }
