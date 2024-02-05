@@ -56,7 +56,7 @@ public class PlaylistClient implements PlaylistGateway {
     }
 
     @Override
-    public PlaylistWithMusicEntity getPlaylistById(final int id) {
+    public PlaylistWithMusicEntity getById(final int id) {
         info(this.getClass(), "Get playlist by id");
         final var playlistModel = playlistRepository.findById(id).orElseThrow(() -> new PlaylistException(PlaylistMessages.NOT_FOUND));
 
@@ -69,7 +69,7 @@ public class PlaylistClient implements PlaylistGateway {
     }
 
     @Override
-    public List<PlaylistEntity> getPlaylistByUserId(int id) {
+    public List<PlaylistEntity> getByUserId(final int id) {
         LOGGER.info("[PlaylistClient] Get playlist by user id");
         LOGGER.info("[PlaylistClient] User id: " + id);
 

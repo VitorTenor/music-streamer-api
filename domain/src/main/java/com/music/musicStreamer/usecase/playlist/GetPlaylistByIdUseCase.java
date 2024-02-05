@@ -14,6 +14,6 @@ public class GetPlaylistByIdUseCase {
     }
 
     public PlaylistWithMusicEntity execute(int id) {
-        return playlistGateway.getPlaylistById(id);
+        return playlistGateway.getById(id);
     }
 }
