@@ -61,7 +61,7 @@ public class MusicClient implements MusicGateway {
     }
 
     @Override
-    public byte[] playMusic(int musicId) {
+    public byte[] playMusic(final int musicId) {
         info(this.getClass(), "Play music by id");
 
         MusicModel musicModel = findMusicById(musicId);
@@ -77,7 +77,7 @@ public class MusicClient implements MusicGateway {
     }
 
     @Override
-    public MusicDownload downloadMusic(int musicId) {
+    public MusicDownload downloadMusic(final int musicId) {
         info(this.getClass(), "Download music by id");
 
         MusicModel musicModel = findMusicById(musicId);
@@ -95,7 +95,7 @@ public class MusicClient implements MusicGateway {
     }
 
     @Override
-    public MusicEntity getMusicById(int musicId) {
+    public MusicEntity getMusicById(final int musicId) {
         info(this.getClass(), "Get music by id");
         info(this.getClass(), "Music id: " + musicId);
 
@@ -106,7 +106,7 @@ public class MusicClient implements MusicGateway {
 
     @Override
     @Transactional
-    public String deleteMusicById(int musicId) {
+    public String deleteMusicById(final int musicId) {
         info(this.getClass(), "Delete music by id");
 
         var musicModel = findMusicById(musicId);
@@ -117,13 +117,11 @@ public class MusicClient implements MusicGateway {
         musicRepository.deleteById(musicId);
         info(this.getClass(), "Music deleted in database");
 
-        if (Boolean.TRUE.equals(imageGateway.deleteByMusicId(musicId))) {
-            info(this.getClass(), "Image deleted in database");
-        }
+        imageGateway.deleteByMusicId(musicId);
+        info(this.getClass(), "Image deleted in database");
 
-        if (Boolean.TRUE.equals(playlistMusicGateway.delete(musicId))) {
-            info(this.getClass(), "Music deleted in playlist");
-        }
+        playlistMusicGateway.delete(musicId);
+        info(this.getClass(), "Music deleted in playlist");
 
         fileBase.deleteInFiles(musicModel.getPathName());
         info(this.getClass(), "Music deleted in files");
@@ -131,7 +129,7 @@ public class MusicClient implements MusicGateway {
         return MusicMessages.MUSIC_DELETED.getMessage();
     }
 
-    private MusicModel saveInDatabase(MusicModel music) {
+    private MusicModel saveInDatabase(final MusicModel music) {
         info(this.getClass(), "Save music in database");
         return musicRepository.save(music);
     }
