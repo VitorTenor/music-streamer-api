@@ -3,7 +3,7 @@ package com.music.musicStreamer.core.util.factory;
 import com.music.musicStreamer.api.v1.database.model.MusicModel;
 import com.music.musicStreamer.entity.music.MusicEntity;
 import com.music.musicStreamer.entity.music.MusicRequest;
-import com.music.musicStreamer.usecase.image.GetImageByMusicIdUseCase;
+import com.music.musicStreamer.gateway.ImageGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -15,17 +15,18 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class MusicFactory {
-    private final GetImageByMusicIdUseCase getImageByMusicIdUseCase;
+    private final ImageGateway imageGateway;
     private @Value("${storage.music.mediaType}") String MUSIC_TYPE;
 
     public MusicEntity toEntity(final MusicModel musicModel) {
+        final var image = imageGateway.getByMusicId(musicModel.getId());
         return new MusicEntity(
                 musicModel.getId(),
                 musicModel.getName(),
                 musicModel.getArtist(),
                 musicModel.getAlbum(),
                 musicModel.getGenre(),
-                getImageByMusicIdUseCase.execute(musicModel.getId()),
+                image,
                 musicModel.getPathName()
         );
 
@@ -35,13 +36,15 @@ public class MusicFactory {
         var musicEntityDTO = new ArrayList<MusicEntity>();
 
         for (final var music : musicModel) {
+            final var image = imageGateway.getByMusicId(music.getId());
+
             var musicEntity2 = new MusicEntity(
                     music.getId(),
                     music.getName(),
                     music.getArtist(),
                     music.getAlbum(),
                     music.getGenre(),
-                    getImageByMusicIdUseCase.execute(music.getId()),
+                    image,
                     music.getPathName()
             );
             musicEntityDTO.add(musicEntity2);
