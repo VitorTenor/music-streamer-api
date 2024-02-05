@@ -42,25 +42,25 @@ public class PlaylistMusicClient implements PlaylistMusicGateway {
     @Override
     @Transactional
     public Boolean deleteMusicFromPlaylist(int id) {
-        LOGGER.info("[PlaylistMusicClient] Delete music from playlist");
+        info(this.getClass(), "Delete music from playlist");
 
         List<PlaylistMusicModel> playlistMusic = playlistMusicRepository.findByMusicId(id);
         if (playlistMusic.isEmpty()) {
-            LOGGER.info("[PlaylistMusicClient] Music not found in playlist, nothing to delete");
+            info(this.getClass(), "Music not found in playlist, nothing to delete");
             return false;
         }
         for (PlaylistMusicModel playlistMusicModel : playlistMusic) {
             playlistMusicRepository.deleteById(playlistMusicModel.getId());
         }
 
-        LOGGER.info("[PlaylistMusicClient] Music deleted from playlist");
+        info(this.getClass(), "Music deleted from playlist");
         return true;
     }
 
     @Override
     public List<Music> getMusicByPlaylistId(int id) {
-        LOGGER.info("[PlaylistMusicClient] Get music by playlist id");
-        LOGGER.info("[PlaylistMusicClient] Playlist id: " + id);
+        info(this.getClass(), "Get music by playlist id");
+        info(this.getClass(), "Playlist id: " + id);
 
         List<Music> musicList = new ArrayList<>();
 
@@ -71,17 +71,21 @@ public class PlaylistMusicClient implements PlaylistMusicGateway {
             }
         }
 
-        LOGGER.info("[PlaylistMusicClient] Music list size: " + musicList.size());
+        info(this.getClass(), "Music list size: " + musicList.size());
 
         return musicList;
     }
 
     @Override
     public List<Long> getMusicIdByPlaylistId(final Long id) {
+        info(this.getClass(), "Get music id by playlist id");
+
         return playlistMusicRepository.findMusicIdByPlaylistId(id.intValue());
     }
 
     public PlaylistMusicModel save(PlaylistMusicModel playlistMusicModel) {
+        info(this.getClass(), "Save playlist music");
+
         return playlistMusicRepository.save(playlistMusicModel);
     }
 }
