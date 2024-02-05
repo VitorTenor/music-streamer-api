@@ -1,7 +1,9 @@
 package com.music.musicStreamer.core.util.factory;
 
 import com.music.musicStreamer.api.v1.database.model.UserModel;
+import com.music.musicStreamer.entity.user.AuthenticationEntity;
 import com.music.musicStreamer.entity.user.CreateUserEntity;
+import com.music.musicStreamer.entity.user.UserEntity;
 import com.music.musicStreamer.enums.UserRole;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -11,7 +13,7 @@ import java.util.Date;
 
 @Component
 @RequiredArgsConstructor
-public class UserRegisterFactory {
+public class UserFactory {
 
     public UserModel toModel(CreateUserEntity entity) {
         var userModel = new UserModel();
@@ -25,7 +27,11 @@ public class UserRegisterFactory {
         return userModel;
     }
 
-    public CreateUserEntity toEntity(final UserModel userModel) {
-        return new CreateUserEntity(userModel.getName(), userModel.getEmail(), userModel.getPassword());
+    public UserEntity toEntity(final UserModel model) {
+        return new UserEntity(model.getName(), model.getEmail());
+    }
+
+    public AuthenticationEntity toEntity(final UserModel model, final String token) {
+        return new AuthenticationEntity(model.getName(), model.getEmail(), token);
     }
 }

@@ -3,7 +3,7 @@ package com.music.musicStreamer.api.v1.client;
 import com.music.musicStreamer.api.v1.database.model.UserModel;
 import com.music.musicStreamer.api.v1.database.repository.UserRepository;
 import com.music.musicStreamer.core.security.service.TokenService;
-import com.music.musicStreamer.core.util.factory.UserRegisterFactory;
+import com.music.musicStreamer.core.util.factory.UserFactory;
 import com.music.musicStreamer.entity.user.AuthenticationEntity;
 import com.music.musicStreamer.entity.user.CreateUserEntity;
 import com.music.musicStreamer.entity.user.LoginEntity;
@@ -22,7 +22,7 @@ import javax.transaction.Transactional;
 @AllArgsConstructor
 public class UserClient implements UserGateway {
     private final AuthClient authClient;
-    private final UserRegisterFactory userRegisterFactory;
+    private final UserFactory userFactory;
     private final TokenService tokenService;
     private final UserRepository userRepository;
 
@@ -34,16 +34,18 @@ public class UserClient implements UserGateway {
         final var existsByEmail = userRepository.existsByEmail(entity.email());
         if (Boolean.TRUE.equals(existsByEmail)) throw new UserException(UserMessages.ALREADY_EXISTS);
 
-        final var createdUser = save(userRegisterFactory.toModel(entity));
+        final var userModel = userFactory.toModel(entity);
+        final var createdUser = save(userModel);
 
         log.info("[UserClient] User created => userId: " + createdUser.getId());
 
-        return new UserEntity(createdUser.getName(), createdUser.getEmail());
+        return userFactory.toEntity(createdUser);
     }
 
     @Override
     public AuthenticationEntity login(LoginEntity entity) {
         log.info("[UserClient] Login user");
+
         final var user = userRepository.findByEmail(entity.email())
                 .orElseThrow(() -> {
                     log.info("[UserClient] User not found => " + entity.email());
@@ -54,10 +56,10 @@ public class UserClient implements UserGateway {
         final var token = tokenService.generateToken(user);
 
         log.info("[UserClient] User logged => " + user.getEmail());
-        return new AuthenticationEntity(user.getName(), user.getEmail(), token);
+        return userFactory.toEntity(user, token);
     }
 
-    private UserModel save(UserModel userModel) {
+    private UserModel save(final UserModel userModel) {
         log.info("[UserClient] Save user => " + userModel.getEmail());
         return this.userRepository.save(userModel);
     }
