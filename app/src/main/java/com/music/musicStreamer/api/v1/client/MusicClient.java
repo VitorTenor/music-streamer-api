@@ -29,8 +29,17 @@ public class MusicClient implements MusicGateway {
      */
     private final ImageGateway imageGateway;
     private final PlaylistMusicGateway playlistMusicGateway;
+    /*
+     * Factories
+     */
     private final MusicFactory musicFactory;
+    /*
+     * Repositories
+     */
     private final MusicRepository musicRepository;
+    /*
+     * Storage
+     */
     private final FileBase<SaveMusicEntity> fileBase;
 
     @Override

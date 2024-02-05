@@ -25,7 +25,9 @@ public class PlaylistMusicClient implements PlaylistMusicGateway {
      * Factories
      */
     private final PlaylistMusicFactory playlistMusicFactory;
-
+    /*
+     * Repositories
+     */
     private final MusicRepository musicRepository;
     private final PlaylistMusicRepository playlistMusicRepository;
 

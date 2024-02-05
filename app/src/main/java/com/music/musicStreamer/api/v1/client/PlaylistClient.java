@@ -26,14 +26,16 @@ public class PlaylistClient implements PlaylistGateway {
      * Clients
      */
     private final PlaylistMusicGateway playlistMusicGateway;
-
+    /*
+     * Repositories
+     */
+    private final PlaylistRepository playlistRepository;
     /*
      * Factories
      */
     private final PlaylistFactory playlistFactory;
     private final PlaylistMusicFactory playlistMusicFactory;
 
-    private final PlaylistRepository playlistRepository;
 
     @Override
     @Transactional

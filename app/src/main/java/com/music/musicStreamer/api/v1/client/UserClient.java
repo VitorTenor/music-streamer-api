@@ -26,13 +26,14 @@ public class UserClient implements UserGateway {
      * Clients
      */
     private final AuthenticationGateway authenticationGateway;
-
     /*
      * Factories
      */
     private final UserFactory userFactory;
     private final TokenService tokenService;
-
+    /*
+     * Repositories
+     */
     private final UserRepository userRepository;
 
     @Override
