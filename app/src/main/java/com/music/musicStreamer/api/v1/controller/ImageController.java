@@ -16,15 +16,15 @@ import java.util.logging.Logger;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/v1/image")
+@RequestMapping("/v1/images")
 public class ImageController {
 
     private final GetImageUseCase getImageUseCase;
     private final UploadImageUseCase uploadImageUseCase;
     private final Logger LOGGER = Logger.getLogger(ImageController.class.getName());
 
-    @PostMapping(path = "/upload")
-    public ResponseEntity<Image> uploadImageByMusicId(@ModelAttribute @Valid ImageUpload imageUpload) throws IOException {
+    @PostMapping
+    public ResponseEntity<Image> upload(@ModelAttribute @Valid ImageUpload imageUpload) throws IOException {
         LOGGER.info("[ImageController] Upload image");
 
         return ResponseEntity.status(HttpStatus.OK).body(uploadImageUseCase.execute(imageUpload.toEntity()));
