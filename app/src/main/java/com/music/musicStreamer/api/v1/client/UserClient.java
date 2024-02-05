@@ -12,16 +12,16 @@ import com.music.musicStreamer.enums.UserMessages;
 import com.music.musicStreamer.exception.UserException;
 import com.music.musicStreamer.gateway.UserGateway;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
 
-@Slf4j
+import static com.music.musicStreamer.core.util.factory.LogFactory.info;
+
 @Component
 @AllArgsConstructor
 public class UserClient implements UserGateway {
-    private final AuthClient authClient;
+    private final AuthenticationClient authenticationClient;
     private final UserFactory userFactory;
     private final TokenService tokenService;
     private final UserRepository userRepository;
@@ -29,7 +29,7 @@ public class UserClient implements UserGateway {
     @Override
     @Transactional
     public UserEntity create(CreateUserEntity entity) {
-        log.info("[UserClient] Create user");
+        info(this.getClass(), "Create user");
 
         final var existsByEmail = userRepository.existsByEmail(entity.email());
         if (Boolean.TRUE.equals(existsByEmail)) throw new UserException(UserMessages.ALREADY_EXISTS);
@@ -37,34 +37,33 @@ public class UserClient implements UserGateway {
         final var userModel = userFactory.toModel(entity);
         final var createdUser = save(userModel);
 
-        log.info("[UserClient] User created => userId: " + createdUser.getId());
+        info(this.getClass(), "User created => userId: " + createdUser.getId());
 
         return userFactory.toEntity(createdUser);
     }
 
     @Override
     public AuthenticationEntity login(LoginEntity entity) {
-        log.info("[UserClient] Login user");
+        info(this.getClass(), "Login user");
 
         final var user = userRepository.findByEmail(entity.email())
                 .orElseThrow(() -> {
-                    log.info("[UserClient] User not found => " + entity.email());
+                    info(this.getClass(), "User not found => " + entity.email());
                     return new UserException(UserMessages.NOT_FOUND);
                 });
 
-        if (authClient.authenticate(entity)) {
+        if (authenticationClient.isAuthenticated(entity)) {
             final var token = tokenService.generateToken(user);
-            log.info("[UserClient] User logged => " + user.getEmail());
+            info(this.getClass(), "User logged => " + user.getEmail());
             return userFactory.toEntity(user, token);
         } else {
-            log.info("[UserClient] User not authenticated => " + entity.email());
+            info(this.getClass(), "User not authenticated => " + entity.email());
             throw new UserException(UserMessages.UNAUTHORIZED);
         }
     }
 
     private UserModel save(final UserModel userModel) {
-        log.info("[UserClient] Save user => " + userModel.getEmail());
+        info(this.getClass(), "Save user => " + userModel.getEmail());
         return this.userRepository.save(userModel);
     }
-
 }
