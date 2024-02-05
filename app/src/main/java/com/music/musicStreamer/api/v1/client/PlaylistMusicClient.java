@@ -60,4 +60,9 @@ public class PlaylistMusicClient implements PlaylistMusicGateway {
 
         return musicList;
     }
+
+    @Override
+    public List<Long> getMusicIdByPlaylistId(final Long id) {
+        return playlistMusicRepository.findMusicIdByPlaylistId(id.intValue());
+    }
 }

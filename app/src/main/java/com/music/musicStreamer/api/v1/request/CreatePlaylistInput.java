@@ -6,7 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.NotEmpty;
 
 @Schema(name = "CreatePlaylistRequest", description = "Request to create a playlist")
-public record CreatePlaylistRequest (
+public record CreatePlaylistInput(
         @NotEmpty(message = "Name is required")
         @Schema(description = "Name of the playlist", example = "My Playlist")
         String name

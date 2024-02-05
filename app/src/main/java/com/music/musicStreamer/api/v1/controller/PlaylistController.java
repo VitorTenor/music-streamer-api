@@ -1,9 +1,9 @@
 package com.music.musicStreamer.api.v1.controller;
 
-import com.music.musicStreamer.api.v1.assembler.CreatePlaylistAssembler;
-import com.music.musicStreamer.api.v1.request.CreatePlaylistRequest;
+import com.music.musicStreamer.api.v1.assembler.PlaylistAssembler;
+import com.music.musicStreamer.api.v1.request.CreatePlaylistInput;
 import com.music.musicStreamer.api.v1.request.MusicPlaylistRegister;
-import com.music.musicStreamer.api.v1.response.CreatePlaylistResponse;
+import com.music.musicStreamer.api.v1.response.PlaylistOutput;
 import com.music.musicStreamer.usecase.playlist.AddMusicPlaylistUseCase;
 import com.music.musicStreamer.usecase.playlist.CreatePlaylistUseCase;
 import com.music.musicStreamer.usecase.playlist.GetPlaylistByIdUseCase;
@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 import static com.music.musicStreamer.core.util.factory.LogFactory.info;
 
@@ -26,15 +28,15 @@ public class PlaylistController extends AbstractController {
     /*
      * - Assembler to convert the response from the use case to the response of the API
      */
-    private final CreatePlaylistAssembler createPlaylistAssembler;
+    private final PlaylistAssembler playlistAssembler;
 
     @PostMapping
-    public ResponseEntity<CreatePlaylistResponse> create(@RequestBody CreatePlaylistRequest request) {
+    public ResponseEntity<PlaylistOutput> create(@RequestBody @Valid CreatePlaylistInput input) {
         info(this.getClass(), "Create playlist");
-        info(this.getClass(), "Playlist name: " + request.name());
+        info(this.getClass(), "Playlist name: " + input.name());
 
-        final var response = createPlaylistAssembler.toOutput(
-                createPlaylistUseCase.execute(request.toEntity(getUserFromToken().getUserId()))
+        final var response = playlistAssembler.toOutput(
+                createPlaylistUseCase.execute(input.toEntity(getUserFromToken().getUserId()))
         );
 
         return buildResponseEntity(HttpStatus.CREATED, response);

@@ -2,28 +2,31 @@ package com.music.musicStreamer.core.util.factory;
 
 import com.music.musicStreamer.api.v1.database.model.PlaylistModel;
 import com.music.musicStreamer.api.v1.database.model.PlaylistMusicModel;
+import com.music.musicStreamer.entity.playlist.CreatePlaylistEntity;
 import com.music.musicStreamer.entity.playlist.MusicPlaylistRequest;
 import com.music.musicStreamer.entity.playlist.PlaylistEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
-import java.util.logging.Logger;
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
 public class PlaylistFactory {
-    private final Logger LOGGER = Logger.getLogger(PlaylistFactory.class.getName());
-
     public PlaylistEntity createPlaylist(PlaylistModel playlistModel) {
-        LOGGER.info("[PlaylistFactory] Create playlist");
-        return new PlaylistEntity(playlistModel.getId(), playlistModel.getName());
+        return new PlaylistEntity((long) playlistModel.getId(), playlistModel.getName(), null);
     }
 
     public PlaylistMusicModel createPlaylistMusicModel(MusicPlaylistRequest musicPlaylistRequest) {
-        LOGGER.info("[PlaylistFactory] Create playlist music model");
-
         return new PlaylistMusicModel(musicPlaylistRequest.getPlaylistId(), musicPlaylistRequest.getUserId(), musicPlaylistRequest.getMusicId(), new Date(), new Date());
     }
 
+    public PlaylistEntity toEntity(final PlaylistModel playlistModel, final List<Long> musicIds) {
+        return new PlaylistEntity((long) playlistModel.getId(), playlistModel.getName(), musicIds);
+    }
+
+    public PlaylistModel toModel(CreatePlaylistEntity entity) {
+        return new PlaylistModel(entity.name(), entity.userId(), new Date(), new Date());
+    }
 }

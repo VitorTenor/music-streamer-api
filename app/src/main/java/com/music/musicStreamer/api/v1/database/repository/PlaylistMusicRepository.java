@@ -8,4 +8,5 @@ import java.util.List;
 public interface PlaylistMusicRepository extends JpaRepository<PlaylistMusicModel, Integer> {
     List<PlaylistMusicModel> findByMusicId(Integer id);
     List<PlaylistMusicModel> findAllById(int id);
+    List<Long> findMusicIdByPlaylistId(final int id);
 }

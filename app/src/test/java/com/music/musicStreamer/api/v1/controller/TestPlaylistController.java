@@ -1,6 +1,6 @@
 package com.music.musicStreamer.api.v1.controller;
 
-import com.music.musicStreamer.api.v1.response.CreatePlaylistResponse;
+import com.music.musicStreamer.api.v1.response.PlaylistOutput;
 import com.music.musicStreamer.util.AbstractContextTest;
 import com.music.musicStreamer.util.JwtUtil;
 import org.junit.jupiter.api.*;
@@ -50,11 +50,12 @@ public class TestPlaylistController extends AbstractContextTest {
         // assert
         resultActions.andExpect(MockMvcResultMatchers.status().isCreated());
 
-        var playlist = this.payloadExtractor.as(CreatePlaylistResponse.class);
+        var playlist = this.payloadExtractor.as(PlaylistOutput.class);
 
         assertNotNull(playlist);
         assertNotNull(playlist.getId());
         assertEquals("My playlist", playlist.getName());
+        assertEquals(0, playlist.getMusicIds().size());
     }
 
 }

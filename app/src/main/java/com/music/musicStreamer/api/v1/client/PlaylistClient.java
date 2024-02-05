@@ -15,15 +15,17 @@ import com.music.musicStreamer.entity.playlist.PlaylistMusic;
 import com.music.musicStreamer.enums.PlaylistMessages;
 import com.music.musicStreamer.exception.PlaylistException;
 import com.music.musicStreamer.gateway.PlaylistGateway;
+import com.music.musicStreamer.gateway.PlaylistMusicGateway;
 import com.music.musicStreamer.usecase.playlistMusic.GetMusicByPlaylistIdUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
+
+import static com.music.musicStreamer.core.util.factory.LogFactory.info;
 
 @Component
 @RequiredArgsConstructor
@@ -34,17 +36,27 @@ public class PlaylistClient implements PlaylistGateway {
     private final PlaylistRepository playlistRepository;
     private final PlaylistMusicRepository playlistMusicRepository;
     private final GetMusicByPlaylistIdUseCase getMusicByPlaylistIdUseCase;
+
+
+    private final PlaylistMusicGateway playlistMusicGateway;
+
     private final Logger LOGGER = Logger.getLogger(PlaylistClient.class.getName());
 
     @Override
     @Transactional
-    public PlaylistEntity create(CreatePlaylistEntity create) {
-        final var date = new Date();
-        final var playlist = new PlaylistModel(create.getName(), create.getUserId(), date, date);
+    public PlaylistEntity create(CreatePlaylistEntity entity) {
+        info(this.getClass(), "Create playlist");
+        info(this.getClass(), "Playlist name: " + entity.name());
 
+        final var playlist = playlistFactory.toModel(entity);
         final var playlistModel = save(playlist);
 
-        return new PlaylistEntity(playlistModel.getId(), playlistModel.getName());
+        final var musicIds = playlistMusicGateway.getMusicIdByPlaylistId((long) playlistModel.getId());
+
+        info(this.getClass(), "Playlist created");
+        info(this.getClass(), "Playlist id: " + playlistModel.getId());
+
+        return playlistFactory.toEntity(playlistModel, musicIds);
     }
 
     @Override
