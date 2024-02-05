@@ -16,7 +16,6 @@ import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.logging.Logger;
 
 import static com.music.musicStreamer.core.util.factory.LogFactory.info;
 
@@ -35,8 +34,6 @@ public class PlaylistClient implements PlaylistGateway {
     private final PlaylistMusicFactory playlistMusicFactory;
 
     private final PlaylistRepository playlistRepository;
-
-    private final Logger LOGGER = Logger.getLogger(PlaylistClient.class.getName());
 
     @Override
     @Transactional
