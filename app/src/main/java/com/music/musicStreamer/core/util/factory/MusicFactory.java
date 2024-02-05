@@ -63,4 +63,16 @@ public class MusicFactory {
         musicModel.setUpdated_at(new Date());
         return musicModel;
     }
+
+    public MusicModel toModel(final MusicEntity musicEntity){
+        var musicModel = new MusicModel();
+        musicModel.setId(musicEntity.id());
+        musicModel.setName(musicEntity.name());
+        musicModel.setArtist(musicEntity.artist());
+        musicModel.setAlbum(musicEntity.album());
+        musicModel.setGenre(musicEntity.genre());
+        musicModel.setPathName(musicEntity.pathName());
+        musicModel.setUpdated_at(new Date());
+        return musicModel;
+    }
 }

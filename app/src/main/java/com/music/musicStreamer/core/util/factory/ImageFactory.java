@@ -1,21 +1,26 @@
 package com.music.musicStreamer.core.util.factory;
 
 import com.music.musicStreamer.api.v1.database.model.ImageModel;
-import com.music.musicStreamer.api.v1.database.model.MusicModel;
 import com.music.musicStreamer.entity.image.ImageEntity;
+import com.music.musicStreamer.entity.music.MusicEntity;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
 @Component
+@RequiredArgsConstructor
 public class ImageFactory {
+    private final MusicFactory musicFactory;
     private @Value("${storage.image.mediaType}") String IMAGE_TYPE;
     private @Value("${storage.image.url}") String IMAGE_URL;
     private @Value("${storage.image.defaultImage}") String DEFAULT_IMAGE;
 
-    public ImageModel toModel(final MusicModel musicModel, final String pathName) {
+    public ImageModel toModel(final MusicEntity musicEntity, final String pathName) {
         final var path = pathName + IMAGE_TYPE;
+        final var musicModel = musicFactory.toModel(musicEntity);
+
         return new ImageModel(
                 musicModel,
                 path,

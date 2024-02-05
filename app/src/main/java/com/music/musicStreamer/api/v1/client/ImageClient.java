@@ -2,7 +2,6 @@ package com.music.musicStreamer.api.v1.client;
 
 import com.music.musicStreamer.api.v1.database.model.ImageModel;
 import com.music.musicStreamer.api.v1.database.repository.ImageRepository;
-import com.music.musicStreamer.api.v1.database.repository.MusicRepository;
 import com.music.musicStreamer.core.storage.FileBase;
 import com.music.musicStreamer.core.util.MainUtils;
 import com.music.musicStreamer.core.util.factory.ImageFactory;
@@ -11,6 +10,7 @@ import com.music.musicStreamer.entity.image.UploadImageEntity;
 import com.music.musicStreamer.enums.MusicMessages;
 import com.music.musicStreamer.exception.MusicException;
 import com.music.musicStreamer.gateway.ImageGateway;
+import com.music.musicStreamer.gateway.MusicGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -29,18 +29,22 @@ public class ImageClient implements ImageGateway {
 
     private final FileBase<UploadImageEntity> fileBase;
     private final ImageRepository imageRepository;
-    private final MusicRepository musicRepository;
+    /*
+     * Clients
+     */
+    private final MusicGateway musicGateway;
 
     @Override
     @Transactional
     public ImageEntity save(UploadImageEntity entity) {
         info(this.getClass(), "Upload image");
 
-        final var musicModel = musicRepository.findById(entity.musicId())
-                .orElseThrow(() -> new MusicException(MusicMessages.NOT_FOUND));
+        final var musicEntity = musicGateway.getMusicById(entity.musicId());
+        if (Objects.isNull(musicEntity)) throw new MusicException(MusicMessages.NOT_FOUND);
+
 
         info(this.getClass(), "Music found");
-        info(this.getClass(), "Music name => " + musicModel.getName());
+        info(this.getClass(), "Music name => " + musicEntity.name());
 
         final var newFileName = MainUtils.randomName();
         info(this.getClass(), "New file name => " + newFileName);
@@ -48,7 +52,7 @@ public class ImageClient implements ImageGateway {
         fileBase.saveInFiles(entity, newFileName);
         info(this.getClass(), "Image saved in files");
 
-        final var imageModel = saveInDatabase(imageFactory.toModel(musicModel, newFileName));
+        final var imageModel = saveInDatabase(imageFactory.toModel(musicEntity, newFileName));
         info(this.getClass(), "Image saved in database => imageId: " + imageModel.getId());
 
         return imageFactory.toEntity(imageModel);
