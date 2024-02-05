@@ -93,7 +93,7 @@ public class MusicClient implements MusicGateway {
     }
 
     @Override
-    public MusicEntity getMusicById(final int musicId) {
+    public MusicEntity getById(final int musicId) {
         info(this.getClass(), "Get music by id");
         info(this.getClass(), "Music id: " + musicId);
 

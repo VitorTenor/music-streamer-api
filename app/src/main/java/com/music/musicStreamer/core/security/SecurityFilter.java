@@ -1,7 +1,7 @@
 package com.music.musicStreamer.core.security;
 
 import com.music.musicStreamer.api.v1.database.repository.UserRepository;
-import com.music.musicStreamer.core.security.service.TokenService;
+import com.music.musicStreamer.core.util.factory.TokenFactory;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -20,13 +20,13 @@ import java.io.IOException;
 @AllArgsConstructor
 public class SecurityFilter extends OncePerRequestFilter {
 
-    private final TokenService tokenService;
+    private final TokenFactory tokenFactory;
     private final UserRepository userRepository;
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String token = recoverToken(request);
         if (token != null) {
-            String email = tokenService.validate(token);
+            String email = tokenFactory.validate(token);
             UserDetails userDetails = userRepository.findUserDetailsByEmail(email);
 
             Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());

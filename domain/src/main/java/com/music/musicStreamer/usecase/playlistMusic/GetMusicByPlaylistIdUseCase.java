@@ -14,7 +14,7 @@ public class GetMusicByPlaylistIdUseCase {
         this.playlistMusicGateway = playlistMusicGateway;
     }
 
-    public List<MusicEntity> execute(int id) {
+    public List<MusicEntity> execute(final Long id) {
 
         return playlistMusicGateway.getMusicByPlaylistId(id);
     }
