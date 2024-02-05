@@ -2,7 +2,7 @@ package com.music.musicStreamer.api.v1.client;
 
 import com.music.musicStreamer.api.v1.database.model.UserModel;
 import com.music.musicStreamer.api.v1.database.repository.UserRepository;
-import com.music.musicStreamer.core.security.service.TokenService;
+import com.music.musicStreamer.core.util.factory.TokenFactory;
 import com.music.musicStreamer.core.util.factory.UserFactory;
 import com.music.musicStreamer.entity.user.AuthenticationEntity;
 import com.music.musicStreamer.entity.user.CreateUserEntity;
@@ -30,7 +30,7 @@ public class UserClient implements UserGateway {
      * Factories
      */
     private final UserFactory userFactory;
-    private final TokenService tokenService;
+    private final TokenFactory tokenFactory;
     /*
      * Repositories
      */
@@ -63,7 +63,7 @@ public class UserClient implements UserGateway {
                 });
 
         if (Boolean.TRUE.equals(authenticationGateway.isAuthenticated(entity))) {
-            final var token = tokenService.generate(user);
+            final var token = tokenFactory.generate(user);
             info(this.getClass(), "User logged => " + user.getEmail());
             return userFactory.toEntity(user, token);
         }

@@ -1,4 +1,4 @@
-package com.music.musicStreamer.core.security.service;
+package com.music.musicStreamer.core.util.factory;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -6,14 +6,14 @@ import com.auth0.jwt.exceptions.JWTCreationException;
 import com.music.musicStreamer.api.v1.database.model.UserModel;
 import com.music.musicStreamer.exception.BusinessException;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
-@Service
-public class TokenService {
+@Component
+public class TokenFactory {
 
     @Value("${api.security.token.secret}")
     private String secret;
