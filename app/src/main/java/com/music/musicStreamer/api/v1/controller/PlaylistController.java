@@ -25,9 +25,9 @@ public class PlaylistController extends AbstractController {
     /*
      * - Use case
      */
-    private final CreatePlaylistUseCase createPlaylistUseCase;
     private final GetPlaylistByIdUseCase getById;
     private final GetPlaylistByUserIdUseCase getAllByUserId;
+    private final CreatePlaylistUseCase createPlaylistUseCase;
     /*
      * - Assembler
      */
@@ -38,7 +38,6 @@ public class PlaylistController extends AbstractController {
     public ResponseEntity<PlaylistOutput> create(@RequestBody @Valid CreatePlaylistInput input) {
         info(this.getClass(), "Create playlist");
         info(this.getClass(), "Playlist name: " + input.name());
-
 
         final var response = playlistAssembler.toOutput(
                 createPlaylistUseCase.execute(input.toEntity(getUserFromToken().getUserId()))
