@@ -4,7 +4,7 @@ import com.music.musicStreamer.entity.playlist.MusicPlaylistRequest;
 
 import javax.validation.constraints.NotEmpty;
 
-public record MusicPlaylistRegister (
+public record PlatlistMusicEntity(
         @NotEmpty(message = "Music id is required")
         int musicId,
         @NotEmpty(message = "Playlist id is required")

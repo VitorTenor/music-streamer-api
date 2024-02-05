@@ -4,10 +4,10 @@ import com.music.musicStreamer.entity.music.Music;
 
 import java.util.List;
 
-public record PlaylistMusicEntity (
+public record PlaylistWithMusicEntity(
         int id,
         String name,
         int userId,
         List<Music> music
-){
+) {
 }

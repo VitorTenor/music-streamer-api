@@ -6,6 +6,8 @@ import com.music.musicStreamer.api.v1.database.repository.MusicRepository;
 import com.music.musicStreamer.api.v1.database.repository.PlaylistMusicRepository;
 import com.music.musicStreamer.core.util.factory.PlaylistMusicFactory;
 import com.music.musicStreamer.entity.music.Music;
+import com.music.musicStreamer.entity.playlistmusic.PlaylistMusicEntity;
+import com.music.musicStreamer.enums.PlaylistMessages;
 import com.music.musicStreamer.gateway.PlaylistMusicGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -23,6 +25,14 @@ public class PlaylistMusicClient implements PlaylistMusicGateway {
     private final MusicRepository musicRepository;
     private final PlaylistMusicFactory playlistMusicFactory;
     private final Logger LOGGER = Logger.getLogger(PlaylistMusicClient.class.getName());
+
+    @Override
+    @Transactional
+    public String create(PlaylistMusicEntity entity) {
+        save(playlistMusicFactory.toModel(entity));
+
+        return PlaylistMessages.MUSIC_ADDED.getMessage();
+    }
 
     @Override
     @Transactional
@@ -64,5 +74,9 @@ public class PlaylistMusicClient implements PlaylistMusicGateway {
     @Override
     public List<Long> getMusicIdByPlaylistId(final Long id) {
         return playlistMusicRepository.findMusicIdByPlaylistId(id.intValue());
+    }
+
+    public PlaylistMusicModel save(PlaylistMusicModel playlistMusicModel) {
+        return playlistMusicRepository.save(playlistMusicModel);
     }
 }

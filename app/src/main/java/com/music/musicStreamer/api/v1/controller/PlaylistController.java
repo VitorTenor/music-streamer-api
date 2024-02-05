@@ -2,9 +2,7 @@ package com.music.musicStreamer.api.v1.controller;
 
 import com.music.musicStreamer.api.v1.assembler.PlaylistAssembler;
 import com.music.musicStreamer.api.v1.request.CreatePlaylistInput;
-import com.music.musicStreamer.api.v1.request.MusicPlaylistRegister;
 import com.music.musicStreamer.api.v1.response.PlaylistOutput;
-import com.music.musicStreamer.usecase.playlist.AddMusicPlaylistUseCase;
 import com.music.musicStreamer.usecase.playlist.CreatePlaylistUseCase;
 import com.music.musicStreamer.usecase.playlist.GetPlaylistByIdUseCase;
 import com.music.musicStreamer.usecase.playlist.GetPlaylistByUserIdUseCase;
@@ -23,7 +21,6 @@ import static com.music.musicStreamer.core.util.factory.LogFactory.info;
 public class PlaylistController extends AbstractController {
     private final CreatePlaylistUseCase createPlaylistUseCase;
     private final GetPlaylistByIdUseCase getPlaylistByIdUseCase;
-    private final AddMusicPlaylistUseCase addMusicPlaylistUseCase;
     private final GetPlaylistByUserIdUseCase getPlaylistByUserIdUseCase;
     /*
      * - Assembler to convert the response from the use case to the response of the API
@@ -41,19 +38,6 @@ public class PlaylistController extends AbstractController {
         );
 
         return buildResponseEntity(HttpStatus.CREATED, response);
-    }
-
-    @PostMapping("/musics")
-    public ResponseEntity<String> addMusic(@RequestBody MusicPlaylistRegister musicPlaylistRegister) {
-        info(this.getClass(), "Add song to playlist");
-        info(this.getClass(), "Playlist id: " + musicPlaylistRegister.playlistId());
-        info(this.getClass(), "Music id: " + musicPlaylistRegister.musicId());
-
-
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(addMusicPlaylistUseCase.execute(
-                        musicPlaylistRegister.toEntity(getUserFromToken().getUserId())
-                ));
     }
 
     @GetMapping("/getPlaylistById/{playlistId}")
