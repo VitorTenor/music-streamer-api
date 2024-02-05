@@ -26,7 +26,6 @@ public class UserClient implements UserGateway {
      * Clients
      */
     private final AuthenticationGateway authenticationGateway;
-
     /*
      * Factories
      */
