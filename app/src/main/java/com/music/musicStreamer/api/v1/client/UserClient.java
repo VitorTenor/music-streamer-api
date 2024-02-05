@@ -65,10 +65,9 @@ public class UserClient implements UserGateway {
             final var token = tokenService.generate(user);
             info(this.getClass(), "User logged => " + user.getEmail());
             return userFactory.toEntity(user, token);
-        } else {
-            info(this.getClass(), "User not authenticated => " + entity.email());
-            throw new UserException(UserMessages.UNAUTHORIZED);
         }
+        info(this.getClass(), "User not authenticated => " + entity.email());
+        throw new UserException(UserMessages.UNAUTHORIZED);
     }
 
     private UserModel save(final UserModel userModel) {
