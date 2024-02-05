@@ -12,10 +12,6 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class PlaylistFactory {
-    public PlaylistEntity toEntity(PlaylistModel playlistModel) {
-        return new PlaylistEntity((long) playlistModel.getId(), playlistModel.getName(), List.of());
-    }
-
     public PlaylistEntity toEntity(final PlaylistModel playlistModel, final List<Long> musicIds) {
         return new PlaylistEntity((long) playlistModel.getId(), playlistModel.getName(), musicIds);
     }

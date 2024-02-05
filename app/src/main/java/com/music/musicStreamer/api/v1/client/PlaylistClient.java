@@ -70,7 +70,10 @@ public class PlaylistClient implements PlaylistGateway {
         info(this.getClass(), "Get playlist by user id");
         info(this.getClass(), "User id: " + id);
 
-        return playlistRepository.findAllByUserId(id).stream().map(playlistFactory::toEntity).toList();
+        return playlistRepository.findAllByUserId(id).stream().map(playlist -> {
+            final var musicIds = playlistMusicGateway.getMusicIdByPlaylistId((long) playlist.getId());
+            return playlistFactory.toEntity(playlist, musicIds);
+        }).toList();
     }
 
 
