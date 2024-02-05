@@ -10,9 +10,10 @@ import com.music.musicStreamer.entity.music.MusicDownload;
 import com.music.musicStreamer.entity.music.MusicRequest;
 import com.music.musicStreamer.enums.MusicMessages;
 import com.music.musicStreamer.exception.MusicException;
+import com.music.musicStreamer.gateway.ImageGateway;
 import com.music.musicStreamer.gateway.MusicGateway;
+import com.music.musicStreamer.gateway.PlaylistMusicGateway;
 import com.music.musicStreamer.usecase.image.DeleteImageByMusicIdUseCase;
-import com.music.musicStreamer.usecase.playlistMusic.DeleteMusicFromPlaylistUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -26,11 +27,16 @@ import java.util.logging.Logger;
 @Component
 @RequiredArgsConstructor
 public class MusicClient implements MusicGateway {
+    /*
+     * Clients
+     */
+    private final ImageGateway imageGateway;
+    private final PlaylistMusicGateway playlistMusicGateway;
     private final MusicFiles musicFiles;
     private final MusicFactory musicFactory;
     private final MusicRepository musicRepository;
+
     private final DeleteImageByMusicIdUseCase deleteImageByMusicIdUseCase;
-    private final DeleteMusicFromPlaylistUseCase deleteMusicFromPlaylistUseCase;
     private final Logger LOGGER = Logger.getLogger(MusicClient.class.getName());
 
     @Override
@@ -114,11 +120,11 @@ public class MusicClient implements MusicGateway {
         musicRepository.deleteById(musicId);
         LOGGER.info("[MusicClient] Music deleted in database");
 
-        if (deleteImageByMusicIdUseCase.execute(musicId)) {
+        if (Boolean.TRUE.equals(imageGateway.deleteImageByMusicId(musicId))) {
             LOGGER.info("[MusicClient] Image deleted in database");
         }
 
-        if (deleteMusicFromPlaylistUseCase.execute(musicId)) {
+        if (Boolean.TRUE.equals(playlistMusicGateway.delete(musicId))) {
             LOGGER.info("[MusicClient] Music deleted in playlist");
         }
 

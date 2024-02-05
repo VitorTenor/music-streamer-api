@@ -13,6 +13,6 @@ public class DeleteMusicFromPlaylistUseCase {
     }
 
     public Boolean execute(int id) {
-        return playlistMusicGateway.deleteMusicFromPlaylist(id);
+        return playlistMusicGateway.delete(id);
     }
 }
