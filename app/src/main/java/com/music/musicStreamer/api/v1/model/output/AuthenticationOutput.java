@@ -7,7 +7,7 @@ import lombok.Getter;
 @Getter
 @Builder
 @Schema(name = "User Login Response", description = "Response of the user login")
-public class UserLoginOutput {
+public class AuthenticationOutput {
     @Schema(description = "User name", example = "Vitor")
     private final String name;
     @Schema(description = "User email", example = "vitor@vitor.com")

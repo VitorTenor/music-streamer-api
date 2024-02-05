@@ -2,7 +2,7 @@ package com.music.musicStreamer.api.v1.openApi;
 
 import com.music.musicStreamer.api.v1.model.input.CreateUserInput;
 import com.music.musicStreamer.api.v1.model.input.LoginInput;
-import com.music.musicStreamer.api.v1.model.output.UserLoginOutput;
+import com.music.musicStreamer.api.v1.model.output.AuthenticationOutput;
 import com.music.musicStreamer.api.v1.model.output.UserOutput;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -29,9 +29,9 @@ public interface UserControllerOpenApi {
             description = "Login user",
             tags = {"User Controller"},
             responses = {
-                    @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = UserLoginOutput.class))),
+                    @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = AuthenticationOutput.class))),
             }
     )
-    ResponseEntity<UserLoginOutput> login(@RequestBody @Valid LoginInput userRegisterRequest);
+    ResponseEntity<AuthenticationOutput> login(@RequestBody @Valid LoginInput userRegisterRequest);
 
 }

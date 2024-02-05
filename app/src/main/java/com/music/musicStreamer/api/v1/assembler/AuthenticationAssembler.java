@@ -1,14 +1,14 @@
 package com.music.musicStreamer.api.v1.assembler;
 
-import com.music.musicStreamer.api.v1.model.output.UserLoginOutput;
+import com.music.musicStreamer.api.v1.model.output.AuthenticationOutput;
 import com.music.musicStreamer.entity.user.AuthenticationEntity;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserLoginAssembler implements Assembler<AuthenticationEntity, UserLoginOutput> {
+public class AuthenticationAssembler implements Assembler<AuthenticationEntity, AuthenticationOutput> {
     @Override
-    public UserLoginOutput toOutput(AuthenticationEntity entity) {
-        return UserLoginOutput.builder()
+    public AuthenticationOutput toOutput(AuthenticationEntity entity) {
+        return AuthenticationOutput.builder()
                 .name(entity.name())
                 .email(entity.email())
                 .token(entity.token())

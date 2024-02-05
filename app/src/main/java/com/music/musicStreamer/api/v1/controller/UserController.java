@@ -1,10 +1,10 @@
 package com.music.musicStreamer.api.v1.controller;
 
+import com.music.musicStreamer.api.v1.assembler.AuthenticationAssembler;
 import com.music.musicStreamer.api.v1.assembler.UserAssembler;
-import com.music.musicStreamer.api.v1.assembler.UserLoginAssembler;
 import com.music.musicStreamer.api.v1.model.input.CreateUserInput;
 import com.music.musicStreamer.api.v1.model.input.LoginInput;
-import com.music.musicStreamer.api.v1.model.output.UserLoginOutput;
+import com.music.musicStreamer.api.v1.model.output.AuthenticationOutput;
 import com.music.musicStreamer.api.v1.model.output.UserOutput;
 import com.music.musicStreamer.api.v1.openApi.UserControllerOpenApi;
 import com.music.musicStreamer.usecase.user.CreateUserUseCase;
@@ -30,7 +30,7 @@ public class UserController extends AbstractController implements UserController
     /*
     * - Assembler to convert the response from the use case to the response of the API
     */
-    private final UserLoginAssembler userLoginAssembler;
+    private final AuthenticationAssembler authenticationAssembler;
     private final UserAssembler userAssembler;
 
     @Override
@@ -46,11 +46,11 @@ public class UserController extends AbstractController implements UserController
 
     @Override
     @PostMapping("/login")
-    public ResponseEntity<UserLoginOutput> login(@RequestBody @Valid LoginInput input) {
+    public ResponseEntity<AuthenticationOutput> login(@RequestBody @Valid LoginInput input) {
         info(this.getClass(),"Login user");
         info(this.getClass(),"User email:" + input.email());
 
-        var response = userLoginAssembler.toOutput(loginUseCase.execute(input.toEntity()));
+        var response = authenticationAssembler.toOutput(loginUseCase.execute(input.toEntity()));
 
         return buildResponseEntity(HttpStatus.OK, response);
     }
