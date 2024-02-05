@@ -33,8 +33,8 @@ public class UserController extends AbstractController implements UserController
     /*
     * - Assembler
     */
-    private final AuthenticationAssembler authenticationAssembler;
     private final UserAssembler userAssembler;
+    private final AuthenticationAssembler authenticationAssembler;
 
     @Override
     @PostMapping
