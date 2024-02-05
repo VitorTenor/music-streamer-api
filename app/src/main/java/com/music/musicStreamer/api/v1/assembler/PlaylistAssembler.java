@@ -1,6 +1,6 @@
 package com.music.musicStreamer.api.v1.assembler;
 
-import com.music.musicStreamer.api.v1.response.PlaylistOutput;
+import com.music.musicStreamer.api.v1.model.output.PlaylistOutput;
 import com.music.musicStreamer.entity.playlist.PlaylistEntity;
 import org.springframework.stereotype.Component;
 

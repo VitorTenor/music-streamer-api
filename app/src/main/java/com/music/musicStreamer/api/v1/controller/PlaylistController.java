@@ -1,8 +1,8 @@
 package com.music.musicStreamer.api.v1.controller;
 
 import com.music.musicStreamer.api.v1.assembler.PlaylistAssembler;
-import com.music.musicStreamer.api.v1.request.CreatePlaylistInput;
-import com.music.musicStreamer.api.v1.response.PlaylistOutput;
+import com.music.musicStreamer.api.v1.model.input.CreatePlaylistInput;
+import com.music.musicStreamer.api.v1.model.output.PlaylistOutput;
 import com.music.musicStreamer.usecase.playlist.CreatePlaylistUseCase;
 import com.music.musicStreamer.usecase.playlist.GetPlaylistByIdUseCase;
 import com.music.musicStreamer.usecase.playlist.GetPlaylistByUserIdUseCase;

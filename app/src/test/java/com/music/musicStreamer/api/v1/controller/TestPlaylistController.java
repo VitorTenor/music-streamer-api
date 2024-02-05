@@ -1,6 +1,6 @@
 package com.music.musicStreamer.api.v1.controller;
 
-import com.music.musicStreamer.api.v1.response.PlaylistOutput;
+import com.music.musicStreamer.api.v1.model.output.PlaylistOutput;
 import com.music.musicStreamer.util.AbstractContextTest;
 import com.music.musicStreamer.util.JwtUtil;
 import org.junit.jupiter.api.*;

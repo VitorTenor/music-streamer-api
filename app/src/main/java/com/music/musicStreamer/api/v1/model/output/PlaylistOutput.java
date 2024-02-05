@@ -1,4 +1,4 @@
-package com.music.musicStreamer.api.v1.response;
+package com.music.musicStreamer.api.v1.model.output;
 
 import lombok.Builder;
 import lombok.Getter;
