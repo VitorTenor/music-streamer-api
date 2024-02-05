@@ -8,7 +8,7 @@ public interface FileBase<T> {
     void saveInFiles(T object, String fileName);
     void deleteInFiles(String fileName);
     byte[] getBytesInFiles(String fileName);
-    List<?> getAllInFiles();
+    <E> List<E> getAllInFiles();
     File getFile(String fileName);
     InputStream getInFilesStream(String fileName);
 }

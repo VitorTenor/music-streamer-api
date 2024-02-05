@@ -2,7 +2,7 @@ package com.music.musicStreamer.api.v1.client;
 
 import com.music.musicStreamer.api.v1.database.model.MusicModel;
 import com.music.musicStreamer.api.v1.database.repository.MusicRepository;
-import com.music.musicStreamer.core.storage.impl.MusicFile;
+import com.music.musicStreamer.core.storage.FileBase;
 import com.music.musicStreamer.core.util.MainUtils;
 import com.music.musicStreamer.core.util.factory.MusicFactory;
 import com.music.musicStreamer.entity.music.MusicDownload;
@@ -32,9 +32,9 @@ public class MusicClient implements MusicGateway {
      */
     private final ImageGateway imageGateway;
     private final PlaylistMusicGateway playlistMusicGateway;
-    private final MusicFile musicFiles;
     private final MusicFactory musicFactory;
     private final MusicRepository musicRepository;
+    private final FileBase<MusicRequest> fileBase;
 
 
     @Override
@@ -45,7 +45,7 @@ public class MusicClient implements MusicGateway {
         final var newFileName = MainUtils.randomName();
         info(this.getClass(), "New file name => " + newFileName);
 
-        musicFiles.saveInFiles(musicRequest, newFileName);
+        fileBase.saveInFiles(musicRequest, newFileName);
         info(this.getClass(), "Music saved in files");
 
         final var musicModel = saveInDatabase(musicFactory.createModel(musicRequest, newFileName));
@@ -59,7 +59,7 @@ public class MusicClient implements MusicGateway {
     public List<MusicEntity> getAllMusics() {
         info(this.getClass(), "Get all musics");
 
-        return musicFiles.getAllInFiles();
+        return fileBase.getAllInFiles();
     }
 
     @Override
@@ -71,7 +71,7 @@ public class MusicClient implements MusicGateway {
         info(this.getClass(), "Music found");
         info(this.getClass(), "Music id: " + musicModel.getId());
 
-        return musicFiles.getInFilesStream(musicModel.getPathName()).readAllBytes();
+        return fileBase.getInFilesStream(musicModel.getPathName()).readAllBytes();
     }
 
     @Override
@@ -83,9 +83,9 @@ public class MusicClient implements MusicGateway {
         info(this.getClass(), "Music found");
         info(this.getClass(), "Music id: " + musicModel.getId());
 
-        InputStream resource = musicFiles.getInFilesStream(musicModel.getPathName());
+        InputStream resource = fileBase.getInFilesStream(musicModel.getPathName());
 
-        File file = musicFiles.getFile(musicModel.getPathName());
+        File file = fileBase.getFile(musicModel.getPathName());
 
         info(this.getClass(), "Music downloaded");
 
@@ -123,7 +123,7 @@ public class MusicClient implements MusicGateway {
             info(this.getClass(), "Music deleted in playlist");
         }
 
-        musicFiles.deleteInFiles(musicModel.getPathName());
+        fileBase.deleteInFiles(musicModel.getPathName());
         info(this.getClass(), "Music deleted in files");
 
         return MusicMessages.MUSIC_DELETED.getMessage();
