@@ -5,23 +5,21 @@ import com.music.musicStreamer.api.v1.database.model.PlaylistMusicModel;
 import com.music.musicStreamer.api.v1.database.repository.PlaylistMusicRepository;
 import com.music.musicStreamer.api.v1.database.repository.PlaylistRepository;
 import com.music.musicStreamer.core.util.factory.PlaylistFactory;
+import com.music.musicStreamer.core.util.factory.PlaylistMusicFactory;
 import com.music.musicStreamer.core.util.validator.PlaylistValidator;
 import com.music.musicStreamer.core.util.validator.UserValidator;
-import com.music.musicStreamer.entity.music.Music;
 import com.music.musicStreamer.entity.playlist.CreatePlaylistEntity;
 import com.music.musicStreamer.entity.playlist.MusicPlaylistRequest;
 import com.music.musicStreamer.entity.playlist.PlaylistEntity;
-import com.music.musicStreamer.entity.playlist.PlaylistMusic;
+import com.music.musicStreamer.entity.playlist.PlaylistMusicEntity;
 import com.music.musicStreamer.enums.PlaylistMessages;
 import com.music.musicStreamer.exception.PlaylistException;
 import com.music.musicStreamer.gateway.PlaylistGateway;
 import com.music.musicStreamer.gateway.PlaylistMusicGateway;
-import com.music.musicStreamer.usecase.playlistMusic.GetMusicByPlaylistIdUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -30,15 +28,26 @@ import static com.music.musicStreamer.core.util.factory.LogFactory.info;
 @Component
 @RequiredArgsConstructor
 public class PlaylistClient implements PlaylistGateway {
-    private final UserValidator userValidator;
-    private final PlaylistFactory playlistFactory;
-    private final PlaylistValidator playlistValidator;
-    private final PlaylistRepository playlistRepository;
-    private final PlaylistMusicRepository playlistMusicRepository;
-    private final GetMusicByPlaylistIdUseCase getMusicByPlaylistIdUseCase;
-
-
+    /*
+     * Clients
+     */
     private final PlaylistMusicGateway playlistMusicGateway;
+
+    /*
+     * Factories
+     */
+    private final PlaylistFactory playlistFactory;
+    private final PlaylistMusicFactory playlistMusicFactory;
+
+    private final PlaylistRepository playlistRepository;
+    // TODO: REMOVE
+    private final UserValidator userValidator;
+    // TODO: REMOVE
+    private final PlaylistValidator playlistValidator;
+
+    // TODO: REMOVE
+    private final PlaylistMusicRepository playlistMusicRepository;
+
 
     private final Logger LOGGER = Logger.getLogger(PlaylistClient.class.getName());
 
@@ -75,15 +84,16 @@ public class PlaylistClient implements PlaylistGateway {
     }
 
     @Override
-    public PlaylistMusic getPlaylistById(int id) {
-        LOGGER.info("[PlaylistClient] Get playlist by id");
-        PlaylistModel playlistModel = playlistRepository.findById(id).orElseThrow(() -> new PlaylistException(PlaylistMessages.NOT_FOUND));
+    public PlaylistMusicEntity getPlaylistById(final int id) {
+        info(this.getClass(), "Get playlist by id");
+        final var playlistModel = playlistRepository.findById(id).orElseThrow(() -> new PlaylistException(PlaylistMessages.NOT_FOUND));
 
-        LOGGER.info("[PlaylistClient] Playlist found");
-        LOGGER.info("[PlaylistClient] Playlist id: " + playlistModel.getId());
-        LOGGER.info("[PlaylistClient] Playlist name: " + playlistModel.getName());
+        info(this.getClass(), "Playlist found");
+        info(this.getClass(), "Playlist id: " + playlistModel.getId());
 
-        return new PlaylistMusic(playlistModel.getId(), playlistModel.getName(), playlistModel.getUserId(), getMusicByList(id));
+        final var musics = playlistMusicGateway.getMusicByPlaylistId(playlistModel.getId());
+
+        return playlistMusicFactory.toEntity(playlistModel, musics);
     }
 
     @Override
@@ -96,10 +106,6 @@ public class PlaylistClient implements PlaylistGateway {
         LOGGER.info("[PlaylistClient] User found");
 
         return playlistRepository.findAllByUserId(id).stream().map(playlistFactory::createPlaylist).toList();
-    }
-
-    private List<Music> getMusicByList(int playlistId) {
-        return new ArrayList<>(getMusicByPlaylistIdUseCase.execute(playlistId));
     }
 
     private PlaylistModel save(PlaylistModel playlist) {

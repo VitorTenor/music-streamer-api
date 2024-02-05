@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @RequiredArgsConstructor
+@Deprecated
 public class UserValidator {
     private final UserRepository userRepository;
 

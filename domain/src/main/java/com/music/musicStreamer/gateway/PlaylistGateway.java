@@ -1,9 +1,9 @@
 package com.music.musicStreamer.gateway;
 
+import com.music.musicStreamer.entity.playlist.CreatePlaylistEntity;
 import com.music.musicStreamer.entity.playlist.MusicPlaylistRequest;
 import com.music.musicStreamer.entity.playlist.PlaylistEntity;
-import com.music.musicStreamer.entity.playlist.PlaylistMusic;
-import com.music.musicStreamer.entity.playlist.CreatePlaylistEntity;
+import com.music.musicStreamer.entity.playlist.PlaylistMusicEntity;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ public interface PlaylistGateway {
 
     String addMusicToPlaylist(MusicPlaylistRequest musicPlaylistRequest);
 
-    PlaylistMusic getPlaylistById(int id);
+    PlaylistMusicEntity getPlaylistById(int id);
 
     List<PlaylistEntity> getPlaylistByUserId(int id);
 }

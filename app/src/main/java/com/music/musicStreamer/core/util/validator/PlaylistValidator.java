@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 
 @Component
 @RequiredArgsConstructor
+@Deprecated
 public class PlaylistValidator {
     private final PlaylistRepository playlistRepository;
     private final MusicValidator musicValidator;
