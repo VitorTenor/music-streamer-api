@@ -16,12 +16,15 @@ import java.util.Date;
 public class UserFactory {
 
     public UserModel toModel(CreateUserEntity entity) {
+        var date = new Date();
+        var password = new BCryptPasswordEncoder().encode(entity.password());
+
         var userModel = new UserModel();
         userModel.setName(entity.name());
         userModel.setEmail(entity.email());
-        userModel.setPassword(new BCryptPasswordEncoder().encode(entity.password()));
-        userModel.setCreated_at(new Date());
-        userModel.setUpdated_at(new Date());
+        userModel.setPassword(password);
+        userModel.setCreated_at(date);
+        userModel.setUpdated_at(date);
         userModel.setActive(true);
         userModel.setRole(UserRole.ADMIN);
         return userModel;

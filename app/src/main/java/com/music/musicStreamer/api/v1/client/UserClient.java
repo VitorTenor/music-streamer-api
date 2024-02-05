@@ -10,6 +10,7 @@ import com.music.musicStreamer.entity.user.LoginEntity;
 import com.music.musicStreamer.entity.user.UserEntity;
 import com.music.musicStreamer.enums.UserMessages;
 import com.music.musicStreamer.exception.UserException;
+import com.music.musicStreamer.gateway.AuthenticationGateway;
 import com.music.musicStreamer.gateway.UserGateway;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -21,7 +22,7 @@ import static com.music.musicStreamer.core.util.factory.LogFactory.info;
 @Component
 @AllArgsConstructor
 public class UserClient implements UserGateway {
-    private final AuthenticationClient authenticationClient;
+    private final AuthenticationGateway authenticationGateway;
     private final UserFactory userFactory;
     private final TokenService tokenService;
     private final UserRepository userRepository;
@@ -52,7 +53,7 @@ public class UserClient implements UserGateway {
                     return new UserException(UserMessages.NOT_FOUND);
                 });
 
-        if (authenticationClient.isAuthenticated(entity)) {
+        if (authenticationGateway.isAuthenticated(entity)) {
             final var token = tokenService.generateToken(user);
             info(this.getClass(), "User logged => " + user.getEmail());
             return userFactory.toEntity(user, token);
