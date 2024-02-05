@@ -12,7 +12,7 @@ public class DeleteImageByMusicIdUseCase {
         this.imageGateway = imageGateway;
     }
 
-    public Boolean execute(int id) {
+    public Boolean execute(final Long id) {
         return imageGateway.deleteByMusicId(id);
     }
 }

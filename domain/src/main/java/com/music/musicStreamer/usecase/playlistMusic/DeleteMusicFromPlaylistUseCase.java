@@ -12,7 +12,7 @@ public class DeleteMusicFromPlaylistUseCase {
         this.playlistMusicGateway = playlistMusicGateway;
     }
 
-    public Boolean execute(int id) {
-        return playlistMusicGateway.delete(id);
+    public Boolean execute(final Long id) {
+        return playlistMusicGateway.deleteByMusicId(id);
     }
 }

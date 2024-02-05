@@ -56,10 +56,10 @@ public class ImageClient implements ImageGateway {
 
     @Override
     @Transactional
-    public Boolean deleteByMusicId(final int musicId) {
+    public Boolean deleteByMusicId(final Long musicId) {
         info(this.getClass(), "Delete image by music id");
 
-        final var imageModel = findByMusicId(musicId);
+        final var imageModel = findByMusicId(musicId.intValue());
         if (Objects.isNull(imageModel)) {
             info(this.getClass(), "Image not found, nothing to delete");
             return Boolean.FALSE;
