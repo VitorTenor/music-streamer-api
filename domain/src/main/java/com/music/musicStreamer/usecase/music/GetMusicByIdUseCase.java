@@ -12,6 +12,6 @@ public class GetMusicByIdUseCase {
         this.musicGateway = musicGateway;
     }
     public MusicEntity execute(final int id) {
-        return musicGateway.getMusicById(id);
+        return musicGateway.getById(id);
     }
 }

@@ -53,14 +53,14 @@ public class PlaylistClient implements PlaylistGateway {
     }
 
     @Override
-    public PlaylistWithMusicEntity getById(final int id) {
+    public PlaylistWithMusicEntity getById(final Long id) {
         info(this.getClass(), "Get playlist by id");
-        final var playlistModel = playlistRepository.findById(id).orElseThrow(() -> new PlaylistException(PlaylistMessages.NOT_FOUND));
+        final var playlistModel = playlistRepository.findById(id.intValue()).orElseThrow(() -> new PlaylistException(PlaylistMessages.NOT_FOUND));
 
         info(this.getClass(), "Playlist found");
         info(this.getClass(), "Playlist id: " + playlistModel.getId());
 
-        final var musics = playlistMusicGateway.getMusicByPlaylistId(playlistModel.getId());
+        final var musics = playlistMusicGateway.getMusicByPlaylistId((long) playlistModel.getId());
 
         return playlistMusicFactory.toEntity(playlistModel, musics);
     }

@@ -39,7 +39,7 @@ public class ImageClient implements ImageGateway {
     public ImageEntity save(UploadImageEntity entity) {
         info(this.getClass(), "Upload image");
 
-        final var musicEntity = musicGateway.getMusicById(entity.musicId());
+        final var musicEntity = musicGateway.getById(entity.musicId());
         if (Objects.isNull(musicEntity)) throw new MusicException(MusicMessages.NOT_FOUND);
 
 
