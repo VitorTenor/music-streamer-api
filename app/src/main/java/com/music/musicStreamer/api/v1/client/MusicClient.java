@@ -18,7 +18,6 @@ import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
@@ -35,7 +34,6 @@ public class MusicClient implements MusicGateway {
     private final MusicFactory musicFactory;
     private final MusicRepository musicRepository;
     private final FileBase<MusicRequest> fileBase;
-
 
     @Override
     @Transactional
@@ -63,7 +61,7 @@ public class MusicClient implements MusicGateway {
     }
 
     @Override
-    public byte[] playMusic(int musicId) throws IOException {
+    public byte[] playMusic(int musicId) {
         info(this.getClass(), "Play music by id");
 
         MusicModel musicModel = findMusicById(musicId);
@@ -71,7 +69,11 @@ public class MusicClient implements MusicGateway {
         info(this.getClass(), "Music found");
         info(this.getClass(), "Music id: " + musicModel.getId());
 
-        return fileBase.getInFilesStream(musicModel.getPathName()).readAllBytes();
+        try {
+            return fileBase.getInFilesStream(musicModel.getPathName()).readAllBytes();
+        } catch (Exception e) {
+            throw new MusicException(MusicMessages.NOT_FOUND);
+        }
     }
 
     @Override
@@ -107,7 +109,7 @@ public class MusicClient implements MusicGateway {
     public String deleteMusicById(int musicId) {
         info(this.getClass(), "Delete music by id");
 
-        MusicModel musicModel = findMusicById(musicId);
+        var musicModel = findMusicById(musicId);
 
         info(this.getClass(), "Music found");
         info(this.getClass(), "Music id: " + musicModel.getId());

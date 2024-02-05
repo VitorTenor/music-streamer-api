@@ -3,7 +3,6 @@ package com.music.musicStreamer.usecase.music;
 import com.music.musicStreamer.gateway.MusicGateway;
 
 import javax.inject.Named;
-import java.io.IOException;
 
 @Named
 public class PlayMusicByIdUseCase {
@@ -11,7 +10,7 @@ public class PlayMusicByIdUseCase {
     public PlayMusicByIdUseCase(MusicGateway musicGateway) {
         this.musicGateway = musicGateway;
     }
-    public byte[] execute(final int id) throws IOException {
+    public byte[] execute(final int id) {
         return musicGateway.playMusic(id);
     }
 }

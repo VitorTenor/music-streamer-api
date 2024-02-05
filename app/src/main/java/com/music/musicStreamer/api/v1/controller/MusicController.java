@@ -10,7 +10,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.List;
 
 import static com.music.musicStreamer.core.util.factory.LogFactory.info;
@@ -70,7 +69,7 @@ public class MusicController extends AbstractController {
     }
 
     @GetMapping("/play/{musicId}")
-    public ResponseEntity<byte[]> playById(@PathVariable("musicId") final Long musicId) throws IOException {
+    public ResponseEntity<byte[]> playById(@PathVariable("musicId") final Long musicId) {
         info(this.getClass(), "Play music by id");
         info(this.getClass(), "Music id: " + musicId);
 
