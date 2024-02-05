@@ -5,7 +5,7 @@ import com.music.musicStreamer.api.v1.database.repository.MusicRepository;
 import com.music.musicStreamer.core.storage.FileBase;
 import com.music.musicStreamer.core.util.MainUtils;
 import com.music.musicStreamer.core.util.factory.MusicFactory;
-import com.music.musicStreamer.entity.music.MusicDownload;
+import com.music.musicStreamer.entity.music.MusicDownloadEntity;
 import com.music.musicStreamer.entity.music.MusicEntity;
 import com.music.musicStreamer.entity.music.SaveMusicEntity;
 import com.music.musicStreamer.enums.MusicMessages;
@@ -17,8 +17,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
-import java.io.File;
-import java.io.InputStream;
 import java.util.List;
 
 import static com.music.musicStreamer.core.util.factory.LogFactory.info;
@@ -77,21 +75,21 @@ public class MusicClient implements MusicGateway {
     }
 
     @Override
-    public MusicDownload downloadMusic(final int musicId) {
+    public MusicDownloadEntity downloadMusic(final Long musicId) {
         info(this.getClass(), "Download music by id");
 
-        MusicModel musicModel = findMusicById(musicId);
+        final var musicModel = findMusicById(musicId.intValue());
 
         info(this.getClass(), "Music found");
         info(this.getClass(), "Music id: " + musicModel.getId());
 
-        InputStream resource = fileBase.getInFilesStream(musicModel.getPathName());
+        var resource = fileBase.getInFilesStream(musicModel.getPathName());
 
-        File file = fileBase.getFile(musicModel.getPathName());
+        var file = fileBase.getFile(musicModel.getPathName());
 
         info(this.getClass(), "Music downloaded");
 
-        return new MusicDownload(resource, file);
+        return new MusicDownloadEntity(resource, file);
     }
 
     @Override
