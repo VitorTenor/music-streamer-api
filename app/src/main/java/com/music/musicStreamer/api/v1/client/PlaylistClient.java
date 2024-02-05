@@ -70,16 +70,15 @@ public class PlaylistClient implements PlaylistGateway {
 
     @Override
     public List<PlaylistEntity> getByUserId(final int id) {
-        LOGGER.info("[PlaylistClient] Get playlist by user id");
-        LOGGER.info("[PlaylistClient] User id: " + id);
-
-
-        LOGGER.info("[PlaylistClient] User found");
+        info(this.getClass(), "Get playlist by user id");
+        info(this.getClass(), "User id: " + id);
 
         return playlistRepository.findAllByUserId(id).stream().map(playlistFactory::createPlaylist).toList();
     }
 
+
     private PlaylistModel save(PlaylistModel playlist) {
+        info(this.getClass(), "Save playlist => " + playlist.getName());
         return playlistRepository.save(playlist);
     }
 }
