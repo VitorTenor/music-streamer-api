@@ -5,7 +5,6 @@ import com.music.musicStreamer.api.v1.database.repository.MusicRepository;
 import com.music.musicStreamer.core.storage.FileBase;
 import com.music.musicStreamer.core.util.MainUtils;
 import com.music.musicStreamer.core.util.factory.MusicFactory;
-import com.music.musicStreamer.entity.music.MusicDownloadEntity;
 import com.music.musicStreamer.entity.music.MusicEntity;
 import com.music.musicStreamer.entity.music.SaveMusicEntity;
 import com.music.musicStreamer.enums.MusicMessages;
@@ -81,24 +80,6 @@ public class MusicClient implements MusicGateway {
         } catch (Exception e) {
             throw new MusicException(MusicMessages.NOT_FOUND);
         }
-    }
-
-    @Override
-    public MusicDownloadEntity downloadMusic(final Long musicId) {
-        info(this.getClass(), "Download music by id");
-
-        final var musicModel = findMusicById(musicId.intValue());
-
-        info(this.getClass(), "Music found");
-        info(this.getClass(), "Music id: " + musicModel.getId());
-
-        var resource = fileBase.getInFilesStream(musicModel.getPathName());
-
-        var file = fileBase.getFile(musicModel.getPathName());
-
-        info(this.getClass(), "Music downloaded");
-
-        return new MusicDownloadEntity(resource, file);
     }
 
     @Override

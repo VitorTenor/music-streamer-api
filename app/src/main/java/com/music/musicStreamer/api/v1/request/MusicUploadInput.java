@@ -1,12 +1,14 @@
 package com.music.musicStreamer.api.v1.request;
 
 import com.music.musicStreamer.entity.music.SaveMusicEntity;
+import com.music.musicStreamer.enums.MusicMessages;
+import com.music.musicStreamer.exception.MusicException;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-public record MusicUpload(
+public record MusicUploadInput(
         @NotEmpty(message = "Name is required")
         String name,
         @NotEmpty(message = "Artist is required")
@@ -18,7 +20,11 @@ public record MusicUpload(
         @NotNull(message = "Music is required")
         MultipartFile music
 ) {
-    public SaveMusicEntity toEntity() throws Exception {
-        return new SaveMusicEntity(name, artist, album, genre, music.getBytes());
+    public SaveMusicEntity toEntity() {
+        try {
+            return new SaveMusicEntity(name, artist, album, genre, music.getBytes());
+        } catch (Exception e) {
+            throw new MusicException(MusicMessages.SAVE_STORAGE_ERROR);
+        }
     }
 }

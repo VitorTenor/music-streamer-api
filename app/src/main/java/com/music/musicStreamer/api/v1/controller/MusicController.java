@@ -2,7 +2,7 @@ package com.music.musicStreamer.api.v1.controller;
 
 import com.music.musicStreamer.api.v1.assembler.MusicAssembler;
 import com.music.musicStreamer.api.v1.model.output.MusicOutput;
-import com.music.musicStreamer.api.v1.request.MusicUpload;
+import com.music.musicStreamer.api.v1.request.MusicUploadInput;
 import com.music.musicStreamer.usecase.music.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -32,11 +32,11 @@ public class MusicController extends AbstractController {
     private final MusicAssembler musicAssembler;
 
     @PostMapping("/uploads")
-    public ResponseEntity<MusicOutput> uploadMusic(@ModelAttribute MusicUpload musicUpload) throws Exception {
+    public ResponseEntity<MusicOutput> uploadMusic(@ModelAttribute MusicUploadInput input) {
         info(this.getClass(), "Upload music");
 
         final var response = musicAssembler.toOutput(
-                uploadMusicUseCase.execute(musicUpload.toEntity())
+                uploadMusicUseCase.execute(input.toEntity())
         );
         info(this.getClass(), "Music uploaded");
 

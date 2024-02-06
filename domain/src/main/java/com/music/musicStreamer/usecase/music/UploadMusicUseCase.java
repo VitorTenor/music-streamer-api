@@ -15,7 +15,7 @@ public class UploadMusicUseCase {
         this.musicGateway = musicGateway;
     }
 
-    public MusicEntity execute(SaveMusicEntity saveMusicEntity) throws Exception {
+    public MusicEntity execute(SaveMusicEntity saveMusicEntity) {
         return musicGateway.saveMusic(saveMusicEntity);
     }
 }
