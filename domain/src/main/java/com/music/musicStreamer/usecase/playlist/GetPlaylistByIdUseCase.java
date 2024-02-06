@@ -13,7 +13,7 @@ public class GetPlaylistByIdUseCase {
         this.playlistGateway = playlistGateway;
     }
 
-    public PlaylistWithMusicEntity execute(int id) {
+    public PlaylistWithMusicEntity execute(final Long id) {
         return playlistGateway.getById(id);
     }
 }
