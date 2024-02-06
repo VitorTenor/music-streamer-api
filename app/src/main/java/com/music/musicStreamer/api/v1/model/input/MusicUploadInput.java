@@ -1,4 +1,4 @@
-package com.music.musicStreamer.api.v1.request;
+package com.music.musicStreamer.api.v1.model.input;
 
 import com.music.musicStreamer.entity.music.SaveMusicEntity;
 import com.music.musicStreamer.enums.MusicMessages;

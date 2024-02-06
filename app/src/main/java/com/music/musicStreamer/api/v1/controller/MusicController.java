@@ -1,8 +1,8 @@
 package com.music.musicStreamer.api.v1.controller;
 
 import com.music.musicStreamer.api.v1.assembler.MusicAssembler;
+import com.music.musicStreamer.api.v1.model.input.MusicUploadInput;
 import com.music.musicStreamer.api.v1.model.output.MusicOutput;
-import com.music.musicStreamer.api.v1.request.MusicUploadInput;
 import com.music.musicStreamer.usecase.music.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
