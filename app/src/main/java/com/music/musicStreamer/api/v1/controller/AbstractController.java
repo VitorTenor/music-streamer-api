@@ -33,8 +33,8 @@ public class AbstractController {
     }
 
     private static String tokenDecode(final String token) {
-        Base64.Decoder decoder = Base64.getUrlDecoder();
-        String[] chunks = token.split("\\.");
+        var decoder = Base64.getUrlDecoder();
+        var chunks = token.split("\\.");
         return new String(decoder.decode(chunks[1]));
     }
 
