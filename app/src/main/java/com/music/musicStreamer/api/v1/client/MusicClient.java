@@ -67,10 +67,10 @@ public class MusicClient implements MusicGateway {
     }
 
     @Override
-    public byte[] playMusic(final Long musicId) {
+    public byte[] playMusic(final Long id) {
         info(this.getClass(), "Play music by id");
 
-        MusicModel musicModel = findMusicById(musicId.intValue());
+        MusicModel musicModel = findMusicById(id.intValue());
 
         info(this.getClass(), "Music found");
         info(this.getClass(), "Music id: " + musicModel.getId());
@@ -83,11 +83,11 @@ public class MusicClient implements MusicGateway {
     }
 
     @Override
-    public MusicEntity getMusicById(final int musicId) {
+    public MusicEntity getMusicById(final Long id) {
         info(this.getClass(), "Get music by id");
-        info(this.getClass(), "Music id: " + musicId);
+        info(this.getClass(), "Music id: " + id);
 
-        MusicModel musicModel = findMusicById(musicId);
+        MusicModel musicModel = findMusicById(id.intValue());
 
         return musicFactory.toEntity(musicModel);
     }

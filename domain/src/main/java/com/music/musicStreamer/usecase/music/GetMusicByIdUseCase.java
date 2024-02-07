@@ -8,10 +8,12 @@ import javax.inject.Named;
 @Named
 public class GetMusicByIdUseCase {
     private final MusicGateway musicGateway;
+
     public GetMusicByIdUseCase(MusicGateway musicGateway) {
         this.musicGateway = musicGateway;
     }
-    public MusicEntity execute(final int id) {
-        return musicGateway.getMusicById(id);
+
+    public MusicEntity execute(final Long id) {
+        return this.musicGateway.getMusicById(id);
     }
 }

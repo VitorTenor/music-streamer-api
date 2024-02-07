@@ -9,6 +9,6 @@ public interface MusicGateway {
     MusicEntity saveMusic(SaveMusicEntity saveMusicEntity);
     List<MusicEntity> getAllMusics();
     byte[] playMusic(final Long musicId);
-    MusicEntity getMusicById(int id);
+    MusicEntity getMusicById(final Long id);
     String deleteMusicById(final Long id);
 }
