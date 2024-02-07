@@ -61,7 +61,7 @@ public class MusicController extends AbstractController {
         info(this.getClass(), "Music id: " + musicId);
 
         final var response = musicAssembler.toOutput(
-                getMusicByIdUseCase.execute(musicId.intValue())
+                getMusicByIdUseCase.execute(musicId)
         );
         info(this.getClass(), "Music found");
 
