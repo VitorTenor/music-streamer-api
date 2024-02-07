@@ -67,10 +67,10 @@ public class MusicClient implements MusicGateway {
     }
 
     @Override
-    public byte[] playMusic(final int musicId) {
+    public byte[] playMusic(final Long musicId) {
         info(this.getClass(), "Play music by id");
 
-        MusicModel musicModel = findMusicById(musicId);
+        MusicModel musicModel = findMusicById(musicId.intValue());
 
         info(this.getClass(), "Music found");
         info(this.getClass(), "Music id: " + musicModel.getId());

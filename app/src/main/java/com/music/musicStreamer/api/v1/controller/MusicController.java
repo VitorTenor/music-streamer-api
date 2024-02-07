@@ -73,7 +73,7 @@ public class MusicController extends AbstractController {
         info(this.getClass(), "Play music by id");
         info(this.getClass(), "Music id: " + musicId);
 
-        final var response = playMusicByIdUseCase.execute(musicId.intValue());
+        final var response = playMusicByIdUseCase.execute(musicId);
         info(this.getClass(), "Music played");
 
         return buildResponseEntity(HttpStatus.OK, MediaType.parseMediaType("audio/mpeg"), response);

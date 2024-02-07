@@ -10,7 +10,7 @@ public class PlayMusicByIdUseCase {
     public PlayMusicByIdUseCase(MusicGateway musicGateway) {
         this.musicGateway = musicGateway;
     }
-    public byte[] execute(final int id) {
+    public byte[] execute(final Long id) {
         return musicGateway.playMusic(id);
     }
 }

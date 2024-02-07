@@ -8,7 +8,7 @@ import java.util.List;
 public interface MusicGateway {
     MusicEntity saveMusic(SaveMusicEntity saveMusicEntity);
     List<MusicEntity> getAllMusics();
-    byte[] playMusic(int id);
+    byte[] playMusic(final Long musicId);
     MusicEntity getMusicById(int id);
     String deleteMusicById(final Long id);
 }
