@@ -116,7 +116,7 @@ public class MusicClient implements MusicGateway {
         fileBase.deleteInFiles(musicModel.getPathName());
         info(this.getClass(), "Music deleted in files");
 
-        return MusicMessages.MUSIC_DELETED.getMessage();
+        return MusicMessages.MUSIC_DELETED.message();
     }
 
     private MusicModel saveInDatabase(final MusicModel music) {

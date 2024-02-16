@@ -18,7 +18,7 @@ public enum PlaylistMessages {
         this.message = message;
     }
 
-    public String getMessage() {
-        return message;
+    public String message() {
+        return this.message;
     }
 }

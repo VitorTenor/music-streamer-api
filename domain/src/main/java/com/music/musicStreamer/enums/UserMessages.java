@@ -13,7 +13,7 @@ public enum UserMessages {
     private final String message;
 
     public String message() {
-        return message;
+        return this.message;
     }
 
     UserMessages(String message) {

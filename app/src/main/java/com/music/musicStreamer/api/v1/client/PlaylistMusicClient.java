@@ -40,7 +40,7 @@ public class PlaylistMusicClient implements PlaylistMusicGateway {
 
         info(this.getClass(), "Playlist music created");
 
-        return PlaylistMessages.MUSIC_ADDED.getMessage();
+        return PlaylistMessages.MUSIC_ADDED.message();
     }
 
     @Override

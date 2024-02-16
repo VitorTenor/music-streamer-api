@@ -8,8 +8,8 @@ public enum ImageMessages {
     IMAGE_IS_REQUIRED("Image is required"),
     ID_IS_REQUIRED("Image id is required");
 
-    public String getMessage() {
-        return message;
+    public String message() {
+        return this.message;
     }
 
     private final String message;

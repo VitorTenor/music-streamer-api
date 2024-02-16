@@ -21,8 +21,8 @@ public enum MusicMessages {
         this.message = message;
     }
 
-    public String getMessage() {
-        return message;
+    public String message() {
+        return this.message;
     }
 
 }
