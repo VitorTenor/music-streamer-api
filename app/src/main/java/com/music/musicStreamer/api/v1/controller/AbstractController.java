@@ -1,7 +1,7 @@
 package com.music.musicStreamer.api.v1.controller;
 
 import com.google.gson.Gson;
-import com.music.musicStreamer.core.security.model.UserToken;
+import com.music.musicStreamer.entity.user.UserToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
